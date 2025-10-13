@@ -11,6 +11,11 @@ composeBom = "2024.09.00"
 koog = "0.5.0"
 room = "2.5.0"
 
+koin = "4.0.2"
+android-appcompat = "1.7.0"
+koin-annotations = "2.0.0"
+ksp = "2.0.21-1.0.28"
+
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -30,9 +35,25 @@ androidx-room-compiler = { module = "androidx.room:room-compiler", name="room-co
 koog-agent = { module = "ai.koog:koog-agents",name="koog", version.ref = "koog" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", name="room-runtime", version.ref = "room" }
 
+android-appcompat = {module = "androidx.appcompat:appcompat", version.ref = "android-appcompat"}
+koin-android = { module = "io.insert-koin:koin-android", version.ref = "koin" }
+koin-test = { module = "io.insert-koin:koin-test-junit4", version.ref = "koin" }
+koin-annotations = { module = "io.insert-koin:koin-annotations", version.ref = "koin-annotations" }
+koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-annotations" }
+
+koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
+koin-android-test = { module = "io.insert-koin:koin-android-test", version.ref = "koin" }
+
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+
+android-library = { id = "com.android.library", version.ref = "agp" }
+ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+compose = { id = "org.jetbrains.compose", version.ref = "composeBom" }
 
 

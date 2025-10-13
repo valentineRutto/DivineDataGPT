@@ -2,6 +2,8 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.ksp)
+
 
 }
 
@@ -52,8 +54,11 @@ dependencies {
     implementation(libs.androidx.material3)
     implementation(libs.koog.agent)
 
+    implementation(libs.koin.android)
+    implementation(libs.koin.ksp)
+
     implementation(libs.androidx.room.runtime)
-    
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
