@@ -1,4 +1,6 @@
 package com.valentinerutto.divinedatagpt
 
-class DivineDataViewModel {
+import androidx.lifecycle.ViewModel
+
+class DivineDataViewModel : ViewModel(){
 }
