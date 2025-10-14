@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
+import com.valentinerutto.divinedatagpt.ui.theme.screens.ChatPageScreen
 
 class MainActivity : ComponentActivity() {
 
@@ -25,6 +26,7 @@ class MainActivity : ComponentActivity() {
                         name = "Android",
                         modifier = Modifier.padding(innerPadding)
                     )
+                    ChatPageScreen()
                 }
             }
         }
