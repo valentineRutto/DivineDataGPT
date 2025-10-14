@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -11,6 +13,12 @@ android {
     namespace = "com.valentinerutto.divinedatagpt"
     compileSdk = 36
 
+    packaging {
+        resources {
+            excludes += "/META-INF/*"
+        }
+    }
+    
     defaultConfig {
         applicationId = "com.valentinerutto.divinedatagpt"
         minSdk = 24
@@ -31,12 +39,19 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_11
-        targetCompatibility = JavaVersion.VERSION_11
+        sourceCompatibility = JavaVersion.VERSION_21
+        targetCompatibility = JavaVersion.VERSION_21
     }
-    kotlinOptions {
-        jvmTarget = "11"
+
+    kotlin {
+
+        compileOptions{
+       JvmTarget.JVM_21
     }
+
+
+    }
+
     buildFeatures {
         compose = true
     }

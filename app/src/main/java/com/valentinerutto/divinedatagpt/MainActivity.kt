@@ -14,6 +14,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
 
 class MainActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
