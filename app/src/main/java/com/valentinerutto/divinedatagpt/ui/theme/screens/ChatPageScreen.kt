@@ -246,59 +246,62 @@ fun BottomBar() {
                 .clip(RoundedCornerShape(24.dp))
                 .background(Color(0xFF2C2C2E))
                 .padding(horizontal = 16.dp),
-
+            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-            IconButton(
-                onClick = { },
-                modifier = Modifier.size(28.dp).clip(CircleShape).background(Color.Gray)
 
-            ) {
-                Icon(
-                    imageVector = Icons.Filled.Add,
-                    contentDescription = "Add",
-                    tint = TextWhite
+
+                IconButton(
+                    onClick = { },
+                    modifier = Modifier.size(28.dp).clip(CircleShape).background(Color.Gray)
+
+                ) {
+                    Icon(
+                        imageVector = Icons.Filled.Add,
+                        contentDescription = "Add",
+                        tint = TextWhite
+                    )
+                }
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text(
+                    text = "How are you feeling today?",
+                    color = TextGray,
+
                 )
-            }
 
-            Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
-            Text(
-                text ="How are you feeling today?",
-                color = TextGray,
-                modifier = Modifier.weight(1f)
-            )
+                IconButton(
+                    onClick = { },
+                    modifier = Modifier.size(32.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Mic,
+                        contentDescription = "Microphone",
+                        tint = TextGray
+                    )
+                }
 
-            Spacer(modifier = Modifier.width(8.dp))
+                Spacer(modifier = Modifier.width(8.dp))
 
-            IconButton(
-                onClick = { },
-                modifier = Modifier.size(32.dp)
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Mic,
-                    contentDescription = "Microphone",
-                    tint = TextGray
-                )
-            }
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            IconButton(
-                onClick = { },
-                modifier = Modifier
-                    .size(28.dp)
-                    .clip(CircleShape)
-                    .background(Color.Gray)
-            ) {
-                Icon(
-                    imageVector = Icons.AutoMirrored.Filled.Send,
-                    contentDescription = "Send",
-                    tint = TextWhite,
-                    modifier = Modifier.size(16.dp)
-                )
+                IconButton(
+                    onClick = { },
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clip(CircleShape)
+                        .background(Color.Gray)
+                ) {
+                    Icon(
+                        imageVector = Icons.AutoMirrored.Filled.Send,
+                        contentDescription = "Send",
+                        tint = TextWhite,
+                        modifier = Modifier.size(16.dp)
+                    )
+                }
             }
         }
-    }
+
 }
