@@ -24,8 +24,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             DivineDataGPTTheme {
                 Scaffold(modifier = Modifier.fillMaxSize().systemBarsPadding()) { innerPadding ->
-
-                    ChatPageScreen(                        modifier = Modifier.padding(innerPadding)
+                    ChatPageScreen( modifier = Modifier.padding(innerPadding)
                     )
                 }
             }
