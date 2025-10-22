@@ -1,5 +1,6 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
+import ai.koog.prompt.text.text
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -18,8 +19,11 @@ import androidx.compose.foundation.layout.systemBars
 import androidx.compose.foundation.layout.union
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.BasicTextField
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.Send
 import androidx.compose.material.icons.filled.Add
@@ -36,13 +40,22 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.isEmpty
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.graphics.SolidColor
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.valentinerutto.divinedatagpt.R
@@ -54,10 +67,15 @@ import com.valentinerutto.divinedatagpt.ui.theme.IconPurple
 import com.valentinerutto.divinedatagpt.ui.theme.PurpleButton
 import com.valentinerutto.divinedatagpt.ui.theme.TextGray
 import com.valentinerutto.divinedatagpt.ui.theme.TextWhite
+import io.ktor.client.request.request
+import org.koin.dsl.module
 
 
 @Composable
 fun ChatPageScreen(modifier: Modifier) {
+    var inputText by remember { mutableStateOf("") }
+    val messages = remember { mutableStateListOf<String>() }
+
     Box(
         modifier = modifier
             .fillMaxSize()
@@ -75,10 +93,18 @@ fun ChatPageScreen(modifier: Modifier) {
                     .fillMaxWidth(),
                 contentAlignment = Alignment.Center
             ) {
-                ChatContent()
-            }
+                if (messages.isEmpty()) {
+                    ChatContent()
+                } else {
+                    RequestLazyList(itemsList = messages)
+                }            }
 
-            BottomBar()
+            BottomBar(inputText = inputText, onValueChange = {inputText = it}, onSendClick ={
+                if (inputText.isNotEmpty()) messages.add(inputText)
+                inputText = ""
+            } )
+
+
         }
     }
 }
@@ -161,6 +187,28 @@ fun ChatContent() {
 }
 
 @Composable
+fun RequestLazyList(itemsList: List<String>){
+    LazyColumn{
+        items(itemsList){ item ->
+            RequestListItem(item)
+        }
+    }
+}
+@Composable
+fun RequestListItem(text: String ) {
+    Box(modifier = Modifier
+        .fillMaxWidth()
+        .padding(start = 48.dp, end = 4.dp, top = 8.dp, bottom = 8.dp))
+    Text(text=text, color = TextWhite, textAlign = TextAlign.Center,
+        modifier = Modifier
+            .background(
+                color = colorResource(id = R.color.purple_200),
+                shape = RoundedCornerShape(8.dp)
+            )
+            .padding(8.dp))
+
+}
+@Composable
 fun ActionButtonsRow() {
     Column(
         horizontalAlignment = Alignment.CenterHorizontally
@@ -235,7 +283,9 @@ fun ActionButton(
 }
 
 @Composable
-fun BottomBar() {
+fun BottomBar( inputText: String,
+               onValueChange: (String) -> Unit,
+               onSendClick: () -> Unit) {
     Box(
         modifier = Modifier
             .fillMaxWidth()
@@ -256,11 +306,12 @@ fun BottomBar() {
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-
-
                 IconButton(
                     onClick = { },
-                    modifier = Modifier.size(28.dp).clip(CircleShape).background(Color.Gray)
+                    modifier = Modifier
+                        .size(28.dp)
+                        .clip(CircleShape)
+                        .background(Color.Gray)
 
                 ) {
                     Icon(
@@ -271,12 +322,16 @@ fun BottomBar() {
                 }
 
                 Spacer(modifier = Modifier.width(8.dp))
-
+Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart){
+    BasicTextField(value = inputText, onValueChange= onValueChange, modifier = Modifier.fillMaxWidth(),
+        textStyle = TextStyle(color = TextWhite), cursorBrush = SolidColor(TextWhite), singleLine = true)
+    if (inputText.isEmpty()){
                 Text(
                     text = "How are you feeling today?",
                     color = TextGray,
 
-                )
+                )}
+}
 
                 Spacer(modifier = Modifier.width(8.dp))
 
@@ -294,7 +349,7 @@ fun BottomBar() {
                 Spacer(modifier = Modifier.width(8.dp))
 
                 IconButton(
-                    onClick = { },
+                    onClick = { onSendClick},
                     modifier = Modifier
                         .size(28.dp)
                         .clip(CircleShape)

@@ -18,6 +18,8 @@ ksp = "2.2.0-2.0.2"
 retrofit = "2.11.0"
 okhttp = "4.12.0"
 gson = "2.10.1"
+preference = "1.2.1"
+
 
 [libraries]
 androidx-material-icons= { module = "androidx.compose.material:material-icons-extended" }
@@ -47,6 +49,9 @@ koin-ksp = { module = "io.insert-koin:koin-ksp-compiler", version.ref = "koin-an
 
 koin-androidx-compose = { module = "io.insert-koin:koin-androidx-compose", version.ref = "koin" }
 koin-android-test = { module = "io.insert-koin:koin-android-test", version.ref = "koin" }
+
+preference = {module="androidx.preference:preference-ktx",version.ref = "preference"}
+
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit_gson = { group = "com.squareup.retrofit2", name = "converter-gson", version.ref = "retrofit" }

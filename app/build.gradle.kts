@@ -74,6 +74,7 @@ dependencies {
     implementation(libs.koin.ksp)
 
     implementation(libs.androidx.room.runtime)
+    implementation(libs.preference)
 
     // Retrofit dependencies
     implementation(libs.retrofit)
