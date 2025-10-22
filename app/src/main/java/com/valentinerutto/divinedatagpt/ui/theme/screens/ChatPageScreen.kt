@@ -198,14 +198,15 @@ fun RequestLazyList(itemsList: List<String>){
 fun RequestListItem(text: String ) {
     Box(modifier = Modifier
         .fillMaxWidth()
-        .padding(start = 48.dp, end = 4.dp, top = 8.dp, bottom = 8.dp))
-    Text(text=text, color = TextWhite, textAlign = TextAlign.Center,
-        modifier = Modifier
+        .padding(start = 48.dp, end = 4.dp, top = 8.dp, bottom = 8.dp)){
+    Text(text=text, color = TextWhite,
+        modifier = Modifier                .align(Alignment.CenterEnd)
             .background(
                 color = colorResource(id = R.color.purple_200),
                 shape = RoundedCornerShape(8.dp)
             )
             .padding(8.dp))
+    }
 
 }
 @Composable
@@ -301,55 +302,66 @@ fun BottomBar( inputText: String,
                 .height(48.dp)
                 .clip(RoundedCornerShape(24.dp))
                 .background(Color(0xFF2C2C2E))
-                .padding(horizontal = 16.dp),
+                .padding(horizontal = 8.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
 
-                IconButton(
-                    onClick = { },
-                    modifier = Modifier
-                        .size(28.dp)
-                        .clip(CircleShape)
-                        .background(Color.Gray)
+            IconButton(
+                onClick = { },
+                modifier = Modifier
+                    .size(28.dp)
+                    .clip(CircleShape)
+                    .background(Color.Gray)
 
-                ) {
-                    Icon(
-                        imageVector = Icons.Filled.Add,
-                        contentDescription = "Add",
-                        tint = TextWhite
-                    )
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.Add,
+                    contentDescription = "Add",
+                    tint = TextWhite
+                )
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+
+
+            Box(modifier = Modifier.weight(1f),
+                contentAlignment = Alignment.CenterStart) {
+
+                BasicTextField(
+                    value = inputText,
+                    onValueChange = onValueChange,
+                    modifier = Modifier.fillMaxWidth(),
+                    textStyle = TextStyle(color = TextWhite),
+                    cursorBrush = SolidColor(TextWhite),
+                    singleLine = true
+                )
+                if (inputText.isEmpty()) {
+                    Text(
+                        text = "How are you feeling today?",
+                        color = TextGray,
+
+                        )
                 }
-
-                Spacer(modifier = Modifier.width(8.dp))
-Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart){
-    BasicTextField(value = inputText, onValueChange= onValueChange, modifier = Modifier.fillMaxWidth(),
-        textStyle = TextStyle(color = TextWhite), cursorBrush = SolidColor(TextWhite), singleLine = true)
-    if (inputText.isEmpty()){
-                Text(
-                    text = "How are you feeling today?",
-                    color = TextGray,
-
-                )}
-}
-
-                Spacer(modifier = Modifier.width(8.dp))
+            }
 
                 IconButton(
                     onClick = { },
                     modifier = Modifier.size(32.dp)
+
                 ) {
                     Icon(
                         imageVector = Icons.Default.Mic,
                         contentDescription = "Microphone",
                         tint = TextGray
+
                     )
                 }
 
                 Spacer(modifier = Modifier.width(8.dp))
 
                 IconButton(
-                    onClick = { onSendClick},
+                    onClick = onSendClick,
                     modifier = Modifier
                         .size(28.dp)
                         .clip(CircleShape)
@@ -365,4 +377,4 @@ Box(modifier = Modifier.weight(1f), contentAlignment = Alignment.CenterStart){
             }
         }
 
-}
+    }
