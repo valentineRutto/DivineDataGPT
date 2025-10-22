@@ -1,6 +1,19 @@
-# DivineDataGPT is a Faith-emotional companion consuming  [DivineDataServer Ktor Server](https://github.com/valentineRutto/divinedata-server/tree/main) 
+ # DivineData 🌿
 
- This is the ESV + AI-integrated Bible Companion app architecture:
+**AI-Powered Emotional Bible Companion** 
+
+Connect your emotions to the Word.  
+DivineData analyzes how you feel and suggests scripture and reflections to uplift your spirit.
+
+### ✨ Tech Stack
+- **Kotlin (Native Android)**
+- **MVVM + Koin + Room + Retrofit**
+- **Ktor Backend Integration**
+
+### 🌐 Backend
+Backend repository: [divinedata-server](https://github.com/valentineRutto/divinedata-server)
+
+### Architecture 
 
 ``` 
 Android App (Kotlin + MVVM)
