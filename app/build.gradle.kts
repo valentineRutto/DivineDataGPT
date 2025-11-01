@@ -67,6 +67,20 @@ android {
         compose = true
     }
 
+    flavorDimensions += "version"
+    productFlavors {
+        create("demo") {
+            dimension = "version"
+            applicationIdSuffix = ".demo"
+            versionNameSuffix = "-demo"
+            // You can add flavor-specific resources or code here
+        }
+        create("full") {
+            dimension = "version"
+            applicationIdSuffix = ".full"
+            versionNameSuffix = "-full"
+        }
+    }
 }
 
 dependencies {
