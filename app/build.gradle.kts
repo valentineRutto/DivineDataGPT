@@ -30,13 +30,24 @@ android {
     }
 
     buildTypes {
+
+        all {
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
             )
         }
+        debug {
+            isDefault true
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+        testBuildType "debug"
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_21
@@ -55,6 +66,7 @@ android {
     buildFeatures {
         compose = true
     }
+
 }
 
 dependencies {
