@@ -1,4 +1,9 @@
 package com.valentinerutto.divinedatagpt.data
 
-class DivineDataRepository {
+import com.valentinerutto.divinedatagpt.data.network.ApiService
+
+class DivineDataRepository(val apiService: ApiService) {
+
+
+
 }
