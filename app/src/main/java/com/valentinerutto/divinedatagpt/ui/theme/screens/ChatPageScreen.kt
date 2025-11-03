@@ -40,6 +40,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
@@ -58,6 +59,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
+import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.R
 import com.valentinerutto.divinedatagpt.ui.theme.BottomBarBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
@@ -68,11 +70,18 @@ import com.valentinerutto.divinedatagpt.ui.theme.PurpleButton
 import com.valentinerutto.divinedatagpt.ui.theme.TextGray
 import com.valentinerutto.divinedatagpt.ui.theme.TextWhite
 import io.ktor.client.request.request
+import org.koin.androidx.compose.koinViewModel
 import org.koin.dsl.module
+import org.koin.viewmodel.getViewModelKey
 
 
 @Composable
 fun ChatPageScreen(modifier: Modifier) {
+
+    val myViewModel: DivineDataViewModel = koinViewModel()
+
+    val data by myViewModel.uiState.collectAsState()
+
     var inputText by remember { mutableStateOf("") }
     val messages = remember { mutableStateListOf<String>() }
 

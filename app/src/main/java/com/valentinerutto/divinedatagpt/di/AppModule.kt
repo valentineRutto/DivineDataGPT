@@ -15,7 +15,7 @@ val AppModule = module{
     single { MyApplication.INSTANCE }
 
     single { ApiService() }
-    single { DivineDataRepository() }
+    single { DivineDataRepository(get()) }
 
     viewModel { DivineDataViewModel() }
 
