@@ -16,7 +16,7 @@ val AppModule = module{
     single { MyApplication.INSTANCE }
 
 single{ KtorClient.httpClient }
-    single { ApiService(get()) }
+    single { ApiService() }
     single { DivineDataRepository(get()) }
 
     viewModel { DivineDataViewModel() }
