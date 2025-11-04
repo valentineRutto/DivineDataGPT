@@ -4,6 +4,4 @@ import com.valentinerutto.divinedatagpt.data.network.ApiService
 
 class DivineDataRepository(val apiService: ApiService) {
 
-
-
 }

@@ -19,6 +19,7 @@ retrofit = "2.11.0"
 okhttp = "4.12.0"
 gson = "2.10.1"
 preference = "1.2.1"
+ktorVersion = "2.3.12"
 
 
 [libraries]
@@ -58,6 +59,12 @@ retrofit_gson = { group = "com.squareup.retrofit2", name = "converter-gson", ver
 okhttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okhttp" }
 okhttp_logging = { group = "com.squareup.okhttp3", name = "logging-interceptor", version.ref = "okhttp" }
 gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+
+ktor-client-core ={group ="io.ktor:ktor-client-core", name ="client-core", version.ref = "ktorVersion"}
+ktor-client-cio ={group ="io.ktor:ktor-client-cio", name ="client-cio", version.ref = "ktorVersion"}
+ktor-client-contentnegotian ={group ="io.ktor:ktor-client-content-negotiation", name ="client-content-negotiation", version.ref = "ktorVersion"}
+ktor-serialization-json ={group ="io.ktor:ktor-serialization-kotlinx-json", name ="serialization-json", version.ref = "ktorVersion"}
+ktor-logging ={group ="io.ktor:ktor-client-logging", name ="logging", version.ref = "ktorVersion"}
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
