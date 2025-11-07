@@ -160,7 +160,9 @@ fun TopBar() {
 
         // Refresh button
         IconButton(
-            onClick = { },
+            onClick = {
+
+            },
             modifier = Modifier
                 .size(48.dp)
                 .clip(CircleShape)
@@ -354,18 +356,7 @@ fun BottomBar( inputText: String,
                 }
             }
 
-                IconButton(
-                    onClick = { },
-                    modifier = Modifier.size(32.dp)
 
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Mic,
-                        contentDescription = "Microphone",
-                        tint = TextGray
-
-                    )
-                }
 
                 Spacer(modifier = Modifier.width(8.dp))
 

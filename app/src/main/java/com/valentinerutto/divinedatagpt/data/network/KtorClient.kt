@@ -30,7 +30,7 @@ object KtorClient {
             level = LogLevel.ALL
         }
 
-        defaultRequest { url("https://api.example.com") }
+        defaultRequest { url("http://0.0.0.0:8080/") }
 
     }
 }

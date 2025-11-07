@@ -1,20 +1,41 @@
 package com.valentinerutto.divinedatagpt.data.network
 
+import android.util.Log
+import androidx.compose.ui.autofill.ContentType
+import androidx.compose.ui.autofill.contentType
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import io.ktor.client.HttpClient
+import io.ktor.client.call.body
+import io.ktor.client.request.get
+import io.ktor.client.request.post
+import io.ktor.client.request.setBody
+import io.ktor.http.contentType
 import retrofit2.http.GET
 import retrofit2.http.POST
 
-class ApiService {
+class ApiService(private val httpClient: HttpClient) {
 
-    @GET("verse")
     suspend fun getVerse(): List<Verse> {
-        return emptyList()
+        return try {
+            httpClient.get("verse").body()
+        }catch (e: Exception){
+            emptyList()
+        }
     }
 
     @POST
-    suspend fun postEmotionChat(){
+    suspend fun postEmotionChat(emotionRequest: EmotionRequest){
+        try {
+            val requestBody = EmotionRequest(emotion = emotionRequest.emotion)
 
+            httpClient.post("chat") {
+                // Configure the request
+                setBody(requestBody) // Ktor automatically serializes the data class to JSON
+            }
+            Log.d("ApiService", "Successfully posted emotion.")
+        } catch (e: Exception) {
+            Log.e("ApiService", "Error posting emotion: ${e.message}")
+        }
     }
 
 }
