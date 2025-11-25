@@ -68,11 +68,11 @@ ktor-logging ={group ="io.ktor:ktor-client-logging", name ="logging", version.re
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
-ktor-serialization-json ={group ="io.ktor:ktor-serialization-kotlinx-json", name ="serialization-json", version.ref = "ktorVersion"}
+ktor-serialization-json ={id ="io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion"}
 
 android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose = { id = "org.jetbrains.compose", version.ref = "composeBom" }
-kotlinserialization = {group = "org.jetbrains.kotlin.plugin.serialization",name  ="kotlinserialization"}
+kotlinserialization = {id = "org.jetbrains.kotlin.plugin.serialization",version.ref  ="kotlin"}
 
 
