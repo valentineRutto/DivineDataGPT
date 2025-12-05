@@ -1,0 +1,225 @@
+package com.valentinerutto.divinedatagpt.ui.theme.screens
+
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Air
+import androidx.compose.material.icons.filled.ArrowForward
+import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Explore
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Nightlight
+import androidx.compose.material.icons.filled.SelfImprovement
+import androidx.compose.material.icons.filled.WbSunny
+import androidx.compose.material.icons.filled.Whatshot
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
+
+@Composable
+fun EmotionScreen(modifier: Modifier) {
+
+    val emotionsList = listOf(
+        Emotions("Anxious", Icons.Default.Air),
+        Emotions("Joyful", Icons.Default.WbSunny),
+        Emotions("Lonely", Icons.Default.Nightlight),
+        Emotions("Grateful", Icons.Default.Favorite),
+        Emotions("Angry", Icons.Default.Whatshot),
+        Emotions("Lost", Icons.Default.Explore)
+    )
+
+    val customText = remember { mutableStateOf("") }
+
+    Scaffold(
+        bottomBar = { BottomNavBar() }
+    ) { padding ->
+
+        Column(
+            modifier = modifier
+                .fillMaxSize()
+                .padding(padding)
+                .padding(horizontal = 24.dp),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Text(
+                text = "HOW IS YOUR SPIRIT TODAY?",
+                style = MaterialTheme.typography.titleMedium.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = Color(0xFF333333)
+                ),
+                textAlign = TextAlign.Center
+            )
+
+            Text(
+                text = "Select an emotion or share your own thoughts.",
+                style = MaterialTheme.typography.bodyMedium.copy(color = Color.Gray),
+                modifier = Modifier.padding(top = 8.dp)
+            )
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            EmotionGrid(emotionsList)
+
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(55.dp)
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(Color(0xFFF4F4F4)),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+
+                TextField(
+                    value = customText.value,
+                    onValueChange = { customText.value = it },
+                    placeholder = { Text("I'm feeling...") },
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Color.Transparent,
+                        unfocusedContainerColor = Color.Transparent,
+                        focusedIndicatorColor = Color.Transparent,
+                        unfocusedIndicatorColor = Color.Transparent
+                    ),
+                    modifier = Modifier.weight(1f)
+                )
+
+                IconButton(
+                    onClick = { /* send emotion */ },
+                    modifier = Modifier
+                        .padding(end = 8.dp)
+                        .size(48.dp)
+                        .background(Color(0xFFFFA726), CircleShape)
+                ) {
+                    Icon(
+                        Icons.Default.ArrowForward,
+                        contentDescription = "Send",
+                        tint = Color.White
+                    )
+                }
+            }
+        }
+    }
+}
+data class Emotions(val name: String, val icon: ImageVector)
+
+@Composable
+fun EmotionGrid(list: List<Emotions>) {
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(2),
+        horizontalArrangement = Arrangement.spacedBy(20.dp),
+        verticalArrangement = Arrangement.spacedBy(20.dp),
+        modifier = Modifier.height(300.dp)
+    ) {
+        items(list) { emotion ->
+            Card(
+                modifier = Modifier
+                    .height(80.dp)
+                    .fillMaxWidth(),
+                shape = RoundedCornerShape(16.dp),
+                elevation = CardDefaults.cardElevation(5.dp)
+            ) {
+                Column(
+                    modifier = Modifier.fillMaxSize(),
+                    verticalArrangement = Arrangement.Center,
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    Icon(
+                        emotion.icon,
+                        contentDescription = emotion.name,
+                        tint = Color(0xFF6B7890),
+                        modifier = Modifier.size(26.dp)
+                    )
+                    Text(
+                        text = emotion.name,
+                        fontSize = 14.sp,
+                        color = Color(0xFF6B7890),
+                        modifier = Modifier.padding(top = 6.dp)
+                    )
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BottomNavBar() {
+    NavigationBar {
+        NavigationBarItem(
+            selected = true,
+            onClick = {},
+            icon = { Icon(Icons.Default.SelfImprovement, contentDescription = "Reflect") },
+            label = { Text("Reflect") }
+        )
+        NavigationBarItem(
+            selected = false,
+            onClick = {},
+            icon = { Icon(Icons.Default.Chat, contentDescription = "Companion") },
+            label = { Text("Companion") }
+        )
+    }
+}
+
+
+data class Emotion(
+    val label: String,
+    val iconName: String, // e.g., "SentimentSatisfied"
+    val tintHex: String = "#5B6572"
+)
+
+fun defaultEmotions(): List<Emotion> = listOf(
+    Emotion("Anxious", iconName = "SentimentDissatisfied"),
+    Emotion("Joyful", iconName = "SentimentSatisfied", tintHex = "#0EA5E9"),
+    Emotion("Lonely", iconName = "PersonOutline"),
+    Emotion("Grateful", iconName = "FavoriteBorder", tintHex = "#EF6C00"),
+    Emotion("Angry", iconName = "SentimentVeryDissatisfied", tintHex = "#D32F2F"),
+    Emotion("Lost", iconName = "ExploreOff")
+)
+
+data class SpiritUiModel(
+    val appTitle: String = "DIVINEDATA",
+    val headerTitle: String = "HOW IS YOUR SPIRIT TODAY?",
+    val headerSubtitle: String = "Select an emotion or share your own thoughts.",
+    val emotions: List<Emotion> = defaultEmotions(),
+    val inputPlaceholder: String = "I'm feeling...",
+    val primaryActionHex: String = "#FFA000" // orange send button color
+)
+
+
+fun sampleSpiritContent(): SpiritUiModel = SpiritUiModel()
