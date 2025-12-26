@@ -1,5 +1,6 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -48,6 +49,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.valentinerutto.divinedatagpt.MainActivity
 
 @Composable
 fun EmotionScreen(modifier: Modifier) {
@@ -121,7 +123,9 @@ fun EmotionScreen(modifier: Modifier) {
                 )
 
                 IconButton(
-                    onClick = {   context.mainActivity.startActivity(Intent(context, NewComposeActivity::class.java))
+                    onClick = {  MainActivity(
+
+                    )
                     },
                     modifier = Modifier
                         .padding(end = 8.dp)
