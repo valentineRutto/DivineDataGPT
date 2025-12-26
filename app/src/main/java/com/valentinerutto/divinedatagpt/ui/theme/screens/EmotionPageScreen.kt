@@ -121,7 +121,8 @@ fun EmotionScreen(modifier: Modifier) {
                 )
 
                 IconButton(
-                    onClick = { /* send emotion */ },
+                    onClick = {   context.mainActivity.startActivity(Intent(context, NewComposeActivity::class.java))
+                    },
                     modifier = Modifier
                         .padding(end = 8.dp)
                         .size(48.dp)
