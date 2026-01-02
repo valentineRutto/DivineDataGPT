@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -30,17 +31,20 @@ import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.Whatshot
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Snackbar
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -55,6 +59,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
+import com.valentinerutto.divinedatagpt.UiState
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -71,10 +76,32 @@ fun EmotionScreen(modifier: Modifier) {
 
     var selectedEmotion by remember { mutableStateOf("") }
     val myViewModel: DivineDataViewModel = koinViewModel()
+    val uiState by myViewModel.uiState.collectAsState()
 
 
     Scaffold(
-        bottomBar = { BottomNavBar() }
+        bottomBar = { BottomNavBar() }, snackbarHost = {
+            when (val state = uiState) {
+                is UiState.Success -> {
+                    Snackbar(
+                        modifier = Modifier.padding(16.dp)
+                    ) {
+                        Text(state.message)
+
+                    }
+                }
+                is UiState.Error -> {
+                    Snackbar(
+                        modifier = Modifier.padding(16.dp),
+                        containerColor = MaterialTheme.colorScheme.errorContainer
+                    ) {
+                        Text(state.message)
+                    }
+                }
+                else -> {                        MaterialTheme.colorScheme.surface
+                }
+            }
+        }
     ) { padding ->
 
         Column(
@@ -104,7 +131,7 @@ fun EmotionScreen(modifier: Modifier) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            EmotionGrid({ selectedEmotion = it },emotionsList)
+            EmotionGrid(uiState,{ selectedEmotion = it },emotionsList)
 
 
         Spacer(modifier = Modifier.weight(1f))
@@ -136,6 +163,8 @@ IconButton(onClick = {selectedEmotion = ""}) {
                     }
 }
                 ,
+                enabled = uiState !is UiState.Loading,
+
                 singleLine = true,
                 modifier = Modifier.weight(1f)
             )
@@ -151,13 +180,28 @@ IconButton(onClick = {selectedEmotion = ""}) {
                 modifier = Modifier
                     .padding(end = 8.dp)
                     .size(48.dp)
-                    .background(Color(0xFFFFA726), CircleShape)
+                    .background(Color(0xFFFFA726), CircleShape),
+                enabled = selectedEmotion.isNotEmpty() && uiState !is UiState.Loading
+
             ) {
-                Icon(
-                    Icons.Default.ArrowForward,
-                    contentDescription = "Send",
-                    tint = Color.White
-                )
+
+                when (uiState) {
+                    is UiState.Loading -> {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(24.dp),
+                            color = MaterialTheme.colorScheme.onPrimary
+                        )
+                        Spacer(modifier = Modifier.width(8.dp))
+                        Text("Sending...")
+                    }
+                    else -> {
+                        Icon(
+                            Icons.Default.ArrowForward,
+                            contentDescription = "Send",
+                            tint = Color.White
+                        )
+                    }
+                }
             }
         }
             Spacer(modifier = Modifier.height(40.dp))
@@ -167,7 +211,7 @@ IconButton(onClick = {selectedEmotion = ""}) {
 data class Emotions(val name: String, val icon: ImageVector)
 
 @Composable
-fun EmotionGrid(onEmotionSelected: (String) -> Unit, list: List<Emotions>) {
+fun EmotionGrid(uiState: UiState, onEmotionSelected: (String) -> Unit, list: List<Emotions>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
@@ -179,7 +223,9 @@ fun EmotionGrid(onEmotionSelected: (String) -> Unit, list: List<Emotions>) {
                 modifier = Modifier
                     .height(80.dp)
                     .fillMaxWidth()
-                    .clickable{
+                    .clickable(
+                        enabled = uiState !is UiState.Loading
+                    ){
                         onEmotionSelected("I'm feeling "+emotion.name)
                               }
                 ,
