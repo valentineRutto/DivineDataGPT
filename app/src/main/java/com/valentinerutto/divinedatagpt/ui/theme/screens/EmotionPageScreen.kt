@@ -98,50 +98,52 @@ fun EmotionScreen(modifier: Modifier) {
 
             EmotionGrid(emotionsList)
 
-            Spacer(modifier = Modifier.height(40.dp))
 
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(55.dp)
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(Color(0xFFF4F4F4)),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
+        Spacer(modifier = Modifier.weight(1f))
 
-                TextField(
-                    value = customText.value,
-                    onValueChange = { customText.value = it },
-                    placeholder = { Text("I'm feeling...") },
-                    colors = TextFieldDefaults.colors(
-                        focusedContainerColor = Color.Transparent,
-                        unfocusedContainerColor = Color.Transparent,
-                        focusedIndicatorColor = Color.Transparent,
-                        unfocusedIndicatorColor = Color.Transparent
-                    ),
-                    modifier = Modifier.weight(1f)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(55.dp)
+                .clip(RoundedCornerShape(12.dp))
+                .background(Color(0xFFF4F4F4)),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+
+            TextField(
+                value = customText.value,
+                onValueChange = { customText.value = it },
+                placeholder = { Text("I'm feeling...") },
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.Transparent,
+                    unfocusedContainerColor = Color.Transparent,
+                    focusedIndicatorColor = Color.Transparent,
+                    unfocusedIndicatorColor = Color.Transparent
+                ),
+                modifier = Modifier.weight(1f)
+            )
+
+            IconButton(
+                onClick = {  MainActivity(
+
                 )
-
-                IconButton(
-                    onClick = {  MainActivity(
-
-                    )
-                    },
-                    modifier = Modifier
-                        .padding(end = 8.dp)
-                        .size(48.dp)
-                        .background(Color(0xFFFFA726), CircleShape)
-                ) {
-                    Icon(
-                        Icons.Default.ArrowForward,
-                        contentDescription = "Send",
-                        tint = Color.White
-                    )
-                }
+                },
+                modifier = Modifier
+                    .padding(end = 8.dp)
+                    .size(48.dp)
+                    .background(Color(0xFFFFA726), CircleShape)
+            ) {
+                Icon(
+                    Icons.Default.ArrowForward,
+                    contentDescription = "Send",
+                    tint = Color.White
+                )
             }
         }
-    }
-}
+            Spacer(modifier = Modifier.height(40.dp))
+
+        }
+}}
 data class Emotions(val name: String, val icon: ImageVector)
 
 @Composable
