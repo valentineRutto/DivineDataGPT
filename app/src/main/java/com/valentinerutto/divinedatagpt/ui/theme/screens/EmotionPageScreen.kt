@@ -40,6 +40,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -53,7 +54,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.valentinerutto.divinedatagpt.MainActivity
+import com.valentinerutto.divinedatagpt.DivineDataViewModel
+import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun EmotionScreen(modifier: Modifier) {
@@ -68,6 +70,7 @@ fun EmotionScreen(modifier: Modifier) {
     )
 
     var selectedEmotion by remember { mutableStateOf("") }
+    val myViewModel: DivineDataViewModel = koinViewModel()
 
 
     Scaffold(
@@ -138,9 +141,12 @@ IconButton(onClick = {selectedEmotion = ""}) {
             )
 
             IconButton(
-                onClick = {  MainActivity(
 
-                )
+                onClick = {
+
+                    if (selectedEmotion.isNotEmpty()) {
+                        myViewModel.sendFeeling(selectedEmotion)}
+
                 },
                 modifier = Modifier
                     .padding(end = 8.dp)

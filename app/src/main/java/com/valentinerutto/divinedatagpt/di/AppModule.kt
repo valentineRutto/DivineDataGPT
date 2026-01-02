@@ -19,7 +19,7 @@ single{ KtorClient.httpClient }
     single { ApiService(get()) }
     single { DivineDataRepository(get()) }
 
-    viewModel { DivineDataViewModel() }
+    viewModel { DivineDataViewModel(get()) }
 
     single { DivineDatabase.getDatabase(context = androidContext()) }
 
