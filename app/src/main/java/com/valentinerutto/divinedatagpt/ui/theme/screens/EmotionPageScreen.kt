@@ -2,6 +2,7 @@ package com.valentinerutto.divinedatagpt.ui.theme.screens
 
 import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -20,6 +21,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Air
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Explore
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.Nightlight
@@ -38,8 +40,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -63,7 +67,8 @@ fun EmotionScreen(modifier: Modifier) {
         Emotions("Lost", Icons.Default.Explore)
     )
 
-    val customText = remember { mutableStateOf("") }
+    var selectedEmotion by remember { mutableStateOf("") }
+
 
     Scaffold(
         bottomBar = { BottomNavBar() }
@@ -96,7 +101,7 @@ fun EmotionScreen(modifier: Modifier) {
 
             Spacer(modifier = Modifier.height(40.dp))
 
-            EmotionGrid(emotionsList)
+            EmotionGrid({ selectedEmotion = it },emotionsList)
 
 
         Spacer(modifier = Modifier.weight(1f))
@@ -111,8 +116,8 @@ fun EmotionScreen(modifier: Modifier) {
         ) {
 
             TextField(
-                value = customText.value,
-                onValueChange = { customText.value = it },
+                value = selectedEmotion,
+                onValueChange = { selectedEmotion = it },
                 placeholder = { Text("I'm feeling...") },
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.Transparent,
@@ -120,6 +125,15 @@ fun EmotionScreen(modifier: Modifier) {
                     focusedIndicatorColor = Color.Transparent,
                     unfocusedIndicatorColor = Color.Transparent
                 ),
+                trailingIcon = {
+                    if (selectedEmotion.isNotEmpty()) {
+IconButton(onClick = {selectedEmotion = ""}) {
+    Icon(imageVector = Icons.Default.Clear, contentDescription = "Clear")
+}
+                    }
+}
+                ,
+                singleLine = true,
                 modifier = Modifier.weight(1f)
             )
 
@@ -147,7 +161,7 @@ fun EmotionScreen(modifier: Modifier) {
 data class Emotions(val name: String, val icon: ImageVector)
 
 @Composable
-fun EmotionGrid(list: List<Emotions>) {
+fun EmotionGrid(onEmotionSelected: (String) -> Unit, list: List<Emotions>) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(2),
         horizontalArrangement = Arrangement.spacedBy(20.dp),
@@ -158,9 +172,16 @@ fun EmotionGrid(list: List<Emotions>) {
             Card(
                 modifier = Modifier
                     .height(80.dp)
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .clickable{
+                        onEmotionSelected("I'm feeling "+emotion.name)
+                              }
+                ,
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(5.dp)
+
+
+
             ) {
                 Column(
                     modifier = Modifier.fillMaxSize(),
