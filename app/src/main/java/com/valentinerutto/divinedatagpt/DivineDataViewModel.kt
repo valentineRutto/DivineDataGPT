@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import com.valentinerutto.divinedatagpt.ui.theme.screens.sampleSpiritContent
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -21,9 +22,12 @@ class DivineDataViewModel (private val repository: DivineDataRepository): ViewMo
      fun sendFeeling(emotion: String) {
 
          viewModelScope.launch {
+
              _uiState.value = UiState.Loading
 
              try {
+
+                 delay(2000)
 
                  val result = repository.sendEmotionToServer(emotion)
 

@@ -29,6 +29,8 @@ import androidx.compose.material.icons.filled.Nightlight
 import androidx.compose.material.icons.filled.SelfImprovement
 import androidx.compose.material.icons.filled.WbSunny
 import androidx.compose.material.icons.filled.Whatshot
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -54,6 +56,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -80,8 +83,12 @@ fun EmotionScreen(modifier: Modifier) {
 
 
     Scaffold(
-        bottomBar = { BottomNavBar() }, snackbarHost = {
+        bottomBar = { BottomNavBar() },
+
+        snackbarHost = {
+
             when (val state = uiState) {
+
                 is UiState.Success -> {
                     Snackbar(
                         modifier = Modifier.padding(16.dp)
@@ -98,7 +105,8 @@ fun EmotionScreen(modifier: Modifier) {
                         Text(state.message)
                     }
                 }
-                else -> {                        MaterialTheme.colorScheme.surface
+                else -> {
+                    MaterialTheme.colorScheme.surface
                 }
             }
         }
@@ -157,7 +165,9 @@ fun EmotionScreen(modifier: Modifier) {
                 ),
                 trailingIcon = {
                     if (selectedEmotion.isNotEmpty()) {
+
 IconButton(onClick = {selectedEmotion = ""}) {
+
     Icon(imageVector = Icons.Default.Clear, contentDescription = "Clear")
 }
                     }
@@ -169,35 +179,37 @@ IconButton(onClick = {selectedEmotion = ""}) {
                 modifier = Modifier.weight(1f)
             )
 
-            IconButton(
+           Button(
 
-                onClick = {
-
-                    if (selectedEmotion.isNotEmpty()) {
-                        myViewModel.sendFeeling(selectedEmotion)}
-
-                },
-                modifier = Modifier
-                    .padding(end = 8.dp)
-                    .size(48.dp)
-                    .background(Color(0xFFFFA726), CircleShape),
-                enabled = selectedEmotion.isNotEmpty() && uiState !is UiState.Loading
-
+               onClick = {
+                   if (selectedEmotion.isNotEmpty()) {
+                       myViewModel.sendFeeling(selectedEmotion)
+                   }
+               },
+               modifier = Modifier
+                   .padding(end = 8.dp)
+                   .height(48.dp),
+               enabled = selectedEmotion.isNotEmpty() && uiState !is UiState.Loading,
+               colors = ButtonDefaults.buttonColors(
+                   containerColor = Color(0xFFFFA726)
+               ),
+               shape = CircleShape
             ) {
 
                 when (uiState) {
                     is UiState.Loading -> {
+
                         CircularProgressIndicator(
                             modifier = Modifier.size(24.dp),
                             color = MaterialTheme.colorScheme.onPrimary
                         )
                         Spacer(modifier = Modifier.width(8.dp))
-                        Text("Sending...")
+                        Text("Thinking...")
                     }
                     else -> {
                         Icon(
                             Icons.Default.ArrowForward,
-                            contentDescription = "Send",
+                            contentDescription = "Think",
                             tint = Color.White
                         )
                     }
