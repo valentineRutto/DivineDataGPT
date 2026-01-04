@@ -176,9 +176,9 @@ IconButton(onClick = {selectedEmotion = ""}) {
                shape = CircleShape
             ) {
 
+
                 when (uiState) {
                     is UiState.Loading -> {
-
                         CircularProgressIndicator(
                             modifier = Modifier.size(24.dp),
                             color = MaterialTheme.colorScheme.onPrimary
@@ -187,6 +187,7 @@ IconButton(onClick = {selectedEmotion = ""}) {
                         Text("Thinking...")
                     }
                     else -> {
+
                         Icon(
                             Icons.Default.ArrowForward,
                             contentDescription = "Think",
@@ -201,6 +202,7 @@ IconButton(onClick = {selectedEmotion = ""}) {
             when (val state = uiState) {
 
                 is UiState.Success -> {
+
                     Snackbar(
                         modifier = Modifier.padding(16.dp)
                     ) {
@@ -216,6 +218,29 @@ IconButton(onClick = {selectedEmotion = ""}) {
                         Text(state.message)
                     }
                 }
+
+                is UiState.Idle -> {
+
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors = CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surfaceVariant
+                        )
+                    ) {
+                        Text(
+                            text = "💡 Select an emotion and type how you're feeling",
+                            style = MaterialTheme.typography.bodyMedium,
+                            modifier = Modifier.padding(16.dp),
+                            textAlign = TextAlign.Center
+                        )
+                    }
+                }
+
+
+                is UiState.Loading ->{
+
+                }
+
                 else -> {
                     MaterialTheme.colorScheme.surface
                 }
