@@ -106,7 +106,8 @@ fun ChatPageScreen(modifier: Modifier) {
                     ChatContent()
                 } else {
                     RequestLazyList(itemsList = messages)
-                }            }
+                }
+            }
 
             BottomBar(inputText = inputText, onValueChange = {inputText = it}, onSendClick ={
                 if (inputText.isNotEmpty()) messages.add(inputText)
@@ -211,7 +212,7 @@ fun RequestListItem(text: String ) {
         .fillMaxWidth()
         .padding(start = 48.dp, end = 4.dp, top = 8.dp, bottom = 8.dp)){
     Text(text=text, color = TextWhite,
-        modifier = Modifier                .align(Alignment.CenterEnd)
+        modifier = Modifier.align(Alignment.CenterEnd)
             .background(
                 color = colorResource(id = R.color.purple_200),
                 shape = RoundedCornerShape(8.dp)

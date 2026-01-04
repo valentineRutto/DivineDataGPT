@@ -39,6 +39,9 @@ class DivineDataViewModel (private val repository: DivineDataRepository): ViewMo
          }
     }
 
+    fun resetState() {
+        _uiState.value = UiState.Idle
+    }
 
 }
 
