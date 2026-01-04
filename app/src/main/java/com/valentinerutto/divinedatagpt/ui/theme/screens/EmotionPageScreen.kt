@@ -44,6 +44,9 @@ import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Snackbar
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -53,6 +56,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -69,6 +73,7 @@ import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.R
 import com.valentinerutto.divinedatagpt.UiState
 import com.valentinerutto.divinedatagpt.ui.theme.TextWhite
+import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -87,9 +92,35 @@ fun EmotionScreen(modifier: Modifier) {
     val myViewModel: DivineDataViewModel = koinViewModel()
     val uiState by myViewModel.uiState.collectAsState()
 
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+    // Listen to state changes and show snackbar
+    LaunchedEffect(uiState) {
+        when (val state = uiState) {
+            is UiState.Success -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = state.message,
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
+            is UiState.Error -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = state.message,
+                        duration = SnackbarDuration.Long
+                    )
+                }
+            }
+            else -> {}
+        }
+    }
 
     Scaffold(
-        bottomBar = { BottomNavBar() }
+        bottomBar = { BottomNavBar() },        snackbarHost = { SnackbarHost(snackbarHostState) }
+
     ) { padding ->
 
         Column(
@@ -203,20 +234,9 @@ IconButton(onClick = {selectedEmotion = ""}) {
 
                 is UiState.Success -> {
 
-                    Snackbar(
-                        modifier = Modifier.padding(16.dp)
-                    ) {
-                        Text(state.message)
-
-                    }
                 }
                 is UiState.Error -> {
-                    Snackbar(
-                        modifier = Modifier.padding(16.dp),
-                        containerColor = MaterialTheme.colorScheme.errorContainer
-                    ) {
-                        Text(state.message)
-                    }
+
                 }
 
                 is UiState.Idle -> {
