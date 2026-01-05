@@ -54,6 +54,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -94,6 +95,7 @@ fun EmotionScreen(modifier: Modifier) {
 
     val snackbarHostState = remember { SnackbarHostState() }
     val scope = rememberCoroutineScope()
+    val messages = remember { mutableStateListOf<String>() }
 
     // Listen to state changes and show snackbar
     LaunchedEffect(uiState) {
@@ -149,9 +151,10 @@ fun EmotionScreen(modifier: Modifier) {
             )
 
             Spacer(modifier = Modifier.height(40.dp))
-
-            EmotionGrid(uiState,{ selectedEmotion = it },emotionsList)
-
+if (messages.isEmpty()) {
+    EmotionGrid(uiState, { selectedEmotion = it }, emotionsList)
+}else
+{RequestLazyList(itemsList = messages)}
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -233,6 +236,7 @@ IconButton(onClick = {selectedEmotion = ""}) {
             when (val state = uiState) {
 
                 is UiState.Success -> {
+                    messages.add(state.message)
 
                 }
                 is UiState.Error -> {
