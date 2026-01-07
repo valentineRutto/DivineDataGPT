@@ -2,6 +2,8 @@ package com.valentinerutto.divinedatagpt
 
 import android.app.Application
 import com.valentinerutto.divinedatagpt.di.AppModule
+import com.valentinerutto.divinedatagpt.di.databaseModule
+import com.valentinerutto.divinedatagpt.di.networkModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin
@@ -19,9 +21,11 @@ class MyApplication: Application() {
         INSTANCE = this
 
         startKoin{
+
             androidLogger( level = Level.DEBUG)
             androidContext(this@MyApplication)
-           modules(AppModule    )
+            modules(AppModule, databaseModule, networkModule)
+
         }
     }
 }

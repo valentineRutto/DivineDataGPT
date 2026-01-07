@@ -1,4 +1,4 @@
-package com.valentinerutto.divinedatagpt.data.network
+package com.valentinerutto.divinedatagpt.data.network.ai
 
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit

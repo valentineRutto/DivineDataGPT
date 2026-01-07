@@ -1,16 +1,12 @@
-package com.valentinerutto.divinedatagpt.data.network
+package com.valentinerutto.divinedatagpt.data.network.bible
 
 import android.util.Log
-import androidx.compose.ui.autofill.ContentType
-import androidx.compose.ui.autofill.contentType
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import io.ktor.client.HttpClient
 import io.ktor.client.call.body
 import io.ktor.client.request.get
 import io.ktor.client.request.post
 import io.ktor.client.request.setBody
-import io.ktor.http.contentType
-import retrofit2.http.GET
 import retrofit2.http.POST
 
 class ApiService(private val httpClient: HttpClient) {

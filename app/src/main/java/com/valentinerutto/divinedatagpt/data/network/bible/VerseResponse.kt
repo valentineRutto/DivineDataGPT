@@ -1,8 +1,8 @@
-package com.valentinerutto.divinedatagpt.data.network
+package com.valentinerutto.divinedatagpt.data.network.bible
 
 import kotlinx.serialization.Serializable
 
-@kotlinx.serialization.Serializable
+@Serializable
 data class VerseResponse(
     val id: Int,
     val text: String,
