@@ -64,7 +64,7 @@ val AppModule = module {
                                 chain.request().newBuilder()
                                     .addHeader(
                                         "Authorization",
-                                        "Token ${BuildConfig.ESV_API_KEY}"
+                                        "Token 183e7133d8522b6572e96e85ebf74a870795aa19}"
                                     )
                                     .build()
                             )
