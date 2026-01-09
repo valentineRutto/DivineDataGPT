@@ -6,6 +6,8 @@ import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.DivineDatabase
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.KtorClient
+import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createOkClient
+import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createRetrofit
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.bible.ESVApiService
 import okhttp3.OkHttpClient
@@ -44,6 +46,10 @@ val AppModule = module {
                 .build()
         }
 
+        single { createOkClient() }
+
+
+
         single<AiApi> {
             Retrofit.Builder()
                 .baseUrl("https://api.openai.com/")
@@ -54,6 +60,7 @@ val AppModule = module {
         }
 
         single<ESVApiService> {
+
             Retrofit.Builder()
                 .baseUrl("https://api.esv.org/")
                 .addConverterFactory(GsonConverterFactory.create())
