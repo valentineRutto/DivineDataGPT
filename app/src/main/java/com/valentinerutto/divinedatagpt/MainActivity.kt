@@ -14,6 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
+import com.valentinerutto.divinedatagpt.ui.theme.screens.ChatBubble
+import com.valentinerutto.divinedatagpt.ui.theme.screens.ChatBubbleScreen
+import com.valentinerutto.divinedatagpt.ui.theme.screens.ChatMessage
 import com.valentinerutto.divinedatagpt.ui.theme.screens.ChatPageScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.EmotionScreen
 
@@ -26,8 +29,9 @@ class MainActivity : ComponentActivity() {
             DivineDataGPTTheme {
                 Scaffold(modifier = Modifier.fillMaxSize().systemBarsPadding()) {
                     innerPadding ->
-                            EmotionScreen(modifier = Modifier.padding(innerPadding))
-
+                           EmotionScreen(modifier = Modifier.padding(innerPadding))
+                   // ChatBubbleScreen(listOf(ChatMessage("hello")), onSend = ({}))
+                    //ChatPageScreen(modifier = Modifier.padding(innerPadding))
 
                 }
             }

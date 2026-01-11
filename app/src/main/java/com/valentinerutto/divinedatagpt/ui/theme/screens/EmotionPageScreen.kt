@@ -121,7 +121,8 @@ fun EmotionScreen(modifier: Modifier) {
     }
 
     Scaffold(
-        bottomBar = { BottomNavBar() },        snackbarHost = { SnackbarHost(snackbarHostState) }
+      //  bottomBar = { BottomNavBar() },
+        snackbarHost = { SnackbarHost(snackbarHostState) }
 
     ) { padding ->
 
