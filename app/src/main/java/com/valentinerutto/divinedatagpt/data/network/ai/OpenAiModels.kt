@@ -1,0 +1,20 @@
+package com.valentinerutto.divinedatagpt.data.network.ai
+
+data class ChatCompletionRequest(
+    val model: String = "gpt-3.5-turbo",
+    val messages: List<ChatMessage>,
+    val temperature: Double = 0.7
+)
+
+data class ChatMessage(
+    val role: String, // "system", "user"
+    val content: String
+)
+
+data class ChatCompletionResponse(
+    val choices: List<Choice>
+)
+
+data class Choice(
+    val message: ChatMessage
+)
