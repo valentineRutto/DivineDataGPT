@@ -27,7 +27,7 @@ val AppModule = module {
     single { ApiService(get()) }
     single { DivineDataRepository(get()) }
 
-    viewModel { DivineDataViewModel(get()) }
+    viewModel { DivineDataViewModel(get(), get()) }
 
     single { DivineDatabase.getDatabase(context = androidContext()) }
 

@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.Verse
+import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.ui.theme.screens.sampleSpiritContent
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DivineDataViewModel (private val repository: DivineDataRepository): ViewModel() {
+class DivineDataViewModel (private val repository: DivineDataRepository, private val aiRepository: AiRepository): ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
@@ -42,8 +43,13 @@ class DivineDataViewModel (private val repository: DivineDataRepository): ViewMo
     fun resetState() {
         _uiState.value = UiState.Idle
     }
+    val explanation = aiRepository.explainVerse(
+        verseReference = verse,
+        userFeeling = feeling
+    )
 
 }
+
 
         data class DivineDataUiState(
             val verse: Verse? = null,
