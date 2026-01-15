@@ -43,9 +43,10 @@ class DivineDataViewModel (private val repository: DivineDataRepository, private
     fun resetState() {
         _uiState.value = UiState.Idle
     }
-    val explanation = aiRepository.explainVerse(
-        verseReference = verse,
-        userFeeling = feeling
+
+    suspend fun explanation() = aiRepository.explainVerse(
+        verseReference = "verse",
+        userFeeling = "feeling"
     )
 
 }

@@ -9,7 +9,6 @@ import com.valentinerutto.divinedatagpt.data.network.KtorClient
 import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createOkClient
 import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createRetrofit
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
-import com.valentinerutto.divinedatagpt.data.network.bible.ESVApiService
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -52,14 +51,14 @@ val AppModule = module {
 
         single<AiApi> {
             Retrofit.Builder()
-                .baseUrl("https://api.openai.com/")
+                .baseUrl("https://router.huggingface.co/v1/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(get())
                 .build()
                 .create(AiApi::class.java)
         }
 
-        single<ESVApiService> {
+        single<ApiService> {
 
             Retrofit.Builder()
                 .baseUrl("https://api.esv.org/")
@@ -79,7 +78,7 @@ val AppModule = module {
                         .build()
                 )
                 .build()
-                .create(ESVApiService::class.java)
+                .create(ApiService::class.java)
         }
     }
 
