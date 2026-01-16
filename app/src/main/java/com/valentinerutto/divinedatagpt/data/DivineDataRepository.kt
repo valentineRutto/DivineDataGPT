@@ -9,7 +9,7 @@ class DivineDataRepository(val apiService: ApiService) {
 
     suspend fun sendEmotionToServer(emotion: String) : String{
         return withContext(Dispatchers.IO){
-            apiService.postEmotionChat(EmotionRequest(emotion))
+
             "Feeling '$emotion' sent successfully!"
 
         }

@@ -9,29 +9,8 @@ import io.ktor.client.request.post
 import io.ktor.client.request.setBody
 import retrofit2.http.POST
 
-class ApiService(private val httpClient: HttpClient) {
+interface ApiService {
 
-    suspend fun getVerse(): List<Verse> {
-        return try {
-            httpClient.get("verse").body()
-        }catch (e: Exception){
-            emptyList()
-        }
-    }
 
-    @POST
-    suspend fun postEmotionChat(emotionRequest: EmotionRequest){
-        try {
-            val requestBody = EmotionRequest(emotion = emotionRequest.emotion)
-
-            httpClient.post("chat") {
-                // Configure the request
-                setBody(requestBody) // Ktor automatically serializes the data class to JSON
-            }
-            Log.d("ApiService", "Successfully posted emotion.")
-        } catch (e: Exception) {
-            Log.e("ApiService", "Error posting emotion: ${e.message}")
-        }
-    }
 
 }

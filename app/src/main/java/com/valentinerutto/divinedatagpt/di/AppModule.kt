@@ -9,6 +9,7 @@ import com.valentinerutto.divinedatagpt.data.network.KtorClient
 import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createOkClient
 import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createRetrofit
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
+import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -23,8 +24,10 @@ val AppModule = module {
     single { MyApplication.INSTANCE }
 
     single { KtorClient.httpClient }
-    single { ApiService(get()) }
+
     single { DivineDataRepository(get()) }
+
+    single { AiRepository(get()) }
 
     viewModel { DivineDataViewModel(get(), get()) }
 

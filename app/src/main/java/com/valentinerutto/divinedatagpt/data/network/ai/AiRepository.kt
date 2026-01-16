@@ -1,7 +1,7 @@
 package com.valentinerutto.divinedatagpt.data.network.ai
 
 class AiRepository(
-    private val openAiApi: AiApi
+    private val aiApi: AiApi
 ) {
 
     suspend fun explainVerse(
@@ -22,7 +22,7 @@ class AiRepository(
             comforts them emotionally and offers gentle hope.
         """.trimIndent()
 
-        val response = openAiApi.createChatCompletion(
+        val response = aiApi.createChatCompletion(
             ChatCompletionRequest(
                 messages = listOf(
                     ChatMessage("system", systemPrompt),
