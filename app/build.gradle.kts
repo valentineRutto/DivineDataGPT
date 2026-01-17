@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
@@ -8,6 +9,14 @@ plugins {
     alias(libs.plugins.kotlinserialization)
 
 }
+
+//val hfApiKey = findProperty("HF_API_KEY")?.toString()?: ""
+//val esvApiKey = findProperty("ESV_API_KEY")?.toString()?: ""
+
+//require(hfApiKey.isNotBlank()) { "HF_API_KEY missing in local.properties" }
+//require(esvApiKey.isNotBlank()) { "ESV_API_KEY missing in local.properties" }
+
+
 
 android {
     namespace = "com.valentinerutto.divinedatagpt"
@@ -27,6 +36,13 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        val properties = Properties()
+        properties.load(project.rootProject.file("local.properties").inputStream())
+
+        buildConfigField("String", "ESV_API_KEY", "\"${properties.getProperty("ESV_API_KEY")}\"")
+        buildConfigField("String", "HF_API_KEY", "\"${properties.getProperty("HF_API_KEY")}\"")
+
     }
 
     buildTypes {
@@ -69,6 +85,7 @@ android {
 
     buildFeatures {
         compose = true
+        buildConfig = true
     }
 
     flavorDimensions += "version"

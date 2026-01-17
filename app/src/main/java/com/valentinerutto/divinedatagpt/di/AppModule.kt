@@ -1,15 +1,15 @@
 package com.valentinerutto.divinedatagpt.di
 
+import com.valentinerutto.divinedatagpt.BuildConfig
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.MyApplication
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.DivineDatabase
-import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.KtorClient
 import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createOkClient
-import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createRetrofit
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
+import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
@@ -73,7 +73,7 @@ val AppModule = module {
                                 chain.request().newBuilder()
                                     .addHeader(
                                         "Authorization",
-                                        "Token 183e7133d8522b6572e96e85ebf74a870795aa19}"
+                                        "Token ${BuildConfig.ESV_API_KEY}}"
                                     )
                                     .build()
                             )
