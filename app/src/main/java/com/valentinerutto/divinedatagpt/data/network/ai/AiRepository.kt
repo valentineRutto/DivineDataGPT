@@ -4,6 +4,11 @@ class AiRepository(
     private val aiApi: AiApi
 ) {
 
+
+    suspend fun ask(prompt: String): String{
+       return " reflecting ... "
+    }
+
     suspend fun explainVerse(
         verseReference: String,
         userFeeling: String
