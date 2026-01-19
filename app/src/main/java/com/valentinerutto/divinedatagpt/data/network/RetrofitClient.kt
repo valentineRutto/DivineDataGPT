@@ -44,7 +44,7 @@ object RetrofitClient {
                     chain.request().newBuilder()
                         .addHeader(
                             "Authorization",
-                            "Token ${BuildConfig.ESV_API_KEY}}"
+                            "Token ${BuildConfig.ESV_API_KEY}"
                         )
                         .build()
                 )

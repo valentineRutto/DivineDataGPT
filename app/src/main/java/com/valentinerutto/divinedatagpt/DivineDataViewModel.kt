@@ -3,17 +3,21 @@ package com.valentinerutto.divinedatagpt
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.ui.theme.screens.sampleSpiritContent
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
-class DivineDataViewModel (private val repository: DivineDataRepository, private val aiRepository: AiRepository): ViewModel() {
+class DivineDataViewModel(
+    private val bibleRepository: BibleRepository,
+    private val repository: DivineDataRepository,
+    private val aiRepository: AiRepository
+) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
@@ -26,17 +30,21 @@ class DivineDataViewModel (private val repository: DivineDataRepository, private
 
              _uiState.value = UiState.Loading
 
-             try {
+             // val result = repository.sendEmotionToServer(emotion)
 
-                 delay(2000)
+             val result = bibleRepository.getBibleVerse("John 3:16")
+             result.onSuccess { response ->
+                 val verse = response.passages.firstOrNull() ?: ""
+                 response.canonical
 
-                 val result = repository.sendEmotionToServer(emotion)
+                 _uiState.value = UiState.Success(verse)
 
-                 _uiState.value = UiState.Success(result)
+             }.onFailure { error ->
+                 _uiState.value = UiState.Error(error.message ?: "Unknown error")
 
-             } catch (e: Exception) {
-                 _uiState.value = UiState.Error(e.message ?: "Unknown error")
              }
+
+
          }
     }
 
@@ -48,6 +56,7 @@ class DivineDataViewModel (private val repository: DivineDataRepository, private
         verseReference = "verse",
         userFeeling = "feeling"
     )
+
 
 }
 

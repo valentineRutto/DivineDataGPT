@@ -13,9 +13,8 @@ import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 class BibleRepository(
     private val esvApi: ApiService,
     private val huggingFaceApi: AiApi,
-    private val esvApiKey: String,
-    private val hfApiKey: String
-) {
+
+    ) {
 
     // Popular Hugging Face instruction-tuned models
     companion object {
@@ -30,7 +29,6 @@ class BibleRepository(
     suspend fun getBibleVerse(reference: String): Result<ESVResponse> {
         return try {
             val response = esvApi.getPassage(
-                token = "Token $esvApiKey",
                 query = reference
             )
             Result.success(response)
@@ -72,7 +70,6 @@ class BibleRepository(
 
             val hfResponse = huggingFaceApi.generateText(
                 modelId = modelId,
-                authorization = "Bearer $hfApiKey",
                 request = hfRequest
             )
 
