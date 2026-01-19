@@ -40,5 +40,7 @@ class AiRepository(
             ?.message
             ?.content
             ?: "Take a quiet moment to reflect on this verse and how it speaks to your heart."
+
+
     }
 }

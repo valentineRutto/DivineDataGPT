@@ -1,31 +1,77 @@
 package com.valentinerutto.divinedatagpt.data.network
 
-import okhttp3.Interceptor
+import com.valentinerutto.divinedatagpt.BuildConfig
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
 
-        fun createRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
+    const val ESV_BASE_URL = "https://api.esv.org/"
+    const val HF_BASE_URL = "https://api-inference.huggingface.co/"
 
-            val contentType = "application/json".toMediaType()
+    fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
+
+        "application/json".toMediaType()
 
             return Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create()).build()
         }
 
         fun createOkClient(): OkHttpClient {
-            return OkHttpClient.Builder().addInterceptor(getLoggingInterceptor())
+            return OkHttpClient.Builder().addInterceptor(createLoggingInterceptor())
                 .build()
         }
 
-        private fun getLoggingInterceptor(): Interceptor {
-            val httpLoggingInterceptor = HttpLoggingInterceptor().apply {
-                level = HttpLoggingInterceptor.Level.BODY
+    private fun createLoggingInterceptor(): HttpLoggingInterceptor {
+        return HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) {
+                HttpLoggingInterceptor.Level.BODY
+            } else {
+                HttpLoggingInterceptor.Level.NONE
             }
-            return httpLoggingInterceptor
         }
+    }
+
+
+    fun provideEsvOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                chain.proceed(
+                    chain.request().newBuilder()
+                        .addHeader(
+                            "Authorization",
+                            "Token ${BuildConfig.ESV_API_KEY}}"
+                        )
+                        .build()
+                )
+            }
+            .addInterceptor(createLoggingInterceptor())
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
+    fun provideAIOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor { chain ->
+                chain.proceed(
+                    chain.request().newBuilder()
+                        .addHeader(
+                            "Authorization",
+                            "Bearer ${BuildConfig.HF_API_KEY}"
+                        ).build()
+                )
+            }
+            .addInterceptor(createLoggingInterceptor())
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
+
+
     }

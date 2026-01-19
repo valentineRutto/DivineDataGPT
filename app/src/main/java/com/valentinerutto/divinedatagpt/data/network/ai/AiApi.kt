@@ -12,7 +12,8 @@ interface AiApi {
 
     @POST("v1/chat/completions")
     suspend fun createChatCompletion(
-        @Body request: ChatCompletionRequest
+        @Body
+        request: ChatCompletionRequest
     ): ChatCompletionResponse{
         return ChatCompletionResponse(emptyList())
 

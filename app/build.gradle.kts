@@ -10,12 +10,6 @@ plugins {
 
 }
 
-//val hfApiKey = findProperty("HF_API_KEY")?.toString()?: ""
-//val esvApiKey = findProperty("ESV_API_KEY")?.toString()?: ""
-
-//require(hfApiKey.isNotBlank()) { "HF_API_KEY missing in local.properties" }
-//require(esvApiKey.isNotBlank()) { "ESV_API_KEY missing in local.properties" }
-
 
 
 android {
