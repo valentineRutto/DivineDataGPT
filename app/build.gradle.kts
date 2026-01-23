@@ -124,7 +124,7 @@ dependencies {
     implementation(libs.okhttp.logging)
     implementation(libs.gson)
 
-
+    implementation(libs.google.genai)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

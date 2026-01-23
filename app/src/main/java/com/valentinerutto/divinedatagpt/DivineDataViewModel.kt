@@ -32,10 +32,11 @@ class DivineDataViewModel(
 
              // val result = repository.sendEmotionToServer(emotion)
 
-             val result = bibleRepository.getBibleVerse("John 3:16")
+             val result = bibleRepository.getBibleInsightWithHF("John 3:16")
              result.onSuccess { response ->
-                 val verse = response.passages.firstOrNull() ?: ""
-                 response.canonical
+
+
+                 val verse = response.related_verses.toString()
 
                  _uiState.value = UiState.Success(verse)
 

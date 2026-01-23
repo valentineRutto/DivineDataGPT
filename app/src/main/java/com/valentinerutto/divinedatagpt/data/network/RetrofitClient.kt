@@ -9,9 +9,8 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
-
     const val ESV_BASE_URL = "https://api.esv.org/"
-    const val HF_BASE_URL = "https://api-inference.huggingface.co/"
+    const val HF_BASE_URL = "https://router.huggingface.co"
 
     fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
 
@@ -35,7 +34,6 @@ object RetrofitClient {
             }
         }
     }
-
 
     fun provideEsvOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
@@ -71,7 +69,5 @@ object RetrofitClient {
             .readTimeout(30, TimeUnit.SECONDS)
             .build()
     }
-
-
 
     }

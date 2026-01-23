@@ -20,7 +20,7 @@ okhttp = "4.12.0"
 gson = "2.10.1"
 preference = "1.2.1"
 ktorVersion = "2.3.12"
-
+genai = "0.1.2"
 
 [libraries]
 androidx-material-icons= { module = "androidx.compose.material:material-icons-extended" }
@@ -63,13 +63,13 @@ ktor-client-core ={group ="io.ktor:ktor-client-core", name ="client-core", versi
 ktor-client-cio ={group ="io.ktor:ktor-client-cio", name ="client-cio", version.ref = "ktorVersion"}
 ktor-client-contentnegotian ={group ="io.ktor:ktor-client-content-negotiation", name ="client-content-negotiation", version.ref = "ktorVersion"}
 ktor-logging ={group ="io.ktor:ktor-client-logging", name ="logging", version.ref = "ktorVersion"}
+google-genai = { group = "com.google.ai.client.generativeai:generativeai", name = "ai", version.ref = "genai" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-compose = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 ktor-serialization-json ={id ="io.ktor:ktor-serialization-kotlinx-json", version.ref = "ktorVersion"}
-
 android-library = { id = "com.android.library", version.ref = "agp" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
 compose = { id = "org.jetbrains.compose", version.ref = "composeBom" }
