@@ -1,10 +1,8 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
-import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,11 +12,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -43,7 +39,6 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Snackbar
 import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
@@ -64,16 +59,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.semantics.Role.Companion.Button
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
-import com.valentinerutto.divinedatagpt.R
 import com.valentinerutto.divinedatagpt.UiState
-import com.valentinerutto.divinedatagpt.ui.theme.TextWhite
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -154,8 +145,9 @@ fun EmotionScreen(modifier: Modifier) {
             Spacer(modifier = Modifier.height(40.dp))
 if (messages.isEmpty()) {
     EmotionGrid(uiState, { selectedEmotion = it }, emotionsList)
-}else
-{RequestLazyList(itemsList = messages)}
+} else {
+    RequestLazyList(itemsList = messages)
+}
 
         Spacer(modifier = Modifier.weight(1f))
 
@@ -291,9 +283,9 @@ fun EmotionGrid(uiState: UiState, onEmotionSelected: (String) -> Unit, list: Lis
                     .fillMaxWidth()
                     .clickable(
                         enabled = uiState !is UiState.Loading
-                    ){
-                        onEmotionSelected("I'm feeling "+emotion.name)
-                              }
+                    ) {
+                        onEmotionSelected("I'm feeling " + emotion.name)
+                    }
                 ,
                 shape = RoundedCornerShape(16.dp),
                 elevation = CardDefaults.cardElevation(5.dp)

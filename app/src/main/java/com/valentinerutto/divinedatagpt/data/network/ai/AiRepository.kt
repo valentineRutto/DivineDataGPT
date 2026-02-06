@@ -6,7 +6,8 @@ class AiRepository(
 
 
     suspend fun ask(prompt: String): String{
-       return " reflecting ... "
+
+        return " reflecting ... "
     }
 
     suspend fun explainVerse(
