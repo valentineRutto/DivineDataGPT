@@ -211,7 +211,7 @@ fun Divinereflectionscreen(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 items(suggestions) { suggestion ->
-                    SuggestionChip(suggestion.text)
+                    SuggestionChipUI(suggestion.text)
                 }
             }
 
@@ -473,7 +473,7 @@ fun ReflectionCard(
 }
 
 @Composable
-fun SuggestionChip(text: String) {
+fun SuggestionChipUI(text: String) {
     Surface(
         color = ReflectionTheme.Surface,
         shape = RoundedCornerShape(20.dp),
