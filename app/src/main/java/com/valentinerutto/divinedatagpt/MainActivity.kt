@@ -8,7 +8,6 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -24,7 +23,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DivineDataGPTTheme {
-                viewModel.uiState.collectAsState()
 
                 //  EmotionScreen(modifier = Modifier.padding(innerPadding))
                    // ChatBubbleScreen(listOf(ChatMessage("hello")), onSend = ({}))
