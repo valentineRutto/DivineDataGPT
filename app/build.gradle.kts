@@ -126,13 +126,13 @@ dependencies {
 
     //  implementation(libs.google.genai)
     // Navigation Compose
-    implementation("androidx.navigation:navigation-compose:2.7.6")
+    implementation("androidx.navigation:navigation-compose:2.9.7")
 
     // Coil for image loading
     implementation("io.coil-kt:coil-compose:2.5.0")
 
     // DataStore for preferences
-    implementation("androidx.datastore:datastore-preferences:1.0.0")
+    implementation("androidx.datastore:datastore-preferences:1.2.0")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

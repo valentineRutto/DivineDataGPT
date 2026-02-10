@@ -10,7 +10,7 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import java.util.Calendar
 
-
+data class UserProfile(val name: String,val photoUrl: String?,val hasNotifications: Boolean = false)
 data class HomeUiState(
     val userProfile: UserProfile = UserProfile(
         name = "Sarah",

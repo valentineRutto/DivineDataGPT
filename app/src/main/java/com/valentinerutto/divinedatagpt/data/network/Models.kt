@@ -62,4 +62,4 @@ data class BibleInsightResponse(
     val insight: BibleInsight
 )
 
-data class VerseOfDay(val verse: String, val reference: String, val imageurl: String? = null)
+data class VerseOfDay(val verse: String, val reference: String, val imageUrl: String? = null)
