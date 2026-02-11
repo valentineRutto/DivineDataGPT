@@ -80,11 +80,108 @@ fun SpiritRoute(viewModel: DivineDataViewModel = viewModel()) {
 
   // EmotionScreen()
 }
-
 @Composable
-fun DivineReflectionApp() {
+fun DivineReflectionApp(
+    homeViewModel: HomeViewModel,
+    reflectionViewModel: ReflectionViewModel,
+    onShareVerse: (VerseOfDay) -> Unit,
+    onShareReflection: (com.divinedata.reflection.ui.screens.Reflection) -> Unit
+) {
+    var currentScreen by remember { mutableStateOf(AppScreen.HOME) }
+    var selectedEmotion by remember { mutableStateOf<Emotion?>(null) }
 
+    val homeUiState by homeViewModel.uiState.collectAsState()
+    val reflectionUiState by reflectionViewModel.uiState.collectAsState()
 
+    when (currentScreen) {
+        AppScreen.HOME -> {
+            HomeScreen(
+                userProfile = homeUiState.userProfile,
+                emotions = homeUiState.emotions,
+                verseOfDay = homeUiState.verseOfDay,
+                onEmotionSelected = { emotion ->
+                    selectedEmotion = emotion
+                    currentScreen = AppScreen.REFLECTION
+                },
+                onStartDeepReflection = {
+                    currentScreen = AppScreen.REFLECTION
+                },
+                onShareVerse = {
+                    onShareVerse(homeUiState.verseOfDay)
+                },
+                onNotificationClick = {
+                    homeViewModel.onNotificationClick()
+                },
+                onProfileClick = {
+                    // Navigate to profile settings
+                    currentScreen = AppScreen.SETTINGS
+                },
+                currentScreen = when (currentScreen) {
+                    AppScreen.HOME -> NavigationScreen.HOME
+                    AppScreen.JOURNAL -> NavigationScreen.JOURNAL
+                    AppScreen.SETTINGS -> NavigationScreen.SETTINGS
+                    else -> NavigationScreen.HOME
+                },
+                onNavigate = { navScreen ->
+                    currentScreen = when (navScreen) {
+                        NavigationScreen.HOME -> AppScreen.HOME
+                        NavigationScreen.JOURNAL -> AppScreen.JOURNAL
+                        NavigationScreen.SETTINGS -> AppScreen.SETTINGS
+                    }
+                }
+            )
+        }
+
+        AppScreen.REFLECTION -> {
+            DivineReflectionScreen(
+                messages = reflectionUiState.messages,
+                reflections = reflectionUiState.reflections,
+                onSendMessage = { message ->
+                    reflectionViewModel.sendMessage(message)
+                },
+                onShareReflection = { reflection ->
+                    onShareReflection(reflection)
+                },
+                onBackPressed = {
+                    currentScreen = AppScreen.HOME
+                }
+            )
+        }
+
+        AppScreen.JOURNAL -> {
+            // Journal screen placeholder
+            HomeScreen(
+                userProfile = homeUiState.userProfile,
+                emotions = homeUiState.emotions,
+                verseOfDay = homeUiState.verseOfDay,
+                currentScreen = NavigationScreen.JOURNAL,
+                onNavigate = { navScreen ->
+                    currentScreen = when (navScreen) {
+                        NavigationScreen.HOME -> AppScreen.HOME
+                        NavigationScreen.JOURNAL -> AppScreen.JOURNAL
+                        NavigationScreen.SETTINGS -> AppScreen.SETTINGS
+                    }
+                }
+            )
+        }
+
+        AppScreen.SETTINGS -> {
+            // Settings screen placeholder
+            HomeScreen(
+                userProfile = homeUiState.userProfile,
+                emotions = homeUiState.emotions,
+                verseOfDay = homeUiState.verseOfDay,
+                currentScreen = NavigationScreen.SETTINGS,
+                onNavigate = { navScreen ->
+                    currentScreen = when (navScreen) {
+                        NavigationScreen.HOME -> AppScreen.HOME
+                        NavigationScreen.JOURNAL -> AppScreen.JOURNAL
+                        NavigationScreen.SETTINGS -> AppScreen.SETTINGS
+                    }
+                }
+            )
+        }
+    }
 }
 
 @Composable
