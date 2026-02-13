@@ -88,6 +88,7 @@ fun EmotionScreen(modifier: Modifier) {
     val scope = rememberCoroutineScope()
     val messages = remember { mutableStateListOf<String>() }
 
+
     // Listen to state changes and show snackbar
     LaunchedEffect(uiState) {
         when (val state = uiState) {
