@@ -18,3 +18,17 @@ data class ChatCompletionResponse(
 data class Choice(
     val message: ChatMessage
 )
+
+data class BibleVerseResponse(
+    val verse: String,
+    val book: String,
+    val reflection: String
+)
+
+/**
+ * Represents the Word of the Day verse.
+ */
+data class WordOfTheDayResponse(
+    val verse: String,
+    val book: String
+)

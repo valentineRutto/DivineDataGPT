@@ -30,9 +30,10 @@ class DivineDataViewModel(
 
              _uiState.value = UiState.Loading
 
-             // val result = repository.sendEmotionToServer(emotion)
+             repository.sendEmotionToServer(emotion)
 
              val result = bibleRepository.getBibleInsightWithHF("John 3:16")
+
              result.onSuccess { response ->
 
 

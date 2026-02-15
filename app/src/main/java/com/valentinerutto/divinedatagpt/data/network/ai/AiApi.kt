@@ -13,9 +13,8 @@ interface AiApi {
     suspend fun createChatCompletion(
         @Body
         request: ChatCompletionRequest
-    ): ChatCompletionResponse{
-        return ChatCompletionResponse(emptyList())
-
+    ): BibleVerseResponse {
+        return BibleVerseResponse("John 3:16", "John", "Reflection text")
     }
 
 

@@ -1,5 +1,6 @@
 [versions]
 agp = "8.13.0"
+generativeAi = "0.3.0"
 kotlin = "2.2.20"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -25,6 +26,7 @@ genai = "0.1.2"
 [libraries]
 androidx-material-icons= { module = "androidx.compose.material:material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+generative-ai = { module = "com.google.ai.client:generative-ai", name = "ai", version.ref = "genai" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

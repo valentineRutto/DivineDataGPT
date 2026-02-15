@@ -14,6 +14,7 @@ class AiRepository(
         verseReference: String,
         userFeeling: String
     ): String {
+
         val systemPrompt = """
             You are a compassionate Christian spiritual guide.
             Explain Bible verses gently, clearly, and with encouragement.

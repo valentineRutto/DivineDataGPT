@@ -134,6 +134,9 @@ dependencies {
     // DataStore for preferences
     implementation("androidx.datastore:datastore-preferences:1.2.0")
     implementation("com.google.mlkit:genai-prompt:1.0.0-beta1")
+
+    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

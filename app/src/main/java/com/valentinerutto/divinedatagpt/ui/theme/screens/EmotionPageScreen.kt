@@ -147,7 +147,7 @@ fun EmotionScreen(modifier: Modifier) {
 if (messages.isEmpty()) {
     EmotionGrid(uiState, { selectedEmotion = it }, emotionsList)
 } else {
-    RequestLazyList(itemsList = messages)
+
 }
 
         Spacer(modifier = Modifier.weight(1f))

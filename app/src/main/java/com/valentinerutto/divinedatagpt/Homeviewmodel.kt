@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.network.VerseOfDay
 import com.valentinerutto.divinedatagpt.ui.theme.screens.Emotion
+import com.valentinerutto.divinedatagpt.util.AppScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,7 +31,7 @@ data class HomeUiState(
         imageUrl = null
     ),
 
-    val currentScreen: NavigationScreen = NavigationScreen.HOME,
+    val currentScreen: AppScreen = AppScreen.HOME,
     val greeting: String = "GOOD MORNING",
     val isLoading: Boolean = false
 )
@@ -124,7 +125,7 @@ class HomeViewModel : ViewModel() {
         }
     }
 
-    fun onNavigate(screen: NavigationScreen) {
+    fun onNavigate(screen: AppScreen) {
         _uiState.value = _uiState.value.copy(currentScreen = screen)
     }
 
