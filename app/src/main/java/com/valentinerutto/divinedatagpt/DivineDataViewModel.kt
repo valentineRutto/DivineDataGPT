@@ -7,11 +7,13 @@ import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
+import com.valentinerutto.divinedatagpt.data.network.ai.ChatCompletionRequest
 import com.valentinerutto.divinedatagpt.ui.theme.screens.sampleSpiritContent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlin.onSuccess
 
 class DivineDataViewModel(
     private val bibleRepository: BibleRepository,
@@ -29,21 +31,16 @@ class DivineDataViewModel(
          viewModelScope.launch {
 
              _uiState.value = UiState.Loading
+             val emotionString = ChatCompletionRequest(messages = emotion)
+             val result = repository.sendEmotionToServer(emotionString)
 
-             repository.sendEmotionToServer(emotion)
-
-             val result = bibleRepository.getBibleInsightWithHF("John 3:16")
-
-             result.onSuccess { response ->
+             result.onSuccess {
 
 
-                 val verse = response.related_verses.toString()
-
-                 _uiState.value = UiState.Success(verse)
+                 _uiState.value = UiState.Success(it)
 
              }.onFailure { error ->
                  _uiState.value = UiState.Error(error.message ?: "Unknown error")
-
              }
 
 
