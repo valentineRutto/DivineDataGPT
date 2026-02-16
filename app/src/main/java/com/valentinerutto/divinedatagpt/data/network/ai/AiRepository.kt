@@ -38,9 +38,7 @@ class AiRepository(
             )
         )
 
-        return response.choices.firstOrNull()
-            ?.message
-            ?.content
+        return response.verse
             ?: "Take a quiet moment to reflect on this verse and how it speaks to your heart."
 
 

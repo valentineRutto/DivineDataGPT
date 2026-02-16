@@ -6,11 +6,14 @@ import com.valentinerutto.divinedatagpt.data.network.HuggingFaceResponse
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Path
+import retrofit2.http.Query
 
 interface AiApi {
 
-    @POST("v1/chat/completions")
+    @POST("v1beta/models/gemini-2.5-flash:generateContent")
     suspend fun createChatCompletion(
+        @Query("key") apiKey: String,
+
         @Body
         request: ChatCompletionRequest
     ): BibleVerseResponse {
