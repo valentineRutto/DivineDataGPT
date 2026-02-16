@@ -35,7 +35,11 @@ android {
         properties.load(project.rootProject.file("local.properties").inputStream())
 
         buildConfigField("String", "ESV_API_KEY", "\"${properties.getProperty("ESV_API_KEY")}\"")
-        buildConfigField("String", "HF_API_KEY", "\"${properties.getProperty("HF_API_KEY")}\"")
+        buildConfigField(
+            "String",
+            "GEMINI_API_KEY",
+            "\"${properties.getProperty("GEMINI_API_KEY")}\""
+        )
 
     }
 
