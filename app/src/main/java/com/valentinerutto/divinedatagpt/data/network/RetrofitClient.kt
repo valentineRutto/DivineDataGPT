@@ -10,7 +10,11 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     const val ESV_BASE_URL = "https://api.esv.org/"
+
     const val HF_BASE_URL = "https://router.huggingface.co"
+    const val GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/"
+
+    const val OpenAI_BASE_URL = "https://api.openai.com/"
 
     fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
 

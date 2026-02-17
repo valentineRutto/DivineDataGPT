@@ -8,20 +8,12 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.valentinerutto.divinedatagpt.data.network.VerseOfDay
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
 import com.valentinerutto.divinedatagpt.ui.theme.screens.Divinereflectionscreen
-import com.valentinerutto.divinedatagpt.ui.theme.screens.Emotion
 import com.valentinerutto.divinedatagpt.ui.theme.screens.Reflection
-import com.valentinerutto.divinedatagpt.util.AppScreen
 
 class MainActivity : ComponentActivity() {
     val viewModel: DivineDataViewModel by viewModels()
@@ -38,6 +30,7 @@ class MainActivity : ComponentActivity() {
 
                 Divinereflectionscreen(
                     onSendMessage = { message ->
+                        viewModel.sendFeeling(message)
                     },
                     onShareReflection = { reflection ->
                         shareReflection(reflection)
@@ -76,12 +69,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-@Composable
-fun SpiritRoute(viewModel: DivineDataViewModel = viewModel()) {
-    viewModel.uiModel
 
-  // EmotionScreen()
-}
 @Composable
 fun DivineReflectionApp(
     homeViewModel: HomeViewModel,

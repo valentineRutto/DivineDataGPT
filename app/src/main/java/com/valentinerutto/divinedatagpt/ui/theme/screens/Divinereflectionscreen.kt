@@ -298,11 +298,13 @@ fun Divinereflectionscreen(
                     IconButton(
                         onClick = {
                             if (messageText.isNotBlank()) {
+
                                 onSendMessage(messageText)
                                 messageText = ""
                                 scope.launch {
                                     listState.animateScrollToItem(messages.size)
                                 }
+
                             }
                         },
                         modifier = Modifier

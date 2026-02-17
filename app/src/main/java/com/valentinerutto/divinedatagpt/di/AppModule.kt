@@ -45,7 +45,7 @@ val AppModule = module {
 
         single(named("AI")) {
             RetrofitClient.provideRetrofit(
-                RetrofitClient.HF_BASE_URL,
+                RetrofitClient.GEMINI_BASE_URL,
                 get(named("AI"))
             )
         }

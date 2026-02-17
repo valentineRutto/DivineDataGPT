@@ -3,7 +3,6 @@ package com.valentinerutto.divinedatagpt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.network.VerseOfDay
-import com.valentinerutto.divinedatagpt.ui.theme.screens.Emotion
 import com.valentinerutto.divinedatagpt.util.AppScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -12,6 +11,7 @@ import kotlinx.coroutines.launch
 import java.util.Calendar
 
 data class UserProfile(val name: String,val photoUrl: String?,val hasNotifications: Boolean = false)
+data class Emotion(val name: String, val emoji: String)
 data class HomeUiState(
     val userProfile: UserProfile = UserProfile(
         name = "Sarah",

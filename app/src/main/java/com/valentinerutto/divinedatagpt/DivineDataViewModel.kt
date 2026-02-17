@@ -1,13 +1,11 @@
 package com.valentinerutto.divinedatagpt
 
-import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
-import com.valentinerutto.divinedatagpt.ui.theme.screens.sampleSpiritContent
 import com.valentinerutto.divinedatagpt.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -22,8 +20,6 @@ class DivineDataViewModel(
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
     val uiState: StateFlow<UiState> = _uiState.asStateFlow()
 
-    var uiModel = mutableStateOf(sampleSpiritContent())
-        private set
 
      fun sendFeeling(emotion: String) {
 
