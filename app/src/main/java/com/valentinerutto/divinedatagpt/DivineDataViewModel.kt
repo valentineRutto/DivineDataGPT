@@ -8,6 +8,7 @@ import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.ui.theme.screens.sampleSpiritContent
+import com.valentinerutto.divinedatagpt.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -29,11 +30,21 @@ class DivineDataViewModel(
          viewModelScope.launch {
 
              _uiState.value = UiState.Loading
+
              when (val result = aiRepository.ask(emotion)) {
 
-                 is Result -> _uiState.value = UiState.Success(result)
+                 is Resource.Success -> {
+                     _uiState.value = UiState.Success(result.data.verse)
 
-                 Result.failure -> _uiState.value = UiState.Error("Something went wrong")
+                 }
+
+                 is Resource.Error -> {
+                     _uiState.value = UiState.Error(result.message)
+                 }
+
+                 is Resource.Loading -> {
+                     _uiState.value = UiState.Loading
+                 }
 
              }
 

@@ -5,6 +5,7 @@ import com.google.ai.client.generativeai.GenerativeModel
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.BibleVerseResponse
 import com.valentinerutto.divinedatagpt.data.network.ai.ChatCompletionRequest
+import com.valentinerutto.divinedatagpt.util.Resource
 
 class DivineDataRepository(val apiService: AiApi) {
 
@@ -21,12 +22,12 @@ class DivineDataRepository(val apiService: AiApi) {
         }
     }
 
-    suspend fun sendEmotionToServer(emotion: ChatCompletionRequest): Result<BibleVerseResponse> {
+    suspend fun sendEmotionToServer(emotion: ChatCompletionRequest): Resource<BibleVerseResponse> {
         """
             The user is feeling "${emotion.messages}".
         """.trimIndent()
 
         val response = apiService.createChatCompletion(emotion)
-        return Result.Success(response)
+        return Resource.Success(response)
     }
 }

@@ -22,9 +22,7 @@ interface AiApi {
     suspend fun createChatCompletionOPenAi(
         @Body
         request: ChatCompletionRequestOpenApi
-    ): BibleVerseResponse {
-        return BibleVerseResponse("John 3:16", "John", "Reflection text")
-    }
+    ): retrofit2.Response<BibleVerseResponse>
 
 
 

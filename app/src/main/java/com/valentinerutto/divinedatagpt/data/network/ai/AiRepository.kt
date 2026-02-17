@@ -1,11 +1,13 @@
 package com.valentinerutto.divinedatagpt.data.network.ai
 
+import com.valentinerutto.divinedatagpt.util.Resource
+
 class AiRepository(
     private val aiApi: AiApi
 ) {
 
 
-    suspend fun ask(feeling: String): String {
+    suspend fun ask(feeling: String): Resource<BibleVerseResponse> {
 
 
         val systemPrompt = "You are a compassionate biblical scholar. " +
@@ -32,7 +34,12 @@ class AiRepository(
                 )
             )
         )
-        return response.reflection
+
+        if (response.isSuccessful && response.body() != null) {
+            return Resource.Success(response.body()!!)
+        } else {
+            return Resource.Error(response.message())
+        }
     }
 
     suspend fun explainVerse(
