@@ -78,9 +78,9 @@ class DivineDataViewModel(
     //reflectionscreenmethods
 
 
-     fun initWithEmotion(emotion: String) {
+    fun initWithEmotion(emotion: String) {
 
-         if (emotion == "general" || conversationHistory.isNotEmpty()) return
+        if (emotion == "general" || conversationHistory.isNotEmpty()) return
 
          viewModelScope.launch {
 
@@ -93,20 +93,24 @@ class DivineDataViewModel(
 
                      val aiMsg = ChatMessage(
 
-                         content   = result.data.insight,
-                         isUser    = false,
-                         verse     = result.data.verse,
+                         content = result.data.insight,
+                         isUser = false,
+                         verse = result.data.verse,
                          reference = result.data.reference
                      )
                      conversationHistory.add("assistant" to "${result.data.verse} - ${result.data.insight}")
 
-                     _reflectionuiState.value = ReflectionUiState( messages = _reflectionuiState.value.messages + aiMsg, isLoading = false)
+                     _reflectionuiState.value = ReflectionUiState(
+                         messages = _reflectionuiState.value.messages + aiMsg,
+                         isLoading = false
+                     )
 
                  }
 
                  is Resource.Error -> {
 
-                     _reflectionuiState.value = ReflectionUiState(error = result.message, isLoading = false)
+                     _reflectionuiState.value =
+                         ReflectionUiState(error = result.message, isLoading = false)
 
                  }
 
@@ -118,6 +122,39 @@ class DivineDataViewModel(
 
          }
     }
+
+    fun sendMessage(userText: String) {
+        if (userText.isBlank()) return
+        val userMsg = ChatMessage(userText, isUser = true)
+        conversationHistory.add("user" to userText)
+        _reflectionuiState.update { it.copy(messages = it.messages + userMsg, isLoading = true) }
+
+
+        viewModelScope.launch {
+            aiRepository.chatReflection(
+                BuildConfig.GEMINI_API_KEY,
+                userText,
+                conversationHistory.toList()
+            ).fold(
+
+                onFailure = { e ->
+                    _reflectionuiState.update { it.copy(error = e.message, isLoading = false) }
+                }, onSuccess = {
+                    conversationHistory.add("assistant" to it.first)
+
+                    _reflectionuiState.update { state ->
+                        state.copy(
+                            messages = state.messages + ChatMessage(
+                                it.first,
+                                isUser = false
+                            ), isLoading = false
+                        )
+                    }
+                })
+
+        }
+    }
+
 
     fun resetState() {
         _uiState.value = UiState.Idle
@@ -132,7 +169,7 @@ class DivineDataViewModel(
 }
 
 
- data class DivineDataUiState(
+data class DivineDataUiState(
             val verse: Verse? = null,
             val loading: Boolean = false,
             val errorMessage: String? = null
@@ -154,10 +191,13 @@ data class HomeUiState(
 
 data class ReflectionUiState(
     val messages: List<ChatMessage> = listOf(
-        ChatMessage("Welcome to your reflection space.\nHow is your soul feeling today?", isUser = false)
+        ChatMessage(
+            "Welcome to your reflection space.\nHow is your soul feeling today?",
+            isUser = false
+        )
     ),
     val isLoading: Boolean = false,
-    val error: String?     = null
+    val error: String? = null
 )
 
 
