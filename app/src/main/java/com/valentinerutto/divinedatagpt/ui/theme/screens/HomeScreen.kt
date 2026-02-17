@@ -173,7 +173,7 @@ fun HomeScreen(
                             letterSpacing = 1.sp
                         )
                         Text(
-                            "Gods Child",
+                            "God's Child",
                             color = TextPrimary,
                             fontSize = 18.sp,
                             fontWeight = FontWeight.Bold
