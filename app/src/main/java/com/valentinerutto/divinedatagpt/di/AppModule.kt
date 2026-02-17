@@ -1,7 +1,6 @@
 package com.valentinerutto.divinedatagpt.di
 
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
-import com.valentinerutto.divinedatagpt.HomeViewModel
 import com.valentinerutto.divinedatagpt.MyApplication
 import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
@@ -29,7 +28,6 @@ val AppModule = module {
     single { AiRepository(get()) }
 
     viewModel { DivineDataViewModel(get(), get(), get()) }
-    viewModel { HomeViewModel(get()) }
 
     single { DivineDatabase.getDatabase(context = androidContext()) }
 

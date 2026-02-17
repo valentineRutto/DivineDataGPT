@@ -10,10 +10,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.valentinerutto.divinedatagpt.data.network.bible.VerseOfDay
+import androidx.navigation.compose.rememberNavController
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
-import com.valentinerutto.divinedatagpt.ui.theme.screens.Divinereflectionscreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.Reflection
+import com.valentinerutto.divinedatagpt.util.NavGraph
 
 class MainActivity : ComponentActivity() {
     val viewModel: DivineDataViewModel by viewModels()
@@ -24,18 +24,8 @@ class MainActivity : ComponentActivity() {
         setContent {
             DivineDataGPTTheme {
 
-                Divinereflectionscreen(
-                    onSendMessage = { message ->
-                        viewModel.sendMessage(message)
-                    },
-                    onShareReflection = { reflection ->
-                        shareReflection(reflection)
-                    },
-                    onBackPressed = {
-                        finish()
-                    }
-                )
-
+                val navController = rememberNavController()
+                NavGraph(navController = navController)
             }
         }
     }
@@ -65,105 +55,6 @@ class MainActivity : ComponentActivity() {
     }
 }
 
-
-@Composable
-fun DivineReflectionApp(
-    homeViewModel: HomeViewModel,
-    reflectionViewModel: DivineDataViewModel,
-    onShareVerse: (VerseOfDay) -> Unit,
-    onShareReflection: (Reflection) -> Unit
-) {
-
-    //    when (currentScreen) {
-//        AppScreen.HOME -> {
-//            HomeScreen(
-//                userProfile = homeUiState.userProfile,
-//                emotions = homeUiState.emotions,
-//                verseOfDay = homeUiState.verseOfDay,
-//                onEmotionSelected = { emotion ->
-//                    selectedEmotion = emotion
-//                    currentScreen = AppScreen.REFLECTION
-//                },
-//                onStartDeepReflection = {
-//                    currentScreen = AppScreen.REFLECTION
-//                },
-//                onShareVerse = {
-//                    onShareVerse(homeUiState.verseOfDay)
-//                },
-//                onNotificationClick = {
-//                    homeViewModel.onNotificationClick()
-//                },
-//                onProfileClick = {
-//                    // Navigate to profile settings
-//                    currentScreen = AppScreen.SETTINGS
-//                },
-//                currentScreen = when (currentScreen) {
-//                    AppScreen.HOME -> AppScreen.HOME
-//                    AppScreen.JOURNAL -> AppScreen.JOURNAL
-//                    AppScreen.SETTINGS -> AppScreen.SETTINGS
-//                    else -> AppScreen.HOME
-//                },
-//                onNavigate = { navScreen ->
-//                    currentScreen = when (navScreen) {
-//                        NavigationScreen.HOME -> AppScreen.HOME
-//                        NavigationScreen.JOURNAL -> AppScreen.JOURNAL
-//                        NavigationScreen.SETTINGS -> AppScreen.SETTINGS
-//                    }
-//                }
-//            )
-//        }
-//
-//        AppScreen.REFLECTION -> {
-//            DivineReflectionScreen(
-//                messages = reflectionUiState.messages,
-//                reflections = reflectionUiState.reflections,
-//                onSendMessage = { message ->
-//                    reflectionViewModel.sendMessage(message)
-//                },
-//                onShareReflection = { reflection ->
-//                    onShareReflection(reflection)
-//                },
-//                onBackPressed = {
-//                    currentScreen = AppScreen.HOME
-//                }
-//            )
-//        }
-//
-//        AppScreen.JOURNAL -> {
-//            // Journal screen placeholder
-//            HomeScreen(
-//                userProfile = homeUiState.userProfile,
-//                emotions = homeUiState.emotions,
-//                verseOfDay = homeUiState.verseOfDay,
-//                currentScreen = NavigationScreen.JOURNAL,
-//                onNavigate = { navScreen ->
-//                    currentScreen = when (navScreen) {
-//                        NavigationScreen.HOME -> AppScreen.HOME
-//                        NavigationScreen.JOURNAL -> AppScreen.JOURNAL
-//                        NavigationScreen.SETTINGS -> AppScreen.SETTINGS
-//                    }
-//                }
-//            )
-//        }
-//
-//        AppScreen.SETTINGS -> {
-//            // Settings screen placeholder
-//            HomeScreen(
-//                userProfile = homeUiState.userProfile,
-//                emotions = homeUiState.emotions,
-//                verseOfDay = homeUiState.verseOfDay,
-//                currentScreen = NavigationScreen.SETTINGS,
-//                onNavigate = { navScreen ->
-//                    currentScreen = when (navScreen) {
-//                        NavigationScreen.HOME -> AppScreen.HOME
-//                        NavigationScreen.JOURNAL -> AppScreen.JOURNAL
-//                        NavigationScreen.SETTINGS -> AppScreen.SETTINGS
-//                    }
-//                }
-//            )
-//        }
-//    }
-}
 
 @Composable
 fun Greeting(name: String, modifier: Modifier = Modifier) {
