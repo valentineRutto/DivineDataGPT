@@ -7,13 +7,11 @@ import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
-import com.valentinerutto.divinedatagpt.data.network.ai.ChatCompletionRequest
 import com.valentinerutto.divinedatagpt.ui.theme.screens.sampleSpiritContent
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
-import kotlin.onSuccess
 
 class DivineDataViewModel(
     private val bibleRepository: BibleRepository,
@@ -31,18 +29,13 @@ class DivineDataViewModel(
          viewModelScope.launch {
 
              _uiState.value = UiState.Loading
-             val emotionString = ChatCompletionRequest(messages = emotion)
-             val result = repository.sendEmotionToServer(emotionString)
+             when (val result = aiRepository.ask(emotion)) {
 
-             result.onSuccess {
+                 is Result -> _uiState.value = UiState.Success(result)
 
+                 Result.failure -> _uiState.value = UiState.Error("Something went wrong")
 
-                 _uiState.value = UiState.Success(it)
-
-             }.onFailure { error ->
-                 _uiState.value = UiState.Error(error.message ?: "Unknown error")
              }
-
 
          }
     }

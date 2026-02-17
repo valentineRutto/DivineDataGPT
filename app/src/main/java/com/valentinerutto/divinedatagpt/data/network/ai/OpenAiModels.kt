@@ -6,6 +6,12 @@ data class ChatCompletionRequest(
     val temperature: Double = 0.7
 )
 
+data class ChatCompletionRequestOpenApi(
+    val model: String = "gpt-5",
+    val messages: List<ChatMessage>,
+    val temperature: Double = 0.7
+)
+
 data class ChatMessage(
     val role: String, // "system", "user"
     val content: String

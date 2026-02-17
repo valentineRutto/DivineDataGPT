@@ -1,9 +1,9 @@
 package com.valentinerutto.divinedatagpt.util
 
 
-sealed class Result<out T> {
-    data class Success<T>(val data: T) : Result<T>()
-    data class Error(val message: String) : Result<Nothing>()
-    object Loading : Result<Nothing>()
+sealed class Resource<out T> {
+    data class Success<T>(val data: T) : Resource<T>()
+    data class Error(val message: String) : Resource<Nothing>()
+    object Loading : Resource<Nothing>()
 
 }

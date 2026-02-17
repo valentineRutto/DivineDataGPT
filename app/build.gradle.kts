@@ -40,6 +40,8 @@ android {
             "GEMINI_API_KEY",
             "\"${properties.getProperty("GEMINI_API_KEY")}\""
         )
+        buildConfigField("String", "HF_API_KEY", "\"${properties.getProperty("HF_API_KEY")}\"")
+
 
     }
 

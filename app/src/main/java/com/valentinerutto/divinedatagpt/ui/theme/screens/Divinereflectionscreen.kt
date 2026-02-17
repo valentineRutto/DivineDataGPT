@@ -33,6 +33,8 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -40,6 +42,8 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -54,7 +58,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.valentinerutto.divinedatagpt.DivineDataViewModel
+import com.valentinerutto.divinedatagpt.UiState
 import kotlinx.coroutines.launch
+import org.koin.androidx.compose.koinViewModel
 
 // Data models
 data class Message(
@@ -108,7 +115,38 @@ fun Divinereflectionscreen(
 ) {
     var messageText by remember { mutableStateOf("") }
     val listState = rememberLazyListState()
-    val coroutineScope = rememberCoroutineScope()
+
+    val myViewModel: DivineDataViewModel = koinViewModel()
+    val uiState by myViewModel.uiState.collectAsState()
+
+    val snackbarHostState = remember { SnackbarHostState() }
+    val scope = rememberCoroutineScope()
+
+
+    // Listen to state changes and show snackbar
+    LaunchedEffect(uiState) {
+        when (val state = uiState) {
+            is UiState.Success -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = state.message,
+                        duration = SnackbarDuration.Short
+                    )
+                }
+            }
+
+            is UiState.Error -> {
+                scope.launch {
+                    snackbarHostState.showSnackbar(
+                        message = state.message,
+                        duration = SnackbarDuration.Long
+                    )
+                }
+            }
+
+            else -> {}
+        }
+    }
 
     Scaffold(
         topBar = {
@@ -262,7 +300,7 @@ fun Divinereflectionscreen(
                             if (messageText.isNotBlank()) {
                                 onSendMessage(messageText)
                                 messageText = ""
-                                coroutineScope.launch {
+                                scope.launch {
                                     listState.animateScrollToItem(messages.size)
                                 }
                             }
