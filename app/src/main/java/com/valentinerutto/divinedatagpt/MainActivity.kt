@@ -26,7 +26,7 @@ class MainActivity : ComponentActivity() {
 
                 Divinereflectionscreen(
                     onSendMessage = { message ->
-                        viewModel.sendFeeling(message)
+                        viewModel.sendMessage(message)
                     },
                     onShareReflection = { reflection ->
                         shareReflection(reflection)

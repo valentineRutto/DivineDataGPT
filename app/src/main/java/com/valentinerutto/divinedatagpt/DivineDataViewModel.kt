@@ -33,9 +33,13 @@ class DivineDataViewModel(
     private val conversationHistory = mutableListOf<Pair<String, String>>()
 
 
+    private val _dailyUiState = MutableStateFlow(DailyUiState())
+    val dailyUiState: StateFlow<DailyUiState> = _dailyUiState.asStateFlow()
+
     init {
         updateGreeting()
         loadVerseOfDay()
+        loadDailyReflection()
     }
 
     //homescreen methods
@@ -76,8 +80,6 @@ class DivineDataViewModel(
     }
 
     //reflectionscreenmethods
-
-
     fun initWithEmotion(emotion: String) {
 
         if (emotion == "general" || conversationHistory.isNotEmpty()) return
@@ -155,6 +157,23 @@ class DivineDataViewModel(
         }
     }
 
+    fun loadDailyReflection() {
+        viewModelScope.launch {
+            _dailyUiState.update { it.copy(isLoading = true) }
+            aiRepository.getDailyReflection(BuildConfig.GEMINI_API_KEY).fold(
+                onSuccess = { reflection ->
+                    _dailyUiState.update { it.copy(reflection = reflection, isLoading = false) }
+                },
+
+
+                onFailure = { exception ->
+                    _dailyUiState.update {
+                        it.copy(isLoading = false, error = exception.message)
+                    }
+
+                })
+        }
+    }
 
     fun resetState() {
         _uiState.value = UiState.Idle
@@ -164,10 +183,13 @@ class DivineDataViewModel(
         verseReference = "verse",
         userFeeling = "feeling"
     )
-
-
 }
 
+data class DailyUiState(
+    val isLoading: Boolean = false,
+    val reflection: Reflection? = null,
+    val error: String? = null
+)
 
 data class DivineDataUiState(
             val verse: Verse? = null,
