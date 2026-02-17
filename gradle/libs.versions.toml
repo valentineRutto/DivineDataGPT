@@ -22,6 +22,7 @@ gson = "2.10.1"
 preference = "1.2.1"
 ktorVersion = "2.3.12"
 genai = "0.1.2"
+navigationCompose = "2.9.7"
 
 [libraries]
 androidx-material-icons= { module = "androidx.compose.material:material-icons-extended" }
@@ -65,6 +66,7 @@ ktor-client-cio ={group ="io.ktor:ktor-client-cio", name ="client-cio", version.
 ktor-client-contentnegotian ={group ="io.ktor:ktor-client-content-negotiation", name ="client-content-negotiation", version.ref = "ktorVersion"}
 ktor-logging ={group ="io.ktor:ktor-client-logging", name ="logging", version.ref = "ktorVersion"}
 google-genai = { group = "com.google.ai.client.generativeai:generativeai", name = "ai", version.ref = "genai" }
+androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

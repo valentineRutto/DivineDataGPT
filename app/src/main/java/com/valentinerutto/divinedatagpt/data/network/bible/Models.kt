@@ -1,4 +1,4 @@
-package com.valentinerutto.divinedatagpt.data.network
+package com.valentinerutto.divinedatagpt.data.network.bible
 
 
 // ESV API Models

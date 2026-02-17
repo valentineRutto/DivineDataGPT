@@ -60,6 +60,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.UiState
+import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme
+import com.valentinerutto.divinedatagpt.ui.theme.TextPrimary
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -85,16 +87,7 @@ data class SuggestionChip(
 )
 
 // Color scheme
-object ReflectionTheme {
-    val Background = Color(0xFF1A1625)
-    val Surface = Color(0xFF2D2838)
-    val Primary = Color(0xFF7C3AED)
-    val PrimaryVariant = Color(0xFF6D28D9)
-    val UserMessage = Color(0xFF7C3AED)
-    val AIMessage = Color(0xFF2D2838)
-    val TextPrimary = Color(0xFFE5E7EB)
-    val TextSecondary = Color(0xFF9CA3AF)
-}
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -160,7 +153,7 @@ fun Divinereflectionscreen(
                             text = "Divine Reflection",
                             fontSize = 20.sp,
                             fontWeight = FontWeight.SemiBold,
-                            color = ReflectionTheme.TextPrimary
+                            color = TextPrimary
                         )
                         Text(
                             text = "DIVINEDATA AI",

@@ -10,7 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.valentinerutto.divinedatagpt.data.network.VerseOfDay
+import com.valentinerutto.divinedatagpt.data.network.bible.VerseOfDay
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
 import com.valentinerutto.divinedatagpt.ui.theme.screens.Divinereflectionscreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.Reflection

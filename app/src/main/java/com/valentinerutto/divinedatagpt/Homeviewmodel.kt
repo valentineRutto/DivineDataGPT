@@ -2,7 +2,7 @@ package com.valentinerutto.divinedatagpt
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.valentinerutto.divinedatagpt.data.network.VerseOfDay
+import com.valentinerutto.divinedatagpt.data.network.bible.VerseOfDay
 import com.valentinerutto.divinedatagpt.util.AppScreen
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -13,6 +13,7 @@ import java.util.Calendar
 data class UserProfile(val name: String,val photoUrl: String?,val hasNotifications: Boolean = false)
 data class Emotion(val name: String, val emoji: String)
 data class HomeUiState(
+
     val userProfile: UserProfile = UserProfile(
         name = "Sarah",
         photoUrl = null,
@@ -25,6 +26,7 @@ data class HomeUiState(
         Emotion("Inspired", "✨"),
         Emotion("Stressed", "🌊")
     ),
+
     val verseOfDay: VerseOfDay = VerseOfDay(
         verse = "Do not be anxious about anything, but in every situation, by prayer and petition, with thanksgiving, present your requests to God.",
         reference = "PHILIPPIANS 4:6",
@@ -34,6 +36,7 @@ data class HomeUiState(
     val currentScreen: AppScreen = AppScreen.HOME,
     val greeting: String = "GOOD MORNING",
     val isLoading: Boolean = false
+
 )
 
 class HomeViewModel : ViewModel() {

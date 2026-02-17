@@ -1,6 +1,5 @@
 package com.valentinerutto.divinedatagpt.data.network.bible
 
-import com.valentinerutto.divinedatagpt.data.network.ESVResponse
 import retrofit2.http.GET
 import retrofit2.http.Query
 

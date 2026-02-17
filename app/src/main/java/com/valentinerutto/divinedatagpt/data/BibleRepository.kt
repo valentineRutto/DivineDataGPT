@@ -2,10 +2,10 @@ package com.valentinerutto.divinedatagpt.data
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
-import com.valentinerutto.divinedatagpt.data.network.BibleInsight
-import com.valentinerutto.divinedatagpt.data.network.ESVResponse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
+import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
+import com.valentinerutto.divinedatagpt.data.network.bible.ESVResponse
 
 
 class BibleRepository(
