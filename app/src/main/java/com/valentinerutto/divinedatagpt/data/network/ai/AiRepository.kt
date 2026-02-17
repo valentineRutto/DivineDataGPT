@@ -112,18 +112,13 @@ class AiRepository(
     }
 
 
+    suspend fun ask(apikey: String, feeling: String) {
 
 
-
-
-
-    suspend fun ask(apikey: String, feeling: String): Resource<BibleVerseResponse> {
-
-
-        val systemPrompt = "You are a compassionate biblical scholar. " +
+        "You are a compassionate biblical scholar. " +
                 "Always respond with valid JSON only — no markdown, no extra text."
 
-        val userPrompt = """
+        """
                 A person is feeling "$feeling". Provide a comforting and relevant Bible verse,
                 the book it's from, and a short, encouraging 2-3 sentence reflection.
                 
@@ -135,22 +130,6 @@ class AiRepository(
                 }
             """.trimIndent()
 
-        val response = aiApi.createChatCompletionOPenAi(
-            apiKey = apikey,
-            ChatCompletionRequestOpenApi(
-
-                messages = listOf(
-                    ChatMessage("system", systemPrompt),
-                    ChatMessage("user", userPrompt)
-                )
-            )
-        )
-
-        if (response.isSuccessful && response.body() != null) {
-            return Resource.Success(response.body()!!)
-        } else {
-            return Resource.Error(response.message())
-        }
     }
 
     suspend fun explainVerse(
@@ -165,23 +144,15 @@ class AiRepository(
             Keep responses under 120 words.
         """.trimIndent()
 
-        val userPrompt = """
+        """
             The user is feeling "$userFeeling".
             Explain the Bible verse $verseReference in a way that
             comforts them emotionally and offers gentle hope.
         """.trimIndent()
 
-        val response = aiApi.createChatCompletion(
-
-            ChatCompletionRequest(
-                messages = userPrompt
-                )
-            )
 
 
-        return response.verse
-            ?: "Take a quiet moment to reflect on this verse and how it speaks to your heart."
-
+        return "Take a quiet moment to reflect on this verse and how it speaks to your heart."
 
     }
 }

@@ -3,8 +3,6 @@ package com.valentinerutto.divinedatagpt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
-import com.valentinerutto.divinedatagpt.data.DivineDataRepository
-import com.valentinerutto.divinedatagpt.data.local.Verse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.data.network.ai.model.ChatMessage
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
@@ -18,7 +16,6 @@ import java.util.Calendar
 
 class DivineDataViewModel(
     private val bibleRepository: BibleRepository,
-    private val repository: DivineDataRepository,
     private val aiRepository: AiRepository
 ) : ViewModel() {
     private val _uiState = MutableStateFlow<UiState>(UiState.Idle)
@@ -74,7 +71,6 @@ class DivineDataViewModel(
                     }
                 }
             )
-
 
         }
     }
@@ -175,14 +171,7 @@ class DivineDataViewModel(
         }
     }
 
-    fun resetState() {
-        _uiState.value = UiState.Idle
-    }
 
-    suspend fun explanation() = aiRepository.explainVerse(
-        verseReference = "verse",
-        userFeeling = "feeling"
-    )
 }
 
 data class DailyUiState(
@@ -190,12 +179,6 @@ data class DailyUiState(
     val reflection: Reflection? = null,
     val error: String? = null
 )
-
-data class DivineDataUiState(
-            val verse: Verse? = null,
-            val loading: Boolean = false,
-            val errorMessage: String? = null
-        )
 
 sealed class UiState {
     object Idle : UiState()

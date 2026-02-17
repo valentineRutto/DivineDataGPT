@@ -14,5 +14,4 @@ val defaultEmotions = listOf(
     Emotion("inspired", "Inspired", "✨"),
     Emotion("stressed", "Stressed", "🌊"),
     Emotion("peaceful", "Peaceful", "☀️"),
-    Emotion("happy", "Happy", "☀️")
 )

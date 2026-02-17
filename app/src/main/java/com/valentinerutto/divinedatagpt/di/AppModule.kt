@@ -3,7 +3,6 @@ package com.valentinerutto.divinedatagpt.di
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.MyApplication
 import com.valentinerutto.divinedatagpt.data.BibleRepository
-import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.DivineDatabase
 import com.valentinerutto.divinedatagpt.data.network.RetrofitClient
 import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createOkClient
@@ -21,13 +20,11 @@ val AppModule = module {
 
     single { MyApplication.INSTANCE }
 
-    single { DivineDataRepository(get()) }
-
     single { BibleRepository(get(), get()) }
 
     single { AiRepository(get()) }
 
-    viewModel { DivineDataViewModel(get(), get(), get()) }
+    viewModel { DivineDataViewModel(get(), get()) }
 
     single { DivineDatabase.getDatabase(context = androidContext()) }
 
