@@ -19,7 +19,6 @@ object RetrofitClient {
     fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
 
         "application/json".toMediaType()
-
             return Retrofit.Builder().baseUrl(baseUrl).client(okHttpClient)
                 .addConverterFactory(GsonConverterFactory.create()).build()
         }
@@ -59,15 +58,7 @@ object RetrofitClient {
 
     fun provideAIOkHttpClient(): OkHttpClient {
         return OkHttpClient.Builder()
-            .addInterceptor { chain ->
-                chain.proceed(
-                    chain.request().newBuilder()
-                        .addHeader(
-                            "Authorization",
-                            "Bearer ${BuildConfig.HF_API_KEY}"
-                        ).build()
-                )
-            }
+
             .addInterceptor(createLoggingInterceptor())
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)

@@ -27,7 +27,7 @@ class DivineDataViewModel(
 
              _uiState.value = UiState.Loading
 
-             when (val result = aiRepository.ask(emotion)) {
+             when (val result = aiRepository.ask(BuildConfig.GEMINI_API_KEY, emotion)) {
 
                  is Resource.Success -> {
                      _uiState.value = UiState.Success(result.data.verse)

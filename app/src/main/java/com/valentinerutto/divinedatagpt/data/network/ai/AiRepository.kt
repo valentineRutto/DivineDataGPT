@@ -7,7 +7,7 @@ class AiRepository(
 ) {
 
 
-    suspend fun ask(feeling: String): Resource<BibleVerseResponse> {
+    suspend fun ask(apikey: String, feeling: String): Resource<BibleVerseResponse> {
 
 
         val systemPrompt = "You are a compassionate biblical scholar. " +
@@ -26,8 +26,9 @@ class AiRepository(
             """.trimIndent()
 
         val response = aiApi.createChatCompletionOPenAi(
-
+            apiKey = apikey,
             ChatCompletionRequestOpenApi(
+
                 messages = listOf(
                     ChatMessage("system", systemPrompt),
                     ChatMessage("user", userPrompt)

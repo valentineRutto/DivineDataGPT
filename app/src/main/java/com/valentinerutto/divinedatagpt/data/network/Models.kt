@@ -16,36 +16,6 @@ data class PassageMeta(
     val chapter_end: List<Int>
 )
 
-// Hugging Face API Models
-data class HuggingFaceRequest(
-    val inputs: String,
-    val parameters: HFParameters? = null
-)
-
-data class HFParameters(
-    val max_new_tokens: Int = 500,
-    val temperature: Double = 0.7,
-    val top_p: Double = 0.95,
-    val do_sample: Boolean = true,
-    val return_full_text: Boolean = false
-)
-
-// Response for text generation models
-data class HuggingFaceResponse(
-    val generated_text: String
-)
-
-// Alternative: Chat completion format (for instruct models)
-data class HFChatRequest(
-    val inputs: ChatInputs,
-    val parameters: HFParameters? = null
-)
-
-data class ChatInputs(
-    val past_user_inputs: List<String> = emptyList(),
-    val generated_responses: List<String> = emptyList(),
-    val text: String
-)
 
 // Bible Insight Model
 data class BibleInsight(
