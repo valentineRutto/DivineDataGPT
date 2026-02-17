@@ -24,10 +24,6 @@ class MainActivity : ComponentActivity() {
         setContent {
             DivineDataGPTTheme {
 
-                //  EmotionScreen(modifier = Modifier.padding(innerPadding))
-                   // ChatBubbleScreen(listOf(ChatMessage("hello")), onSend = ({}))
-                    //ChatPageScreen(modifier = Modifier.padding(innerPadding))
-
                 Divinereflectionscreen(
                     onSendMessage = { message ->
                         viewModel.sendFeeling(message)

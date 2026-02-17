@@ -1,15 +1,45 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
-import androidx.compose.animation.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.*
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Chat
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Notifications
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,11 +50,13 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.valentinerutto.divinedatagpt.HomeViewModel
+import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.data.network.ai.model.defaultEmotions
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
+import com.valentinerutto.divinedatagpt.ui.theme.EmotionCard
+import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
 import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
@@ -36,9 +68,9 @@ fun HomeScreen(
     onEmotionSelected: (String) -> Unit,
     onStartReflection: () -> Unit,
     onDailyReflection: () -> Unit,
-    viewModel: HomeViewModel = koinViewModel()
+    viewModel: DivineDataViewModel = koinViewModel()
 ) {
-    val uiState by viewModel.uiState.collectAsState()
+    val uiState by viewModel.homeuiState.collectAsState()
     var selectedTab by remember { mutableIntStateOf(0) }
 
     Scaffold(
@@ -71,13 +103,13 @@ fun HomeScreen(
                     onClick = { selectedTab = 1 },
                     icon = {
                         Icon(
-                            Icons.Default.MenuBook, contentDescription = "Journal",
+                            Icons.Default.MenuBook, contentDescription = "Bible",
                             tint = if (selectedTab == 1) PurplePrimary else TextMuted
                         )
                     },
                     label = {
                         Text(
-                            "JOURNAL", fontSize = 10.sp,
+                            "BIBLE", fontSize = 10.sp,
                             color = if (selectedTab == 1) PurplePrimary else TextMuted
                         )
                     },
