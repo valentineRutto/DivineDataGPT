@@ -4,8 +4,6 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.valentinerutto.divinedatagpt.data.network.BibleInsight
 import com.valentinerutto.divinedatagpt.data.network.ESVResponse
-import com.valentinerutto.divinedatagpt.data.network.HFParameters
-import com.valentinerutto.divinedatagpt.data.network.HuggingFaceRequest
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 
@@ -37,54 +35,6 @@ class BibleRepository(
         }
     }
 
-    // Process with Hugging Face LLM
-    suspend fun getBibleInsightWithHF(
-        reference: String,
-        modelId: String = MISTRAL_7B_INSTRUCT
-    ): Result<BibleInsight> {
-        return try {
-            // Step 1: Fetch Bible verse
-            val verseResult = getBibleVerse(reference)
-            if (verseResult.isFailure) {
-                return Result.failure(verseResult.exceptionOrNull()!!)
-            }
-
-            val esvResponse = verseResult.getOrNull()!!
-            val verseText = esvResponse.passages.firstOrNull() ?: ""
-            val canonical = esvResponse.canonical
-
-            // Step 2: Create structured prompt for instruction model
-            val prompt = createInstructPrompt(canonical, verseText)
-
-            // Step 3: Call Hugging Face API
-            val hfRequest = HuggingFaceRequest(
-                inputs = prompt,
-                parameters = HFParameters(
-                    max_new_tokens = 800,
-                    temperature = 0.7,
-                    top_p = 0.95,
-                    do_sample = true,
-                    return_full_text = false
-                )
-            )
-
-            val hfResponse = huggingFaceApi.generateText(
-                modelId = modelId,
-                request = hfRequest
-            )
-
-            // Step 4: Parse the response
-            val generatedText = hfResponse.firstOrNull()?.generated_text ?: ""
-
-            // Extract JSON from response
-            val insight = parseInsightFromResponse(generatedText, canonical, verseText)
-
-            Result.success(insight)
-
-        } catch (e: Exception) {
-            Result.failure(e)
-        }
-    }
 
     // Create instruction-following prompt
     private fun createInstructPrompt(reference: String, verseText: String): String {
