@@ -6,6 +6,7 @@ import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.DivineDataRepository
 import com.valentinerutto.divinedatagpt.data.local.Verse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
+import com.valentinerutto.divinedatagpt.data.network.ai.model.ChatMessage
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -25,6 +26,12 @@ class DivineDataViewModel(
 
     private val _homeuiState = MutableStateFlow(HomeUiState())
     val homeuiState: StateFlow<HomeUiState> = _homeuiState.asStateFlow()
+
+    private val _reflectionuiState = MutableStateFlow(ReflectionUiState())
+    val reflectionuistate: StateFlow<ReflectionUiState> = _reflectionuiState.asStateFlow()
+
+    private val conversationHistory = mutableListOf<Pair<String, String>>()
+
 
     init {
         updateGreeting()
@@ -68,28 +75,43 @@ class DivineDataViewModel(
         }
     }
 
+    //reflectionscreenmethods
 
 
-     fun sendFeeling(emotion: String) {
+     fun initWithEmotion(emotion: String) {
+
+         if (emotion == "general" || conversationHistory.isNotEmpty()) return
 
          viewModelScope.launch {
 
-             _uiState.value = UiState.Loading
+             _reflectionuiState.update { it.copy(isLoading = true) }
 
              when (val result =
                  aiRepository.getReflectionForEmotion(BuildConfig.GEMINI_API_KEY, emotion)) {
 
                  is Resource.Success -> {
-                     _uiState.value = UiState.Success(result.data.verse)
+
+                     val aiMsg = ChatMessage(
+
+                         content   = result.data.insight,
+                         isUser    = false,
+                         verse     = result.data.verse,
+                         reference = result.data.reference
+                     )
+                     conversationHistory.add("assistant" to "${result.data.verse} - ${result.data.insight}")
+
+                     _reflectionuiState.value = ReflectionUiState( messages = _reflectionuiState.value.messages + aiMsg, isLoading = false)
 
                  }
 
                  is Resource.Error -> {
-                     _uiState.value = UiState.Error(result.message)
+
+                     _reflectionuiState.value = ReflectionUiState(error = result.message, isLoading = false)
+
                  }
 
                  is Resource.Loading -> {
-                     _uiState.value = UiState.Loading
+                     _reflectionuiState.value = ReflectionUiState(isLoading = true)
                  }
 
              }
@@ -110,7 +132,7 @@ class DivineDataViewModel(
 }
 
 
-        data class DivineDataUiState(
+ data class DivineDataUiState(
             val verse: Verse? = null,
             val loading: Boolean = false,
             val errorMessage: String? = null
@@ -128,6 +150,14 @@ data class HomeUiState(
     val greeting: String = "GOOD MORNING",
     val isLoading: Boolean = false,
     val error: String? = null,
+)
+
+data class ReflectionUiState(
+    val messages: List<ChatMessage> = listOf(
+        ChatMessage("Welcome to your reflection space.\nHow is your soul feeling today?", isUser = false)
+    ),
+    val isLoading: Boolean = false,
+    val error: String?     = null
 )
 
 
