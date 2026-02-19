@@ -1,5 +1,8 @@
 package com.valentinerutto.divinedatagpt.data.network.ai
 
+import com.valentinerutto.divinedatagpt.data.local.dao.MemorySummaryDao
+import com.valentinerutto.divinedatagpt.data.local.dao.MessageDao
+import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Content
 import com.valentinerutto.divinedatagpt.data.network.ai.model.GeminiRequest
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Part
@@ -7,9 +10,10 @@ import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.util.Resource
 
 class AiRepository(
-    private val aiApi: AiApi
+    private val aiApi: AiApi,
+    private val messageDao: MessageDao,
+    private val memorySummaryDao: MemorySummaryDao
 ) {
-
 
     suspend fun getReflectionForEmotion(apikey: String, emotion: String): Resource<Reflection> {
         return try {
@@ -43,6 +47,33 @@ class AiRepository(
             Resource.Error(e.message.toString())
         }
     }
+    suspend fun addMessageToDB(message: MessageEntity) {
+
+        messageDao.insert(message)
+
+        val allMessages = messageDao.getAllMessages()
+
+        if (allMessages.size >= 5) compressMemory(allMessages)
+
+    }
+
+
+    private suspend fun compressMemory(messages: List<MessageEntity>) {
+        buildString {
+            append("Summarize for context retention:\n")
+            messages.forEach { append("${it.role}: ${it.content}\n") }
+        }
+
+        //doaicall
+
+//    val summary = response.choices.firstOrNull()?.message?.content ?: ""
+//    memoryDao.insert(MemorySummaryEntity(summary = summary))
+//    messageDao.deleteOldMessages(messages.dropLast(5))
+//
+
+    }
+
+
 
     suspend fun chatReflection(
         apiKey: String,
@@ -75,6 +106,8 @@ class AiRepository(
         } catch (e: Exception) {
             Result.failure(e)
         }
+
+
     }
 
 
