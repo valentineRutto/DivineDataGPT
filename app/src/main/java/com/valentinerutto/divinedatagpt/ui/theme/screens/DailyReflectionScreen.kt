@@ -1,6 +1,7 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -41,6 +42,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -54,6 +56,8 @@ import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextPrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
 import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
+import com.valentinerutto.divinedatagpt.util.shareReflection
+import com.valentinerutto.divinedatagpt.util.shareToWhatsApp
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -63,6 +67,9 @@ fun DailyReflectionScreen(
     viewModel: DivineDataViewModel = koinViewModel()
 ) {
     val uiState by viewModel.dailyUiState.collectAsState()
+
+    val context = LocalContext.current
+
 
     Scaffold(
         containerColor = DarkBackground,
@@ -84,7 +91,13 @@ fun DailyReflectionScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = { viewModel.loadDailyReflection() }) {
+                    IconButton(onClick = {
+
+
+                        viewModel.loadDailyReflection()
+
+
+                    }) {
                         Icon(
                             Icons.Default.Refresh,
                             contentDescription = "Refresh",
@@ -119,6 +132,8 @@ fun DailyReflectionScreen(
             } else {
                 uiState.reflection?.let { reflection ->
                     // ── Scripture Card ───────────────────────────
+
+
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
@@ -222,19 +237,25 @@ fun DailyReflectionScreen(
                         ShareButton(
                             color = Color(0xFFE1306C),
                             icon = Icons.Default.PhotoCamera,
-                            label = "Stories"
+                            label = "Stories",
+                            onClick = { shareReflection(context, reflection) }
+
                         )
                         Spacer(Modifier.width(20.dp))
                         ShareButton(
                             color = Color(0xFF25D366),
                             icon = Icons.Default.Message,
-                            label = "WhatsApp"
+                            label = "WhatsApp",
+                            onClick = { shareToWhatsApp(context, reflection) }
+
                         )
                         Spacer(Modifier.width(20.dp))
                         ShareButton(
                             color = CardBackground,
                             icon = Icons.Default.MoreHoriz,
-                            label = "More"
+                            label = "More",
+                            onClick = { shareToWhatsApp(context, reflection) }
+
                         )
                     }
 
@@ -303,14 +324,16 @@ fun DailyReflectionScreen(
 fun ShareButton(
     color: Color,
     icon: androidx.compose.ui.graphics.vector.ImageVector,
-    label: String
+    label: String,
+    onClick: () -> Unit
 ) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
         Box(
             modifier = Modifier
                 .size(60.dp)
                 .clip(CircleShape)
-                .background(color),
+                .background(color)
+                .clickable { onClick() },
             contentAlignment = Alignment.Center
         ) {
             Icon(

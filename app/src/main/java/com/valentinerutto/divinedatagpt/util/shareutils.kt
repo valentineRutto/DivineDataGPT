@@ -12,13 +12,35 @@ fun shareText(context: Context, text: String) {
     context.startActivity(Intent.createChooser(intent, "Share Reflection"))
 }
 
-fun shareToWhatsApp(context: Context, text: String) {
+fun shareToInstagramStory(context: Context, text: String) {
+
+    val intent = Intent("com.instagram.share.ADD_TO_STORY").apply {
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        putExtra("android.intent.extra.TEXT", text)
+    }
+    context.startActivity(intent)
+}
+
+fun shareToWhatsApp(context: Context, reflection: Reflection) {
+
+
+    val text = """
+${reflection.verse}
+
+— ${reflection.reference}
+
+${reflection.insight}
+
+✨ Daily Reflection from DivineData AI
+Download on Play Store: 
+""".trimIndent()
     val intent = Intent(Intent.ACTION_SEND).apply {
         type = "text/plain"
         putExtra(Intent.EXTRA_TEXT, text)
         setPackage("com.whatsapp")
     }
-    context.startActivity(intent)
+    val shareIntent = Intent.createChooser(intent, "Share Reflection")
+    context.startActivity(shareIntent)
 }
 
 fun shareReflection(context: Context, reflection: Reflection) {
@@ -31,7 +53,10 @@ fun shareReflection(context: Context, reflection: Reflection) {
         appendLine()
         appendLine(reflection.insight)
         appendLine()
-        appendLine("- Shared from Divine Reflection by DivineData AI")
+        appendLine(
+            "✨ Daily Reflection from DivineData AI\n" +
+                    "Download on Play Store: \n"
+        )
     }
 
     val sendIntent = Intent().apply {
