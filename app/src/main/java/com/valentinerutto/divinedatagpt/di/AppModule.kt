@@ -22,15 +22,16 @@ val AppModule = module {
 
     single { BibleRepository(get(), get()) }
 
-    single { AiRepository(get()) }
+    single { AiRepository(get(), get(), get()) }
 
     viewModel { DivineDataViewModel(get(), get()) }
-
     single { DivineDatabase.getDatabase(context = androidContext()) }
+
 
 }
     val databaseModule = module {
-
+        single { get<DivineDatabase>().memorySummaryDao() }
+        single { get<DivineDatabase>().messageDao() }
     }
 
     fun Scope.database() = get<DivineDatabase>()

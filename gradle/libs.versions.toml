@@ -1,6 +1,10 @@
 [versions]
 agp = "8.13.0"
+coilCompose = "2.7.0"
+datastorePreferences = "1.2.0"
+genaiPrompt = "1.0.0-beta1"
 generativeAi = "0.3.0"
+generativeaiVersion = "0.9.0"
 kotlin = "2.2.20"
 coreKtx = "1.17.0"
 junit = "4.13.2"
@@ -23,11 +27,17 @@ preference = "1.2.1"
 ktorVersion = "2.3.12"
 genai = "0.1.2"
 navigationCompose = "2.9.7"
+roomKtx = "2.8.4"
 
 [libraries]
+androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
 androidx-material-icons= { module = "androidx.compose.material:material-icons-extended" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+androidx-room-ktx = { module = "androidx.room:room-ktx", version.ref = "room" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+genai-prompt = { module = "com.google.mlkit:genai-prompt", version.ref = "genaiPrompt" }
 generative-ai = { module = "com.google.ai.client:generative-ai", name = "ai", version.ref = "genai" }
+generativeai-v090 = { module = "com.google.ai.client.generativeai:generativeai", version.ref = "generativeaiVersion" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
 androidx-espresso-core = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espressoCore" }

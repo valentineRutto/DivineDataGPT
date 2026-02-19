@@ -3,6 +3,7 @@ package com.valentinerutto.divinedatagpt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
+import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.data.network.ai.model.ChatMessage
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
@@ -36,7 +37,7 @@ class DivineDataViewModel(
     init {
         updateGreeting()
         loadVerseOfDay()
-        loadDailyReflection()
+        //  loadDailyReflection()
     }
 
     //homescreen methods
@@ -130,6 +131,7 @@ class DivineDataViewModel(
 
 
         viewModelScope.launch {
+            aiRepository.addMessageToDB(MessageEntity(role = "user", content = userText))
             aiRepository.chatReflection(
                 BuildConfig.GEMINI_API_KEY,
                 userText,

@@ -11,7 +11,7 @@ import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
 
 @Database(
     entities = [Verse::class, MemorySummaryEntity::class, MessageEntity::class],
-    version = 1,
+    version = 2,
     exportSchema = false
 )
 abstract class DivineDatabase : RoomDatabase() {

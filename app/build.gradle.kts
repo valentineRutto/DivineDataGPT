@@ -132,16 +132,19 @@ dependencies {
 
     //  implementation(libs.google.genai)
     // Navigation Compose
-    implementation("androidx.navigation:navigation-compose:2.9.7")
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.room.ktx)
+    ksp(libs.androidx.room.compiler)
+
 
     // Coil for image loading
-    implementation("io.coil-kt:coil-compose:2.5.0")
+    implementation(libs.coil.compose)
 
     // DataStore for preferences
-    implementation("androidx.datastore:datastore-preferences:1.2.0")
-    implementation("com.google.mlkit:genai-prompt:1.0.0-beta1")
+    implementation(libs.androidx.datastore.preferences)
+    implementation(libs.genai.prompt)
 
-    implementation("com.google.ai.client.generativeai:generativeai:0.9.0")
+    implementation(libs.generativeai.v090)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
