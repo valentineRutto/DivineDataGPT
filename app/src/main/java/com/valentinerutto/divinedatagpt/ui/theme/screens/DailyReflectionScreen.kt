@@ -18,10 +18,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.Download
-import androidx.compose.material.icons.filled.Message
-import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -47,7 +43,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
-import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
@@ -215,51 +210,51 @@ fun DailyReflectionScreen(
 
                     Spacer(Modifier.height(16.dp))
 
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.Center
-                    ) {
-                        ShareButton(
-                            color = Color(0xFFE1306C),
-                            icon = Icons.Default.PhotoCamera,
-                            label = "Stories"
-                        )
-                        Spacer(Modifier.width(20.dp))
-                        ShareButton(
-                            color = Color(0xFF25D366),
-                            icon = Icons.Default.Message,
-                            label = "WhatsApp"
-                        )
-                        Spacer(Modifier.width(20.dp))
-                        ShareButton(
-                            color = CardBackground,
-                            icon = Icons.Default.MoreHoriz,
-                            label = "More"
-                        )
-                    }
-
-                    Spacer(Modifier.height(24.dp))
-
-                    // ── Save Button ──────────────────────────────
-                    Button(
-                        onClick = {},
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp)
-                            .height(56.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = PurplePrimary),
-                        shape = RoundedCornerShape(16.dp)
-                    ) {
-                        Icon(
-                            Icons.Default.Download, contentDescription = null,
-                            tint = TextPrimary, modifier = Modifier.size(20.dp)
-                        )
-                        Spacer(Modifier.width(8.dp))
-                        Text(
-                            "Save to Gallery", color = TextPrimary,
-                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
-                        )
-                    }
+//                    Row(
+//                        modifier = Modifier.fillMaxWidth(),
+//                        horizontalArrangement = Arrangement.Center
+//                    ) {
+//                        ShareButton(
+//                            color = Color(0xFFE1306C),
+//                            icon = Icons.Default.PhotoCamera,
+//                            label = "Stories"
+//                        )
+//                        Spacer(Modifier.width(20.dp))
+//                        ShareButton(
+//                            color = Color(0xFF25D366),
+//                            icon = Icons.Default.Message,
+//                            label = "WhatsApp"
+//                        )
+//                        Spacer(Modifier.width(20.dp))
+//                        ShareButton(
+//                            color = CardBackground,
+//                            icon = Icons.Default.MoreHoriz,
+//                            label = "More"
+//                        )
+//                    }
+//
+//                    Spacer(Modifier.height(24.dp))
+//
+//                    // ── Save Button ──────────────────────────────
+//                    Button(
+//                        onClick = {},
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .padding(horizontal = 16.dp)
+//                            .height(56.dp),
+//                        colors = ButtonDefaults.buttonColors(containerColor = PurplePrimary),
+//                        shape = RoundedCornerShape(16.dp)
+//                    ) {
+//                        Icon(
+//                            Icons.Default.Download, contentDescription = null,
+//                            tint = TextPrimary, modifier = Modifier.size(20.dp)
+//                        )
+//                        Spacer(Modifier.width(8.dp))
+//                        Text(
+//                            "Save to Gallery", color = TextPrimary,
+//                            fontSize = 16.sp, fontWeight = FontWeight.SemiBold
+//                        )
+//                    }
 
                     Spacer(Modifier.height(24.dp))
                 }

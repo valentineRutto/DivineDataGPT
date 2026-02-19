@@ -65,7 +65,8 @@ class DivineDataViewModel(
                             error = exception.message, isLoading = false,
                             verseOfDay = Reflection(
                                 verse = "The Lord is my shepherd; I shall not want. He makes me lie down in green pastures. He leads me beside still waters.",
-                                reference = "PSALM 23:1-2", ""
+                                reference = "PSALM 23:1-2",
+                                "This verse reminds us that when we trust in God’s guidance, we lack nothing essential because He provides, protects, and sustains us. It paints a picture of peace and restoration, showing that God leads us into places of rest and renewal even in the midst of life’s pressures."
                             )
                         )
                     }
@@ -138,7 +139,8 @@ class DivineDataViewModel(
                 onFailure = { e ->
                     _reflectionuiState.update { it.copy(error = e.message, isLoading = false) }
                 }, onSuccess = {
-                    conversationHistory.add("assistant" to it.first)
+
+                conversationHistory.add("assistant" to it.first)
 
                     _reflectionuiState.update { state ->
                         state.copy(
@@ -157,6 +159,7 @@ class DivineDataViewModel(
         viewModelScope.launch {
             _dailyUiState.update { it.copy(isLoading = true) }
             aiRepository.getDailyReflection(BuildConfig.GEMINI_API_KEY).fold(
+
                 onSuccess = { reflection ->
                     _dailyUiState.update { it.copy(reflection = reflection, isLoading = false) }
                 },

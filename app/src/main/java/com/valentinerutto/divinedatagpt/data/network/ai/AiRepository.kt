@@ -95,6 +95,7 @@ class AiRepository(
                 contents = listOf(Content(parts = listOf(Part(prompt))))
             )
             val response = aiApi.generateContent(apiKey, request)
+
             val rawText = response.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
                 ?: return Result.failure(Exception("Empty response"))
 
