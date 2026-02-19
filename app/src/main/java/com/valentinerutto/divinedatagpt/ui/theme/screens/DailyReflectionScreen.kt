@@ -182,7 +182,7 @@ fun DailyReflectionScreen(
                                         Text("✦", color = PurpleAccent, fontSize = 14.sp)
                                         Spacer(Modifier.width(6.dp))
                                         Text(
-                                            text = "AI INSIGHT",
+                                            text = "Divine INSIGHT",
                                             color = PurpleAccent,
                                             fontSize = 12.sp,
                                             fontWeight = FontWeight.SemiBold,
