@@ -68,6 +68,7 @@ fun HomeScreen(
     onEmotionSelected: (String) -> Unit,
     onStartReflection: () -> Unit,
     onDailyReflection: () -> Unit,
+    onBible: () -> Unit,
     viewModel: DivineDataViewModel = koinViewModel()
 ) {
     val uiState by viewModel.homeuiState.collectAsState()
