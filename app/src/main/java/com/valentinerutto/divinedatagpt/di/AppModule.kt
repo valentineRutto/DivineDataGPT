@@ -56,6 +56,7 @@ val AppModule = module {
         }
 
 
+
         single { createOkClient() }
 
         single {

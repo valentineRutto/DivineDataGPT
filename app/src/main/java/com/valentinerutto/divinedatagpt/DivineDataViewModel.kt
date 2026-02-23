@@ -37,7 +37,7 @@ class DivineDataViewModel(
     init {
         updateGreeting()
         loadVerseOfDay()
-        //  loadDailyReflection()
+        loadDailyReflection()
     }
 
     //homescreen methods
