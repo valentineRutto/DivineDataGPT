@@ -62,5 +62,23 @@ object RetrofitClient {
             .build()
     }
 
+    fun provideHGAIOkHttpClient(): OkHttpClient {
+        return OkHttpClient.Builder()
+            .addInterceptor(createLoggingInterceptor())
+            .addInterceptor { chain ->
+                chain.proceed(
+                    chain.request().newBuilder()
+                        .addHeader(
+                            "Authorization",
+                            "Token ${BuildConfig.HF_API_KEY}"
+                        )
+                        .build()
+                )
+            }
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
 
 }

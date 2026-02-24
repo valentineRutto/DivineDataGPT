@@ -49,6 +49,19 @@ val AppModule = module {
             )
         }
 
+        single(named("HGAI")) { RetrofitClient.provideHGAIOkHttpClient() }
+
+        single(named("HGAI")) {
+
+            RetrofitClient.provideRetrofit(
+                RetrofitClient.HUGGING_FACE_BASE_URL,
+                get(named("HGAI"))
+            )
+
+        }
+
+
+
         single(named("ESV")) { RetrofitClient.provideEsvOkHttpClient() }
         single(named("ESV")) {
             RetrofitClient.provideRetrofit(RetrofitClient.ESV_BASE_URL, get(named("ESV")))
