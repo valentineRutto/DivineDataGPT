@@ -68,7 +68,7 @@ fun HomeScreen(
     onEmotionSelected: (String) -> Unit,
     onStartReflection: () -> Unit,
     onDailyReflection: () -> Unit,
-    onBible: () -> Unit,
+    onNavigateToBible: () -> Unit,
     viewModel: DivineDataViewModel = koinViewModel()
 ) {
     val uiState by viewModel.homeuiState.collectAsState()
@@ -101,7 +101,10 @@ fun HomeScreen(
                 )
                 NavigationBarItem(
                     selected = selectedTab == 1,
-                    onClick = { selectedTab = 1 },
+                    onClick = {
+                        selectedTab = 1
+                        onNavigateToBible()
+                    },
                     icon = {
                         Icon(
                             Icons.Default.MenuBook, contentDescription = "Bible",
@@ -118,7 +121,9 @@ fun HomeScreen(
                 )
                 NavigationBarItem(
                     selected = selectedTab == 2,
-                    onClick = { selectedTab = 2 },
+                    onClick = {
+                        selectedTab = 2
+                    },
                     icon = {
                         Icon(
                             Icons.Default.Settings, contentDescription = "Settings",

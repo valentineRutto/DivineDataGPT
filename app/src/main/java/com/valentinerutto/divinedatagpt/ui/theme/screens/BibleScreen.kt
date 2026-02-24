@@ -12,20 +12,28 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BorderColor
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.ChevronRight
 import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -34,6 +42,7 @@ import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
+import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 import com.valentinerutto.divinedatagpt.ui.theme.TextPrimary
 import com.valentinerutto.divinedatagpt.ui.theme.TextSecondary
 import org.koin.androidx.compose.koinViewModel
@@ -41,7 +50,9 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BibleScreen(
-    viewModel: BibleViewModel = koinViewModel()
+    viewModel: BibleViewModel = koinViewModel(),
+    onNavigateToHome: () -> Unit,
+    onNavigateToJournal: () -> Unit
 ) {
     Scaffold(
         containerColor = DarkBackground,
@@ -76,7 +87,20 @@ fun BibleScreen(
                     .padding(padding)
                     .fillMaxWidth()
             ) {
-                Text("thisis the bible screen")
+                Text("this is the bible screen")
+                BottomNavigationBar(
+                    onNavigateToHome = onNavigateToHome,
+                    onNavigateToJournal = onNavigateToJournal,
+                    onNavigateToSettings = onNavigateToHome,
+                    currentBook = "John",
+                    currentChapter = 3,
+                    totalChapters = 10,
+                    onPrevious = {},
+                    onNext = { },
+                    onHighlight = { },
+                    onNote = {},
+                    onShare = { }
+                )
             }
         }
     )
@@ -91,7 +115,10 @@ fun BottomNavigationBar(
     onNext: () -> Unit,
     onHighlight: () -> Unit,
     onNote: () -> Unit,
-    onShare: () -> Unit
+    onShare: () -> Unit,
+    onNavigateToHome: () -> Unit,
+    onNavigateToJournal: () -> Unit,
+    onNavigateToSettings: () -> Unit
 ) {
     Column {
         // Chapter Progress
@@ -129,6 +156,58 @@ fun BottomNavigationBar(
             ActionButton(icon = Icons.Default.Share, label = "SHARE", onClick = onShare)
         }
 
+        NavigationBar(
+            containerColor = DarkSurface,
+            contentColor = TextSecondary,
+            tonalElevation = 0.dp
+        ) {
+            NavigationBarItem(
+                selected = false,
+                onClick = onNavigateToHome,
+                icon = { Icon(Icons.Default.Home, contentDescription = "Home", tint = TextMuted) },
+                label = { Text("HOME", fontSize = 10.sp, color = TextMuted) },
+                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+            )
+            NavigationBarItem(
+                selected = true,
+                onClick = { /* Already on Bible */ },
+                icon = {
+                    Icon(
+                        Icons.Default.MenuBook,
+                        contentDescription = "Bible",
+                        tint = PurplePrimary
+                    )
+                },
+                label = { Text("BIBLE", fontSize = 10.sp, color = PurplePrimary) },
+                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+            )
+            NavigationBarItem(
+                selected = false,
+                onClick = onNavigateToJournal,
+                icon = {
+                    Icon(
+                        Icons.Default.BorderColor,
+                        contentDescription = "Journal",
+                        tint = TextMuted
+                    )
+                },
+                label = { Text("JOURNAL", fontSize = 10.sp, color = TextMuted) },
+                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+            )
+            NavigationBarItem(
+                selected = false,
+                onClick = onNavigateToSettings,
+                icon = {
+                    Icon(
+                        Icons.Default.Settings,
+                        contentDescription = "Settings",
+                        tint = TextMuted
+                    )
+                },
+                label = { Text("SETTINGS", fontSize = 10.sp, color = TextMuted) },
+                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+            )
+        }
 
     }
 }

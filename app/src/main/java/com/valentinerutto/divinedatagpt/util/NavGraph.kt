@@ -27,7 +27,7 @@ fun NavGraph(navController: NavHostController) {
                 onDailyReflection = {
                     navController.navigate(Screen.Daily.route)
                 },
-                onBible = {
+                onNavigateToBible = {
                     navController.navigate(Screen.Bible.route)
                 }
             )
@@ -41,7 +41,6 @@ fun NavGraph(navController: NavHostController) {
             )
         }
         composable(Screen.Daily.route) {
-            BibleScreen()
 
             DailyReflectionScreen(
                 onBack = { navController.popBackStack() }
@@ -49,7 +48,15 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(Screen.Bible.route) {
-            BibleScreen()
+            BibleScreen(
+                onNavigateToHome = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Home.route) { inclusive = false }
+                    }
+                },
+                onNavigateToJournal = {
+                    navController.navigate(Screen.Journal.route)
+                })
         }
     }
 }
