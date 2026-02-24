@@ -29,7 +29,6 @@ val AppModule = module {
     viewModel { BibleViewModel(get()) }
     single { DivineDatabase.getDatabase(context = androidContext()) }
 
-
 }
     val databaseModule = module {
         single { get<DivineDatabase>().memorySummaryDao() }
@@ -50,9 +49,7 @@ val AppModule = module {
             )
         }
 
-
         single(named("ESV")) { RetrofitClient.provideEsvOkHttpClient() }
-
         single(named("ESV")) {
             RetrofitClient.provideRetrofit(RetrofitClient.ESV_BASE_URL, get(named("ESV")))
         }

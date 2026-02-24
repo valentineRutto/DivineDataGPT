@@ -12,6 +12,8 @@ object RetrofitClient {
     const val ESV_BASE_URL = "https://api.esv.org/"
     const val GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/"
 
+    const val HUGGING_FACE_BASE_URL = "https://api-inference.huggingface.co/"
+
     fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
 
         "application/json".toMediaType()

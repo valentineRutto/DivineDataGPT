@@ -13,5 +13,8 @@ interface AiApi {
         @Body request: GeminiRequest
     ): GeminiResponse
 
-
+    @POST("models/mistralai/Mistral-7B-Instruct-v0.2")
+    suspend fun generateText(
+        @Body request: HuggingFaceRequest
+    ): List<HuggingFaceResponse>
 }
