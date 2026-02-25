@@ -50,8 +50,8 @@ Provide your analysis in this exact JSON structure (respond with ONLY the JSON, 
     "application": "practical application for daily Christian life (2-3 sentences)",
     "related_verses": ["reference1", "reference2", "reference3"]
 }
-
 Remember: Respond with ONLY valid JSON, nothing else. [/INST]"""
+
     }
 
     // Alternative prompt for chat models
