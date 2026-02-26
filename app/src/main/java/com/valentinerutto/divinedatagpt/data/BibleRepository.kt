@@ -3,6 +3,8 @@ package com.valentinerutto.divinedatagpt.data
 import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
+import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
+import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
 import com.valentinerutto.divinedatagpt.data.network.bible.ESVResponse
@@ -34,7 +36,50 @@ class BibleRepository(
             Result.failure(e)
         }
     }
+    suspend fun getDailyReflection(): Result<Reflection> {
+        return try {
+            val prompt = buildMistralPrompt(
+                """You are a Bible devotional generator. Provide today's uplifting daily reflection.
+                
+Respond ONLY in this exact JSON format (no markdown, no extra text):
+{
+  "verse": "the full Bible verse text",
+  "reference": "Book Chapter:Verse (NIV)",
+  "insight": "3-4 sentences of deep, inspiring spiritual insight for today's meditation"
+}"""
+            )
 
+            val request = HuggingFaceRequest(
+                inputs = prompt,
+                parameters = MistralParameters(
+                    max_new_tokens = 500,
+                    temperature = 0.9f
+                )
+            )
+
+            val response = huggingFaceApi.generateText(request)
+
+            if (response.error != null) {
+                return Result.failure(Exception(response.error))
+            }
+
+            val generatedText =
+                response.generated_text ?: return Result.failure(Exception("Empty response"))
+
+            val jsonText = extractJson(generatedText)
+            val json = JSONObject(jsonText)
+
+            Result.success(
+                Reflection(
+                    verse = json.getString("verse"),
+                    reference = json.getString("reference"),
+                    insight = json.getString("insight")
+                )
+            )
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
 
     // Create instruction-following prompt
     private fun createInstructPrompt(reference: String, verseText: String): String {
@@ -110,7 +155,22 @@ JSON format:
             createFallbackInsight(reference, verseText, response)
         }
     }
+    private fun buildMistralPrompt(instruction: String): String {
+        return "<s>[INST] $instruction [/INST]"
+    }
 
+    // Helper function to extract JSON from Mistral's response
+    private fun extractJson(text: String): String {
+        // Try to find JSON object in the response
+        val jsonStart = text.indexOf("{")
+        val jsonEnd = text.lastIndexOf("}") + 1
+
+        return if (jsonStart >= 0 && jsonEnd > jsonStart) {
+            text.substring(jsonStart, jsonEnd)
+        } else {
+            text.trim()
+        }
+    }
     // Fallback if JSON parsing fails
     private fun createFallbackInsight(
         reference: String,
