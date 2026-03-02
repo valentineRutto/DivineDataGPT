@@ -5,6 +5,7 @@ import com.google.gson.JsonObject
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
+import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.Parameters
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
 import com.valentinerutto.divinedatagpt.data.network.bible.ESVResponse
@@ -51,9 +52,9 @@ Respond ONLY in this exact JSON format (no markdown, no extra text):
 
             val request = HuggingFaceRequest(
                 inputs = prompt,
-                parameters = MistralParameters(
+                parameters = Parameters(
                     max_new_tokens = 500,
-                    temperature = 0.9f
+                    temperature = 0.9
                 )
             )
 
