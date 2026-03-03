@@ -9,6 +9,7 @@ import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.Param
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
 import com.valentinerutto.divinedatagpt.data.network.bible.ESVResponse
+import org.json.JSONObject
 
 
 class BibleRepository(
@@ -60,12 +61,13 @@ Respond ONLY in this exact JSON format (no markdown, no extra text):
 
             val response = huggingFaceApi.generateText(request)
 
-            if (response.error != null) {
-                return Result.failure(Exception(response.error))
+            if (!response.isSuccessful) {
+                return Result.failure(Exception(response.errorBody().toString()))
             }
 
             val generatedText =
-                response.generated_text ?: return Result.failure(Exception("Empty response"))
+
+                response.body()?.first() ?: return Result.failure(Exception("Empty response"))
 
             val jsonText = extractJson(generatedText)
             val json = JSONObject(jsonText)

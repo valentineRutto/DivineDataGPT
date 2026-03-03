@@ -4,6 +4,7 @@ import com.valentinerutto.divinedatagpt.data.network.ai.model.GeminiRequest
 import com.valentinerutto.divinedatagpt.data.network.ai.model.GeminiResponse
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceResponse
+import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
 import retrofit2.http.Query
@@ -18,5 +19,5 @@ interface AiApi {
     @POST("models/mistralai/Mistral-7B-Instruct-v0.2")
     suspend fun generateText(
         @Body request: HuggingFaceRequest
-    ): List<HuggingFaceResponse>
+    ): Response<List<HuggingFaceResponse>>
 }
