@@ -5,7 +5,6 @@ import com.google.gson.JsonObject
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
-import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.Parameters
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
 import com.valentinerutto.divinedatagpt.data.network.bible.ESVResponse
@@ -52,11 +51,7 @@ Respond ONLY in this exact JSON format (no markdown, no extra text):
             )
 
             val request = HuggingFaceRequest(
-                inputs = prompt,
-                parameters = Parameters(
-                    max_new_tokens = 500,
-                    temperature = 0.9
-                )
+                inputs = prompt
             )
 
             val response = huggingFaceApi.generateText(request)
@@ -65,11 +60,9 @@ Respond ONLY in this exact JSON format (no markdown, no extra text):
                 return Result.failure(Exception(response.errorBody().toString()))
             }
 
-            val generatedText =
+            response.body()?.first() ?: return Result.failure(Exception("Empty response"))
 
-                response.body()?.first() ?: return Result.failure(Exception("Empty response"))
-
-            val jsonText = extractJson(generatedText)
+            val jsonText = extractJson("generatedText")
             val json = JSONObject(jsonText)
 
             Result.success(
