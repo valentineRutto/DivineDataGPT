@@ -11,10 +11,13 @@ import androidx.room.PrimaryKey
 )
 data class BibleVerseEntity(
     @PrimaryKey(autoGenerate = true)
-    val id: Int = 0,
-    val book: String,
-    val chapter: Int,
-    val verse: Int,
-    val text: String,
-    val version: String
+    val id: Long = 0,
+    val book: String,              // "Genesis"
+    val bookAbbrev: String,        // "genesis"
+    val chapter: Int,              // 1, 2, 3...
+    val verse: Int,                // 1, 2, 3...
+    val text: String,              // The actual verse text
+    val sectionNumber: Int = 1,    // Section within chapter
+    val bookOrder: Int,            // 1-66 for sorting
+    val testament: String
 )

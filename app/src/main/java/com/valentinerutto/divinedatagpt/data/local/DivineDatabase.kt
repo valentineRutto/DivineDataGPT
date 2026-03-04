@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MemorySummaryDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MessageDao
 import com.valentinerutto.divinedatagpt.data.local.entity.MemorySummaryEntity
@@ -17,6 +18,9 @@ import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
 abstract class DivineDatabase : RoomDatabase() {
     abstract fun memorySummaryDao(): MemorySummaryDao
     abstract fun messageDao(): MessageDao
+
+    abstract fun bibleDao(): BibleDao
+
     companion object Companion {
         @Volatile
         private var INSTANCE: DivineDatabase? = null
