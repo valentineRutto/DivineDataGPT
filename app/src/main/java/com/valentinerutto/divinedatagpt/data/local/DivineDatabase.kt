@@ -9,9 +9,11 @@ import com.valentinerutto.divinedatagpt.data.local.dao.MemorySummaryDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MessageDao
 import com.valentinerutto.divinedatagpt.data.local.entity.MemorySummaryEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 
 @Database(
-    entities = [Verse::class, MemorySummaryEntity::class, MessageEntity::class],
+    entities = [Verse::class, MemorySummaryEntity::class, MessageEntity::class, BibleVerseEntity::class, BibleVerseEntity2::class],
     version = 2,
     exportSchema = false
 )

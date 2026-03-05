@@ -4,15 +4,16 @@ package com.valentinerutto.divinedatagpt.util
 import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
-import com.google.gson.reflect.TypeToken
+import com.google.gson.stream.JsonReader
 import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseDto
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 import com.valentinerutto.divinedatagpt.util.BibleDatabaseSeeder.Companion.BATCH_SIZE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 /**
- * One-time seeder: reads `assets/bible.json`, converts each DTO to an [BibleVerseEntity],
+ * One-time seeder: reads `assets/bible.json`, converts each DTO to an [BibleVerseEntity2],
  * and batch-inserts into Room in chunks of [BATCH_SIZE] to avoid OOM on large files.
  *
  * The seeder is idempotent – it checks [BibleVerseDao.count] first and skips seeding
@@ -26,7 +27,7 @@ class BibleDatabaseSeeder(
 
     companion object {
         private const val TAG = "BibleDatabaseSeeder"
-        private const val ASSET_FILE = "bible.json"
+        private const val ASSET_FILE = "AlamoPolyglot2.json"
         private const val BATCH_SIZE = 500
     }
 
@@ -48,25 +49,44 @@ class BibleDatabaseSeeder(
         Log.d(TAG, "Seeding Bible database from $ASSET_FILE …")
 
         try {
-            val json = context.assets.open(ASSET_FILE).bufferedReader().use { it.readText() }
+            var totalInserted = 0
+            val batch = ArrayList<BibleVerseEntity2>(BATCH_SIZE)
 
-            val type = object : TypeToken<List<BibleBookEntity>>() {}.type
-            val dtos: List<BibleVerseDto> = gson.fromJson(json, type)
 
-            Log.d(TAG, "Parsed ${dtos.size} verses – inserting in batches of $BATCH_SIZE …")
+            context.assets.open(ASSET_FILE).bufferedReader().use { reader ->
 
-            dtos
-                .chunked(BATCH_SIZE)
-                .forEachIndexed { index, batch ->
-                    dao.insertAll(batch.map { it.toEntity() })
-                    Log.v(
-                        TAG,
-                        "Inserted batch ${index + 1} (${(index + 1) * BATCH_SIZE} / ${dtos.size})"
-                    )
+                JsonReader(reader).use { jsonReader ->
+
+                    jsonReader.beginArray()                      // [
+
+                    while (jsonReader.hasNext()) {
+                        // Gson reads + deserialises exactly one { … } object at a time
+                        val dto: BibleVerseDto =
+                            gson.fromJson(jsonReader, BibleVerseDto::class.java)
+                        batch.add(dto.toEntity())
+
+                        if (batch.size >= BATCH_SIZE) {
+                            dao.insertAll(batch)
+                            totalInserted += batch.size
+                            Log.v(TAG, "Inserted $totalInserted verses so far…")
+                            batch.clear()                        // release before next batch
+                        }
+                    }
+
+                    jsonReader.endArray()                        // ]
                 }
+            }
 
-            Log.d(TAG, "Seeding complete. Total verses in DB: ${dao.count()}")
+            // Flush any remaining verses in the final partial batch
+            if (batch.isNotEmpty()) {
+                dao.insertAll(batch)
+                totalInserted += batch.size
+                batch.clear()
+            }
+
+            Log.d(TAG, "Seeding complete – $totalInserted verses inserted.")
             true
+
         } catch (e: Exception) {
             Log.e(TAG, "Failed to seed database", e)
             false
@@ -75,7 +95,7 @@ class BibleDatabaseSeeder(
 
     // ── Mapping ───────────────────────────────────────────────────────────────
 
-    private fun BibleVerseDto.toEntity() = BibleVerseEntity(
+    private fun BibleVerseDto.toEntity() = BibleVerseEntity2(
         id = id,
         bookId = bookId,
         bookName = bookName,
