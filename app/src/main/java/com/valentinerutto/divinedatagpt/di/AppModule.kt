@@ -1,5 +1,6 @@
 package com.valentinerutto.divinedatagpt.di
 
+import com.google.gson.Gson
 import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.MyApplication
@@ -10,6 +11,7 @@ import com.valentinerutto.divinedatagpt.data.network.RetrofitClient.createOkClie
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
+import com.valentinerutto.divinedatagpt.util.BibleDatabaseSeeder
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.module.dsl.viewModel
 import org.koin.core.qualifier.named
@@ -19,7 +21,10 @@ import retrofit2.Retrofit
 
 val AppModule = module {
 
+
     single { MyApplication.INSTANCE }
+    single { Gson() }
+
 
     single { BibleRepository(get(), get()) }
 
@@ -28,11 +33,14 @@ val AppModule = module {
     viewModel { DivineDataViewModel(get(), get()) }
     viewModel { BibleViewModel(get()) }
     single { DivineDatabase.getDatabase(context = androidContext()) }
+    single { BibleDatabaseSeeder(context = androidContext(), dao = get(), gson = get()) }
+
 
 }
     val databaseModule = module {
         single { get<DivineDatabase>().memorySummaryDao() }
         single { get<DivineDatabase>().messageDao() }
+        single { get<DivineDatabase>().bibleDao() }
     }
 
     fun Scope.database() = get<DivineDatabase>()
