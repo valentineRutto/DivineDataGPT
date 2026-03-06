@@ -93,8 +93,6 @@ class BibleDatabaseSeeder(
         }
     }
 
-    // ── Mapping ───────────────────────────────────────────────────────────────
-
     private fun BibleVerseDto.toEntity() = BibleVerseEntity2(
         id = id,
         bookId = bookId,
