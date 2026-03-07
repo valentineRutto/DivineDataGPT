@@ -8,17 +8,9 @@ import com.google.gson.stream.JsonReader
 import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseDto
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
-import com.valentinerutto.divinedatagpt.util.BibleDatabaseSeeder.Companion.BATCH_SIZE
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
-/**
- * One-time seeder: reads `assets/bible.json`, converts each DTO to an [BibleVerseEntity2],
- * and batch-inserts into Room in chunks of [BATCH_SIZE] to avoid OOM on large files.
- *
- * The seeder is idempotent – it checks [BibleVerseDao.count] first and skips seeding
- * if the table is already populated.
- */
 class BibleDatabaseSeeder(
     private val context: Context,
     private val dao: BibleDao,
@@ -28,6 +20,7 @@ class BibleDatabaseSeeder(
     companion object {
         private const val TAG = "BibleDatabaseSeeder"
         private const val ASSET_FILE = "AlamoPolyglot2.json"
+        private const val ASSET_FILE_WEB = "web_complete.json"
         private const val BATCH_SIZE = 500
     }
 
@@ -60,7 +53,6 @@ class BibleDatabaseSeeder(
                     jsonReader.beginArray()                      // [
 
                     while (jsonReader.hasNext()) {
-                        // Gson reads + deserialises exactly one { … } object at a time
                         val dto: BibleVerseDto =
                             gson.fromJson(jsonReader, BibleVerseDto::class.java)
                         batch.add(dto.toEntity())
