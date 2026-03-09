@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "S\u00e1ng-th\u1ebf K\u00fd",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "Xu\u1ea5t \u00ca-d\u00edp-t\u00f4 K\u00fd",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 3,
+    "name": "L\u00ea-vi K\u00fd",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 4,
+    "name": "D\u00e2n-s\u1ed1 K\u00fd",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 5,
+    "name": "Ph\u1ee5c-truy\u1ec1n Lu\u1eadt-l\u1ec7 K\u00fd",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "Gi\u00f4-su\u00ea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "C\u00e1c Quan X\u00e9t",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "Ru-t\u01a1",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "1 Sa-mu-\u00ean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 10,
+    "name": "2 Sa-mu-\u00ean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 11,
+    "name": "1 C\u00e1c Vua",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 12,
+    "name": "2 C\u00e1c Vua",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 13,
+    "name": "1 S\u1eed-k\u00fd",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 14,
+    "name": "2 S\u1eed-k\u00fd",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 15,
+    "name": "\u00ca-x\u01a1-ra",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "N\u00ea-h\u00ea-mi",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "\u00ca-x\u01a1-t\u00ea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "Gi\u00f3p",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Thi-thi\u00ean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Ch\u00e2m-ng\u00f4n",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Truy\u1ec1n-\u0111\u1ea1o",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Nh\u00e3-ca",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "\u00ca-sai",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "Gi\u00ea-r\u00ea-mi",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "Ca-th\u01b0\u01a1ng",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "\u00ca-x\u00ea-chi-\u00ean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "\u0110a-ni-\u00ean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "\u00d4-s\u00ea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Gi\u00f4-\u00ean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "A-m\u1ed1t",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "\u00c1p-\u0111ia",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Gi\u00f4-na",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Mi-ch\u00ea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "Na-hum",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "Ha-ba-c\u00fac",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "S\u00f4-ph\u00f4-ni",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "A-gh\u00ea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Xa-cha-ri",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "Ma-la-chi",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Ma-thi-\u01a1",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "M\u00e1c",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": "Lu-ca",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "Gi\u0103ng",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "C\u00f4ng-v\u1ee5 c\u00e1c S\u1ee9-\u0111\u1ed3",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "R\u00f4-ma",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "1 C\u00f4-rinh-t\u00f4",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 47,
+    "name": "2 C\u00f4-rinh-t\u00f4",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 48,
+    "name": "Ga-la-ti",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "\u00ca-ph\u00ea-s\u00f4",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "Phi-l\u00edp",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "C\u00f4-l\u00f4-se",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "1 T\u00ea-sa-l\u00f4-ni-ca",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 53,
+    "name": "2 T\u00ea-sa-l\u00f4-ni-ca",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 54,
+    "name": "1 Ti-m\u00f4-th\u00ea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 55,
+    "name": "2 Ti-m\u00f4-th\u00ea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 56,
+    "name": "Tit",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "Phi-l\u00ea-m\u00f4n",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "H\u00ea-b\u01a1-r\u01a1",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "Gia-c\u01a1",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "1 Phi-e-r\u01a1",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 61,
+    "name": "2 Phi-e-r\u01a1",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 62,
+    "name": "1 Gi\u0103ng",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 63,
+    "name": "2 Gi\u0103ng",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 64,
+    "name": "3 Gi\u0103ng",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 65,
+    "name": "Giu-\u0111e",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "Kh\u1ea3i-huy\u1ec1n",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  }
+]

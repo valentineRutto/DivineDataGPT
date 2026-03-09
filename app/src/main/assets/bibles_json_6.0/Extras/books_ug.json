@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "\u064a\u0627\u0631\u0649\u062a\u0649\u0644\u0649\u0634",
+    "shortname": "\u064a\u0627\u0631.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "\u0645\u0649\u0633\u0649\u0631\u062f\u0649\u0646 \u0686\u0649\u0642\u0649\u0634 ",
+    "shortname": "\u0645\u0649\u0633.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 3,
+    "name": "\u0644\u0627\u06cb\u0649\u064a\u0644\u0627\u0631",
+    "shortname": "\u0644\u0627\u06cb.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 4,
+    "name": "\u0686\u06c6\u0644-\u0628\u0627\u064a\u0627\u06cb\u0627\u0646\u062f\u0649\u0643\u0649 \u0633\u06d5\u067e\u06d5\u0631",
+    "shortname": "\u0686\u06c6\u0644.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 5,
+    "name": "\u0642\u0627\u0646\u06c7\u0646 \u0634\u06d5\u0631\u06be\u0649",
+    "shortname": "\u0642\u0627\u0646.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "\u064a\u06d5\u0634\u06c7\u0626\u0627",
+    "shortname": "\u064a\u06d5.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "\u0628\u0627\u062a\u06c7\u0631 \u06be\u0627\u0643\u0649\u0645\u0644\u0627\u0631",
+    "shortname": "\u06be\u0627\u0643.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "\u0631\u06c7\u062a",
+    "shortname": "\u0631\u06c7\u062a",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "\u0633\u0627\u0645\u06c7\u0626\u0649\u0644 \u00ab1\u00bb",
+    "shortname": "1\u0633\u0627\u0645.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 10,
+    "name": "\u0633\u0627\u0645\u06c7\u0626\u0649\u0644 \u00ab2\u00bb",
+    "shortname": "2\u0633\u0627\u0645.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 11,
+    "name": "\u067e\u0627\u062f\u0649\u0634\u0627\u06be\u0644\u0627\u0631 \u00ab1\u00bb",
+    "shortname": "1\u067e\u0627\u062f.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 12,
+    "name": "\u067e\u0627\u062f\u0649\u0634\u0627\u06be\u0644\u0627\u0631 \u00ab2\u00bb",
+    "shortname": "2\u067e\u0627\u062f.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 13,
+    "name": "\u062a\u0627\u0631\u0649\u062e-\u062a\u06d5\u0632\u0643\u0649\u0631\u06d5 \u00ab1\u00bb",
+    "shortname": "1\u062a\u0627\u0631.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 14,
+    "name": "\u062a\u0627\u0631\u0649\u062e-\u062a\u06d5\u0632\u0643\u0649\u0631\u06d5 \u00ab2\u00bb",
+    "shortname": "2\u062a\u0627\u0631.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 15,
+    "name": "\u0626\u06d5\u0632\u0631\u0627",
+    "shortname": "\u0626\u06d5\u0632\u0631\u0627",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "\u0646\u06d5\u06be\u06d5\u0645\u0649\u064a\u0627",
+    "shortname": "\u0646\u06d5\u06be.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "\u0626\u06d5\u0633\u062a\u06d5\u0631",
+    "shortname": "\u0626\u06d5\u0633\u062a.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "\u0626\u0627\u064a\u06c7\u067e",
+    "shortname": "\u0626\u0627\u064a\u06c7\u067e",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "\u0632\u06d5\u0628\u06c7\u0631",
+    "shortname": "\u0632\u06d5\u0628.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "\u067e\u06d5\u0646\u062f-\u0646\u06d5\u0633\u0649\u06be\u06d5\u062a\u0644\u06d5\u0631",
+    "shortname": "\u067e\u06d5\u0646\u062f.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "\u06be\u06d0\u0643\u0645\u06d5\u062a \u062a\u0648\u067e\u0644\u0649\u063a\u06c7\u0686\u0649",
+    "shortname": "\u062a\u0648\u067e.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "\u0643\u06c8\u064a\u0644\u06d5\u0631\u0646\u0649\u06ad \u0643\u06c8\u064a\u0649",
+    "shortname": "\u0643\u06c8\u064a.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "\u064a\u06d5\u0634\u0627\u064a\u0627",
+    "shortname": "\u064a\u06d5\u0634.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "\u064a\u06d5\u0631\u06d5\u0645\u0649\u064a\u0627",
+    "shortname": "\u064a\u06d5\u0631.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "\u064a\u06d5\u0631\u06d5\u0645\u0649\u064a\u0627\u0646\u064a\u06ad \u064a\u0649\u063a\u0627-\u0632\u0627\u0631\u0644\u0649\u0631\u0649",
+    "shortname": "\u064a\u0649\u063a.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "\u0626\u06d5\u0632\u0627\u0643\u0649\u064a\u0627\u0644",
+    "shortname": "\u0626\u200d\u06d5\u0632.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "\u062f\u0627\u0646\u0649\u064a\u0627\u0644",
+    "shortname": "\u062f\u0627\u0646.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "\u06be\u0648\u0634\u0649\u064a\u0627",
+    "shortname": "\u06be\u0648\u0634.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "\u064a\u0648\u0626\u06d0\u0644",
+    "shortname": "\u064a\u0648.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "\u0626\u0627\u0645\u0648\u0633",
+    "shortname": "\u0626\u0627\u0645.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "\u0626\u0648\u0628\u0627\u062f\u0649\u064a\u0627",
+    "shortname": "\u0626\u200d\u0648\u0628.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "\u064a\u06c7\u0646\u06c7\u0633",
+    "shortname": "\u064a\u06c7\u0646.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "\u0645\u0649\u0643\u0627\u06be",
+    "shortname": "\u0645\u0649\u0643.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "\u0646\u0627\u06be\u06c7\u0645",
+    "shortname": "\u0646\u0627\u06be.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "\u06be\u0627\u0628\u0627\u0643\u0643\u06c7\u0643",
+    "shortname": "\u06be\u0627\u0628.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "\u0632\u06d5\u0641\u0627\u0646\u0649\u064a\u0627",
+    "shortname": "\u0632\u06d5\u0641.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "\u06be\u0627\u06af\u0627\u064a",
+    "shortname": "\u06be\u0627\u06af.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "\u0632\u06d5\u0643\u06d5\u0631\u0649\u064a\u0627",
+    "shortname": "\u0632\u06d5\u0643.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "\u0645\u0627\u0644\u0627\u0643\u0649",
+    "shortname": "\u0645\u0627\u0644.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "\u0645\u0627\u062a\u062a\u0627",
+    "shortname": "\u0645\u0627\u062a.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "\u0645\u0627\u0631\u0643\u06c7\u0633",
+    "shortname": "\u0645\u0627\u0631.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": " \u0644\u06c7\u0642\u0627",
+    "shortname": "\u0644\u06c7\u0642\u0627",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "\u064a\u06c7\u06be\u0627\u0646\u0646\u0627",
+    "shortname": "\u064a\u0640\u06c7\u06be.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "\u0631\u0648\u0633\u06c7\u0644\u0644\u0627\u0631\u0646\u0649\u06ad \u067e\u0627\u0626\u0627\u0644\u0649\u064a\u06d5\u062a\u0644\u0649\u0631\u0649",
+    "shortname": "\u0631\u0648\u0633.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "\u0631\u0649\u0645\u0644\u0649\u0642\u0644\u0627\u0631\u063a\u0627",
+    "shortname": "\u0631\u0649\u0645.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "\u0643\u0648\u0631\u0649\u0646\u062a\u06c7\u0633\u0644\u06c7\u0642\u0644\u0627\u0631\u063a\u0627 \u00ab1\u00bb",
+    "shortname": "1\u0643\u0648\u0631.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 47,
+    "name": "\u0643\u0648\u0631\u0649\u0646\u062a\u06c7\u0633\u0644\u06c7\u0642\u0644\u0627\u0631\u063a\u0627 \u00ab2\u00bb",
+    "shortname": "2\u0643\u0648\u0631.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 48,
+    "name": "\u06af\u0627\u0644\u0627\u062a\u0649\u064a\u0627\u0644\u0649\u0642\u0644\u0627\u0631\u063a\u0627",
+    "shortname": "\u06af\u0627\u0644.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "\u0626\u200d\u06d5\u0641\u06d5\u0633\u06c7\u0633\u0644\u06c7\u0642\u0644\u0627\u0631\u063a\u0627",
+    "shortname": "\u0626\u200d\u06d5\u0641.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "\u0641\u0649\u0644\u0649\u067e\u067e\u0649\u0644\u0649\u0642\u0644\u0627\u0631\u063a\u0627",
+    "shortname": "\u0641\u0649\u0644.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "\u0643\u0648\u0644\u0648\u0633\u0633\u0649\u0644\u0649\u0643\u0644\u06d5\u0631\u06af\u06d5",
+    "shortname": "\u0643\u0648\u0644.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "\u062a\u06d0\u0633\u0627\u0644\u0648\u0646\u0649\u0643\u0627\u0644\u0649\u0642\u0644\u0627\u0631\u063a\u0627 \u00ab1\u00bb",
+    "shortname": "1\u062a\u06d0\u0633.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 53,
+    "name": "\u062a\u06d0\u0633\u0627\u0644\u0648\u0646\u0649\u0643\u0627\u0644\u0649\u0642\u0644\u0627\u0631\u063a\u0627 \u00ab2\u00bb",
+    "shortname": "2\u062a\u06d0\u0633.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 54,
+    "name": "\u062a\u0649\u0645\u0648\u062a\u0649\u064a\u063a\u0627 \u00ab1\u00bb",
+    "shortname": "1\u062a\u0649\u0645.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 55,
+    "name": "\u062a\u0649\u0645\u0648\u062a\u0649\u064a\u063a\u0627 \u00ab2\u00bb",
+    "shortname": "2\u062a\u0649\u0645.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 56,
+    "name": "\u062a\u0649\u062a\u06c7\u0633\u0642\u0627",
+    "shortname": "\u062a\u0649\u062a.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "\u0641\u0649\u0644\u06d0\u0645\u0648\u0646\u063a\u0627",
+    "shortname": "\u0641\u0644\u0645.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "\u0626\u0649\u0628\u0631\u0627\u0646\u0649\u064a\u0644\u0627\u0631\u063a\u0627",
+    "shortname": "\u0626\u200d\u0649\u0628\u0631.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "\u064a\u0627\u0642\u06c7\u067e",
+    "shortname": "\u064a\u0627\u0642.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "\u067e\u06d0\u062a\u0631\u06c7\u0633 \u00ab1\u00bb",
+    "shortname": "1\u067e\u06d0\u062a.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 61,
+    "name": "\u067e\u06d0\u062a\u0631\u06c7\u0633 \u00ab2\u00bb",
+    "shortname": "2\u067e\u06d0\u062a.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 62,
+    "name": "\u064a\u06c7\u06be\u0627\u0646\u0646\u0627 \u00ab1\u00bb",
+    "shortname": "1\u064a\u06c7\u06be.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 63,
+    "name": "\u064a\u06c7\u06be\u0627\u0646\u0646\u0627 \u00ab2\u00bb",
+    "shortname": "2\u064a\u06c7\u06be.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 64,
+    "name": "\u064a\u06c7\u06be\u0627\u0646\u0646\u0627 \u00ab3\u00bb",
+    "shortname": "3\u064a\u06c7\u06be.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 65,
+    "name": "\u064a\u06d5\u06be\u06c7\u062f\u0627",
+    "shortname": "\u064a\u06d5\u06be.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "\u06cb\u06d5\u06be\u0649\u064a",
+    "shortname": "\u06cb\u06d5\u06be.",
+    "matching1": null,
+    "matching2": null
+  }
+]

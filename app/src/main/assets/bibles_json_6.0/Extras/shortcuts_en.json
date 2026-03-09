@@ -1,0 +1,119 @@
+[
+  {
+    "id": 1,
+    "name": "Old Testament",
+    "short1": "OT",
+    "short2": "Tenakh",
+    "short3": "Old",
+    "reference": "Genesis - Malachi",
+    "display": 1
+  },
+  {
+    "id": 2,
+    "name": "New Testament",
+    "short1": "New",
+    "short2": "NT",
+    "short3": "New_Testament",
+    "reference": "Matthew - Revelation",
+    "display": 1
+  },
+  {
+    "id": 3,
+    "name": "Law",
+    "short1": "OT Law",
+    "short2": "Torah",
+    "short3": "Moses",
+    "reference": "Genesis - Deuteronomy",
+    "display": 1
+  },
+  {
+    "id": 4,
+    "name": "History",
+    "short1": "History",
+    "short2": "",
+    "short3": "",
+    "reference": "Joshua - Esther",
+    "display": 1
+  },
+  {
+    "id": 5,
+    "name": "Wisdom & Poetry",
+    "short1": "Wisdom",
+    "short2": "Poetry",
+    "short3": "Wisdom and Poetry",
+    "reference": "Job - Song of Solomon",
+    "display": 1
+  },
+  {
+    "id": 6,
+    "name": "Prophets",
+    "short1": "Prophets",
+    "short2": "All Prophets",
+    "short3": "",
+    "reference": "Isaiah - Malachi",
+    "display": 1
+  },
+  {
+    "id": 7,
+    "name": "Major Prophets",
+    "short1": "Major_Prophets",
+    "short2": "Major",
+    "short3": "MajorProphets",
+    "reference": "Isaiah - Daniel",
+    "display": 1
+  },
+  {
+    "id": 8,
+    "name": "Minor Prophets",
+    "short1": "Minor_Prophets",
+    "short2": "Minor",
+    "short3": "MinorProphets",
+    "reference": "Hosea - Malachi",
+    "display": 1
+  },
+  {
+    "id": 9,
+    "name": "Gospels",
+    "short1": "Gosples",
+    "short2": "Gospel",
+    "short3": "Passion",
+    "reference": "Matthew - John",
+    "display": 1
+  },
+  {
+    "id": 10,
+    "name": "Epistles",
+    "short1": "NT Epistles",
+    "short2": "Doctrine",
+    "short3": "All Epistles",
+    "reference": "Romans - Jude",
+    "display": 1
+  },
+  {
+    "id": 11,
+    "name": "Pauline Epistles",
+    "short1": "Paul",
+    "short2": "Pauline",
+    "short3": "Pauline Epistles",
+    "reference": "Romans - Hebrews",
+    "display": 1
+  },
+  {
+    "id": 12,
+    "name": "General Epistles",
+    "short1": "General",
+    "short2": "General_Epistles",
+    "short3": "Epistles General",
+    "reference": "James - Jude",
+    "display": 1
+  },
+  {
+    "id": 13,
+    "name": "End Times Prophecy",
+    "short1": "Last Days",
+    "short2": "End",
+    "short3": "End Times",
+    "reference": "Revelation; Daniel; Matthew 24",
+    "display": 0
+  }
+]

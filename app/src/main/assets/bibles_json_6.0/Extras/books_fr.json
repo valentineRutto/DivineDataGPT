@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "Gen\u00e8se",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "Exode",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 3,
+    "name": "L\u00e9vitique",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 4,
+    "name": "Nombres",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 5,
+    "name": "Deut\u00e9ronome",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "Josu\u00e9",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "Juges",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "Ruth",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "1 Samuel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 10,
+    "name": "2 Samuel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 11,
+    "name": "1 Rois",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 12,
+    "name": "2 Rois",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 13,
+    "name": "1 Chroniques",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 14,
+    "name": "2 Chroniques",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 15,
+    "name": "Esdras",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "N\u00e9h\u00e9mie",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "Esther",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "Job",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Psaume",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Proverbes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Eccl\u00e9siaste",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Cantique Des Cantiqu",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "\u00c9sa\u00efe",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "J\u00e9r\u00e9mie",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "Lamentations",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "\u00c9z\u00e9chiel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "Daniel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "Os\u00e9e",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Jo\u00ebl",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "Amos",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "Abdias",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Jonas",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Mich\u00e9e",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "Nahum",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "Habacuc",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "Sophonie",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "Agg\u00e9e",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Zacharie",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "Malachie",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Matthieu",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "Marc",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": "Luc",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "Jean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "Actes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "Romains",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "1 Corinthiens",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 47,
+    "name": "2 Corinthiens",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 48,
+    "name": "Galates",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "\u00c9ph\u00e9siens",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "Philippiens",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "Colossiens",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "1 Thessaloniciens",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 53,
+    "name": "2 Thessaloniciens",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 54,
+    "name": "1 Timoth\u00e9e",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 55,
+    "name": "2 Timoth\u00e9e",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 56,
+    "name": "Tite",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "Phil\u00e9mon",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "H\u00e9breux",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "Jacques",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "1 Pierre",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 61,
+    "name": "2 Pierre",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 62,
+    "name": "1 Jean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 63,
+    "name": "2 Jean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 64,
+    "name": "3 Jean",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 65,
+    "name": "Jude",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "Apocalypse",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  }
+]

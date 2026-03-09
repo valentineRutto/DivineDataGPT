@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "Kejadian",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "Keluaran",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 3,
+    "name": "Imamat",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 4,
+    "name": "Bilangan",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 5,
+    "name": "Ulangan",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "Yosua",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "Hakim-hakim",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "Rut",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "1 Samuel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 10,
+    "name": "2 Samuel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 11,
+    "name": "1 Raja-raja",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 12,
+    "name": "2 Raja-raja",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 13,
+    "name": "1 Tawarikh",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 14,
+    "name": "2 Tawarikh",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 15,
+    "name": "Ezra",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "Nehemia",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "Ester",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "Ayub",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Mazmur",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Amsal",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Pengkhotbah",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Kidung Agung",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "Yesaya",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "Yeremia",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "Ratapan",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "Yehezkiel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "Daniel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "Hosea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Yoel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "Amos",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "Obaja",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Yunus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Mikha",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "Nahum",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "Habakuk",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "Zefanya",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "Hagai",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Zakharia",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "Maleakhi",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Matius",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "Markus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": "Lukas",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "Yohanes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "Kisah Rasul-rasul",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "Roma",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "1 Korintus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 47,
+    "name": "2 Korintus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 48,
+    "name": "Galatia",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "Efesus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "Filipi",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "Kolose",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "1 Tesalonika",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 53,
+    "name": "2 Tesalonika",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 54,
+    "name": "1 Timotius",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 55,
+    "name": "2 Timotius",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 56,
+    "name": "Titus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "Filemon",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "Ibrani",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "Yakobus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "1 Petrus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 61,
+    "name": "2 Petrus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 62,
+    "name": "1 Yohanes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 63,
+    "name": "2 Yohanes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 64,
+    "name": "3 Yohanes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 65,
+    "name": "Yudas",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "Wahyu",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  }
+]

@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "1 Moj\u017ceszowa \u2013 Rodzaju",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "2 Moj\u017ceszowa - Wyj\u015bcia",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 3,
+    "name": "3 Moj\u017ceszowa - Kap\u0142a\u0144ska",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 4,
+    "name": "4 Moj\u017ceszowa - Liczb",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 5,
+    "name": "5 Moj\u017ceszowa - Powt\u00f3rzonego Prawa",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "Jozuego",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "S\u0119dzi\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "Ruty",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "1. Samuelowa",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 10,
+    "name": "2. Samuelowa",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 11,
+    "name": "1. Kr\u00f3lewska",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 12,
+    "name": "2. Kr\u00f3lewska",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 13,
+    "name": "1. Kronik",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 14,
+    "name": "2. Kronik",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 15,
+    "name": "Ezdraszowa",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "Nehemijaszowa",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "Estery",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "Ijobowa",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Psalm\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Przypowie\u015bci Salomonowych",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Kaznodziei Salomona",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Pie\u015b\u0144 Salomona",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "Izajasz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "Jeremijasz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "Treny Jeremijaszowe",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "Ezechyjel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "Danijel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "Ozeasza",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Joel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "Amos",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "Abdyjasz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Jonasz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Micheasz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "Nahum",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "Abakuk",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "Sofonijasz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "Aggieusz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Zacharyjasz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "Malachyjasz",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Mateusza",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "Marka",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": "\u0141ukasza",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "Jana",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "Dzieje Apostolskie",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "Rzymian",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "1. Korynt\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 47,
+    "name": "2. Korynt\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 48,
+    "name": "Galat\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "Efez\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "Filipens\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "Kolosens\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "1. Tesalonicens\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 53,
+    "name": "2. Tesalonicens\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 54,
+    "name": "1. Tymoteusza",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 55,
+    "name": "2. Tymoteusza",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 56,
+    "name": "Tytusa",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "Filemona",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "\u017byd\u00f3w",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "Jak\u00f3ba",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "1. Piotra",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 61,
+    "name": "2. Piotra",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 62,
+    "name": "1. Jana",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 63,
+    "name": "2. Jana",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 64,
+    "name": "1. Jana",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 65,
+    "name": "Judasa",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "Objawienie Jana",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  }
+]

@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BorderColor
@@ -24,6 +25,7 @@ import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
@@ -33,14 +35,17 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valentinerutto.divinedatagpt.BibleViewModel
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
+import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 import com.valentinerutto.divinedatagpt.ui.theme.TextPrimary
@@ -52,7 +57,6 @@ import org.koin.androidx.compose.koinViewModel
 fun BibleScreen(
     viewModel: BibleViewModel = koinViewModel(),
     onNavigateToHome: () -> Unit,
-    onNavigateToJournal: () -> Unit
 ) {
     Scaffold(
         containerColor = DarkBackground,
@@ -90,7 +94,6 @@ fun BibleScreen(
                 Text("this is the bible screen")
                 BottomNavigationBar(
                     onNavigateToHome = onNavigateToHome,
-                    onNavigateToJournal = onNavigateToJournal,
                     onNavigateToSettings = onNavigateToHome,
                     currentBook = "John",
                     currentChapter = 3,
@@ -107,6 +110,35 @@ fun BibleScreen(
 }
 
 @Composable
+fun BookItem(
+   book: BibleBookEntity,
+    isSelected: Boolean,
+    onSelected: (BibleBookEntity) -> Unit
+) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(if (isSelected) PurplePrimary.copy(0.2f) else Color.Transparent)
+            .clickable { onSelected(book) }
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = book.bookName,
+            style = MaterialTheme.typography.bodyLarge,
+            color = if (isSelected) PurpleAccent else TextPrimary,
+            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
+        )
+        Text(
+            text = "${book.totalChapters} ch",
+            style = MaterialTheme.typography.bodySmall,
+            color = TextMuted
+        )
+    }
+}
+@Composable
 fun BottomNavigationBar(
     currentBook: String,
     currentChapter: Int,
@@ -117,7 +149,6 @@ fun BottomNavigationBar(
     onNote: () -> Unit,
     onShare: () -> Unit,
     onNavigateToHome: () -> Unit,
-    onNavigateToJournal: () -> Unit,
     onNavigateToSettings: () -> Unit
 ) {
     Column {
@@ -181,19 +212,7 @@ fun BottomNavigationBar(
                 label = { Text("BIBLE", fontSize = 10.sp, color = PurplePrimary) },
                 colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
             )
-            NavigationBarItem(
-                selected = false,
-                onClick = onNavigateToJournal,
-                icon = {
-                    Icon(
-                        Icons.Default.BorderColor,
-                        contentDescription = "Journal",
-                        tint = TextMuted
-                    )
-                },
-                label = { Text("JOURNAL", fontSize = 10.sp, color = TextMuted) },
-                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-            )
+
             NavigationBarItem(
                 selected = false,
                 onClick = onNavigateToSettings,

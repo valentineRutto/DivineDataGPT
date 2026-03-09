@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "Farawa",
+    "shortname": "Far",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "Fitowa",
+    "shortname": "Fit",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 3,
+    "name": "Firistoci",
+    "shortname": "Fir",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 4,
+    "name": "\u0198idaya",
+    "shortname": "\u0198id",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 5,
+    "name": "Maimaitawar Shari\u2019a",
+    "shortname": "M Sh",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "Yoshuwa",
+    "shortname": "Yosh",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "Mahukunta",
+    "shortname": "Mah",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "Rut",
+    "shortname": "Rut",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "1 Sama\u2019ila",
+    "shortname": "1Sam",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 10,
+    "name": "2 Sama\u2019ila",
+    "shortname": "2Sam",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 11,
+    "name": "1 Sarakuna",
+    "shortname": "1Sar",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 12,
+    "name": "2 Sarakuna",
+    "shortname": "2Sar",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 13,
+    "name": "1 Tarihi",
+    "shortname": "1Tar",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 14,
+    "name": "2 Tarihi",
+    "shortname": "2Tar",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 15,
+    "name": "Ezra",
+    "shortname": "Ezr",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "Nehemiya",
+    "shortname": "Neh",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "Esta",
+    "shortname": "Esta",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "Ayuba",
+    "shortname": "Ayu",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Zabura",
+    "shortname": "Zab",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Karin Magana",
+    "shortname": "K Mag",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Mai Hadishi",
+    "shortname": "M Had",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Wa\u0199ar Wa\u0199o\u0199i",
+    "shortname": "WW",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "Ishaya",
+    "shortname": "Ish",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "Irmiya",
+    "shortname": "Irm",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "Makoki",
+    "shortname": "Mak",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "Ezekiyel",
+    "shortname": "Ezk",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "Daniyel",
+    "shortname": "Dan",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "Hosiya",
+    "shortname": "Hos",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Yowel",
+    "shortname": "Yow",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "Amos",
+    "shortname": "Amos",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "Obadiya",
+    "shortname": "Oba",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Yunana",
+    "shortname": "Yun",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Mika",
+    "shortname": "Mik",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "Nahum",
+    "shortname": "Nah",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "Habakkuk",
+    "shortname": "Hab",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "Zefaniya",
+    "shortname": "Zef",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "Haggai",
+    "shortname": "Hag",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Zakariya",
+    "shortname": "Zak",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "Malaki",
+    "shortname": "Mal",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Mattiyu",
+    "shortname": "Mat",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "Markus",
+    "shortname": "Mar",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": "Luka",
+    "shortname": "Luk",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "Yohanna",
+    "shortname": "Yoh",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "Ayyukan Manzanni",
+    "shortname": "Ayy M",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "Romawa",
+    "shortname": "Rom",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "1 Korintiyawa",
+    "shortname": "1Kor",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 47,
+    "name": "2 Korintiyawa",
+    "shortname": "2Kor",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 48,
+    "name": "Galatiyawa",
+    "shortname": "Gal",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "Afisawa",
+    "shortname": "Afi",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "Filibbiyawa",
+    "shortname": "Fil",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "Kolossiyawa",
+    "shortname": "Kol",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "1 Tessalonikawa",
+    "shortname": "1Tes",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 53,
+    "name": "2 Tessalonikawa",
+    "shortname": "2Tes",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 54,
+    "name": "1 Timoti",
+    "shortname": "1Tim",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 55,
+    "name": "2 Timoti",
+    "shortname": "2Tim",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 56,
+    "name": "Titus",
+    "shortname": "Tit",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "Filemon",
+    "shortname": "Flm",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "Ibraniyawa",
+    "shortname": "Ibr",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "Ya\u0199ub",
+    "shortname": "Ya\u0199",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "1 Bitrus",
+    "shortname": "1Bit",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 61,
+    "name": "2 Bitrus",
+    "shortname": "2Bit",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 62,
+    "name": "1 Yohanna",
+    "shortname": "1Yoh",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 63,
+    "name": "2 Yohanna",
+    "shortname": "2Yoh",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 64,
+    "name": "3 Yohanna",
+    "shortname": "3Yoh",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 65,
+    "name": "Yahuda",
+    "shortname": "Yah",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "Ru\u2019uya ta Yohanna",
+    "shortname": "R Yoh",
+    "matching1": null,
+    "matching2": null
+  }
+]

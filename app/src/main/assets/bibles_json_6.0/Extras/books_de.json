@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "1 Mose",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Mose"
+  },
+  {
+    "id": 2,
+    "name": "2 Mose",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Mose"
+  },
+  {
+    "id": 3,
+    "name": "3 Mose",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "3Mose"
+  },
+  {
+    "id": 4,
+    "name": "4 Mose",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "4Mose"
+  },
+  {
+    "id": 5,
+    "name": "5 Mose",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "5Mose"
+  },
+  {
+    "id": 6,
+    "name": "Josua",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "Richter",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "Rut",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "1 Samuel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Samuel"
+  },
+  {
+    "id": 10,
+    "name": "2 Samuel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Samuel"
+  },
+  {
+    "id": 11,
+    "name": "1 Koenige",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Koenige"
+  },
+  {
+    "id": 12,
+    "name": "2 Koenige",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Koenige"
+  },
+  {
+    "id": 13,
+    "name": "1 Chronik",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Chronik"
+  },
+  {
+    "id": 14,
+    "name": "2 Chronik",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Chroni"
+  },
+  {
+    "id": 15,
+    "name": "Esra",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "Nehemia",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "Ester",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "Job",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Psalm",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Sprueche",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Prediger",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Hohelied",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "Jesaja",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "Jeremia",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "Klagelieder",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "Hesekiel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "Daniel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "Hosea",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Joel",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "Amos",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "Obadja",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Jona",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Mica",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "Nahum",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "Habakuk",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "Zephanja",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "Haggai",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Sacharja",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "Maleachi",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Matthaeus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "Markus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": "Lukas",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "Johannes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "Apostelgeschichte",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "Roemers",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "1 Korinther",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Korinther"
+  },
+  {
+    "id": 47,
+    "name": "2 Korinther",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Korinther"
+  },
+  {
+    "id": 48,
+    "name": "Galater",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "Epheser",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "Philipper",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "Kolosser",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "1 Thessalonicher",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Thessalonicher"
+  },
+  {
+    "id": 53,
+    "name": "2 Thessalonicher",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Thessalonicher"
+  },
+  {
+    "id": 54,
+    "name": "1 Timotheus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Timotheus"
+  },
+  {
+    "id": 55,
+    "name": "2 Timotheus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Timotheus"
+  },
+  {
+    "id": 56,
+    "name": "Titus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "Philemon",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "Hebraeer",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "Jakobus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "1 Petrus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Petrus"
+  },
+  {
+    "id": 61,
+    "name": "2 Petrus",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Petrus"
+  },
+  {
+    "id": 62,
+    "name": "1 Johannes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "1Johannes"
+  },
+  {
+    "id": 63,
+    "name": "2 Johannes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "2Johannes"
+  },
+  {
+    "id": 64,
+    "name": "3 Johannes",
+    "shortname": null,
+    "matching1": null,
+    "matching2": "3Johannes"
+  },
+  {
+    "id": 65,
+    "name": "Judas",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "Offenbarung",
+    "shortname": null,
+    "matching1": null,
+    "matching2": null
+  }
+]

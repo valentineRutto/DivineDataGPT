@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "Prad\u017eios",
+    "shortname": "Pr",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "I\u0161\u0117jimo",
+    "shortname": "I\u0161",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 3,
+    "name": "Kunig\u0173 (Levit\u0173)",
+    "shortname": "Kun",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 4,
+    "name": "Skai\u010di\u0173",
+    "shortname": "Sk",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 5,
+    "name": "Pakartotas \u012estatymas",
+    "shortname": "\u012est",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "Jozu\u0117s",
+    "shortname": "Joz",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "Teis\u0117j\u0173",
+    "shortname": "Ts",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "R\u016btos",
+    "shortname": "R\u016bt",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "I Samuelio",
+    "shortname": "I Sam",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 10,
+    "name": "II Samuelio",
+    "shortname": "II Sam",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 11,
+    "name": "I Karali\u0173",
+    "shortname": "I Kar",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 12,
+    "name": "II Karali\u0173",
+    "shortname": "II Kar",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 13,
+    "name": "I Metra\u0161\u010di\u0173",
+    "shortname": "I Met",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 14,
+    "name": "II Metra\u0161\u010di\u0173",
+    "shortname": "II Met",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 15,
+    "name": "Ezros",
+    "shortname": "Ezr",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "Nehemijo",
+    "shortname": "Neh",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "Esteros",
+    "shortname": "Est",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "Jobo",
+    "shortname": "Job",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Psalmynas",
+    "shortname": "Ps",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Patarli\u0173",
+    "shortname": "Pat",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Mokytojo",
+    "shortname": "Mok",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Giesmi\u0173 giesm\u0117",
+    "shortname": "Gg",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "Izaijo",
+    "shortname": "Iz",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "Jeremijo",
+    "shortname": "Jer",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "Raudos",
+    "shortname": "Rd",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "Ezechielio",
+    "shortname": "Eze",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "Danieliaus",
+    "shortname": "Dan",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "Oz\u0117jo",
+    "shortname": "Oz",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Joelio",
+    "shortname": "Jl",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "Amoso",
+    "shortname": "Am",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "Abdijo",
+    "shortname": "Abd",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Jonos",
+    "shortname": "Jon",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Mich\u0117jo",
+    "shortname": "Mch",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "Nahumo",
+    "shortname": "Nah",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "Habakuko",
+    "shortname": "Hab",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "Sofonijo",
+    "shortname": "Sof",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "Ag\u0117jo",
+    "shortname": "Ag",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Zacharijo",
+    "shortname": "Zch",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "Malachijo",
+    "shortname": "Mal",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Mato",
+    "shortname": "Mt",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "Morkaus",
+    "shortname": "Mk",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": "Luko",
+    "shortname": "Lk",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "Jono",
+    "shortname": "Jn",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "Apa\u0161tal\u0173 darbai",
+    "shortname": "Apd",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "Romie\u010diams",
+    "shortname": "Rom",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "I Korintie\u010diams",
+    "shortname": "I Kor",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 47,
+    "name": "II Korintie\u010diams",
+    "shortname": "II Kor",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 48,
+    "name": "Galatams",
+    "shortname": "Gal",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "Efezie\u010diams",
+    "shortname": "Ef",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "Filipie\u010diams",
+    "shortname": "Flp",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "Kolosie\u010diams",
+    "shortname": "Kol",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "I Tesalonikie\u010diams",
+    "shortname": "I Tes",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 53,
+    "name": "II Tesalonikie\u010diams",
+    "shortname": "II Tes",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 54,
+    "name": "I Timotiejui",
+    "shortname": "I Tim",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 55,
+    "name": "II Timotiejui",
+    "shortname": "II Tim",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 56,
+    "name": "Titui",
+    "shortname": "Tit",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "Filemonui",
+    "shortname": "Flm",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "Hebrajams",
+    "shortname": "Hbr",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "Jok\u016bbo",
+    "shortname": "Jok",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "I Petro",
+    "shortname": "I Pt",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 61,
+    "name": "II Petro",
+    "shortname": "II Pt",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 62,
+    "name": "I Jono",
+    "shortname": "I Jn",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 63,
+    "name": "II Jono",
+    "shortname": "II Jn",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 64,
+    "name": "III Jono",
+    "shortname": "III Jn",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 65,
+    "name": "Judo",
+    "shortname": "Jud",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "Aprei\u0161kimas",
+    "shortname": "Apr",
+    "matching1": null,
+    "matching2": null
+  }
+]

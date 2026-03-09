@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "Genesis",
+    "shortname": "Gen",
+    "matching1": "Gn",
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "Exodus",
+    "shortname": "Ex",
+    "matching1": "Exo",
+    "matching2": "Exod"
+  },
+  {
+    "id": 3,
+    "name": "Leviticus",
+    "shortname": "Lev",
+    "matching1": "Lv",
+    "matching2": "Le"
+  },
+  {
+    "id": 4,
+    "name": "Numbers",
+    "shortname": "Num",
+    "matching1": "Nm",
+    "matching2": "Nu"
+  },
+  {
+    "id": 5,
+    "name": "Deuteronomy",
+    "shortname": "Deut",
+    "matching1": "Dt",
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "Joshua",
+    "shortname": "Josh",
+    "matching1": "Jos",
+    "matching2": "Jsh"
+  },
+  {
+    "id": 7,
+    "name": "Judges",
+    "shortname": "Judg",
+    "matching1": "Jdg",
+    "matching2": "Jdgs"
+  },
+  {
+    "id": 8,
+    "name": "Ruth",
+    "shortname": "Ru",
+    "matching1": "Rth",
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "1 Samuel",
+    "shortname": "1 Sam",
+    "matching1": "1Samuel 1Sm 1 Sm I Samuel First Samuel I Sm 1st Sm",
+    "matching2": "1st Samuel"
+  },
+  {
+    "id": 10,
+    "name": "2 Samuel",
+    "shortname": "2 Sam",
+    "matching1": "2Samuel 2Sm 2 Sm II Samuel Second Samuel II Sm 2nd Sm",
+    "matching2": "2nd Samuel"
+  },
+  {
+    "id": 11,
+    "name": "1 Kings",
+    "shortname": "1 Ki",
+    "matching1": "1Kings 1Kgs 1 Kgs First Kings I Kings 1st Ki",
+    "matching2": "1st Kings"
+  },
+  {
+    "id": 12,
+    "name": "2 Kings",
+    "shortname": "2 Ki",
+    "matching1": "2Kings 2Kgs 2 Kgs Second Kings II Kings 2nd Ki",
+    "matching2": "2nd Kings"
+  },
+  {
+    "id": 13,
+    "name": "1 Chronicles",
+    "shortname": "1 Chron",
+    "matching1": "1Chronicles First Chronicles 1st Chron",
+    "matching2": "1st Chronicles"
+  },
+  {
+    "id": 14,
+    "name": "2 Chronicles",
+    "shortname": "2 Chron",
+    "matching1": "2Chronicles Second Chronicles 2nd Chron",
+    "matching2": "2nd Chronicles"
+  },
+  {
+    "id": 15,
+    "name": "Ezra",
+    "shortname": "Ezra",
+    "matching1": "Ezr",
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "Nehemiah",
+    "shortname": "Neh",
+    "matching1": "Ne",
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "Esther",
+    "shortname": "Esth",
+    "matching1": "Est",
+    "matching2": "Es"
+  },
+  {
+    "id": 18,
+    "name": "Job",
+    "shortname": "Job",
+    "matching1": "Jb",
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Psalms",
+    "shortname": "Ps",
+    "matching1": "Ps",
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Proverbs",
+    "shortname": "Prov",
+    "matching1": "Prv",
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Ecclesiastes",
+    "shortname": "Ecc",
+    "matching1": "Ec",
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Song of Solomon",
+    "shortname": "SOS",
+    "matching1": "Song of Songs",
+    "matching2": "Canticle of Canticles"
+  },
+  {
+    "id": 23,
+    "name": "Isaiah",
+    "shortname": "Isa",
+    "matching1": "Is",
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "Jeremiah",
+    "shortname": "Jer",
+    "matching1": "Je",
+    "matching2": "Jr"
+  },
+  {
+    "id": 25,
+    "name": "Lamentations",
+    "shortname": "Lam",
+    "matching1": "La",
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "Ezekiel",
+    "shortname": "Eze",
+    "matching1": "Ezek",
+    "matching2": "Ezk"
+  },
+  {
+    "id": 27,
+    "name": "Daniel",
+    "shortname": "Dan",
+    "matching1": "Dn",
+    "matching2": "Da"
+  },
+  {
+    "id": 28,
+    "name": "Hosea",
+    "shortname": "Hos",
+    "matching1": "Ho",
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Joel",
+    "shortname": "Joel",
+    "matching1": "Joe",
+    "matching2": "Jl"
+  },
+  {
+    "id": 30,
+    "name": "Amos",
+    "shortname": "Amos",
+    "matching1": "Ams",
+    "matching2": "Am"
+  },
+  {
+    "id": 31,
+    "name": "Obadiah",
+    "shortname": "Obad",
+    "matching1": "Ob",
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Jonah",
+    "shortname": "Jon",
+    "matching1": "Jnh",
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Micah",
+    "shortname": "Micah",
+    "matching1": "Mch",
+    "matching2": "Mic"
+  },
+  {
+    "id": 34,
+    "name": "Nahum",
+    "shortname": "Nah",
+    "matching1": "Nhm",
+    "matching2": "Na"
+  },
+  {
+    "id": 35,
+    "name": "Habakkuk",
+    "shortname": "Hab",
+    "matching1": "Hb",
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "Zephaniah",
+    "shortname": "Zeph",
+    "matching1": "Zep",
+    "matching2": "Zp"
+  },
+  {
+    "id": 37,
+    "name": "Haggai",
+    "shortname": "Hag",
+    "matching1": "Hg",
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Zechariah",
+    "shortname": "Zech",
+    "matching1": "Zec",
+    "matching2": "Zc"
+  },
+  {
+    "id": 39,
+    "name": "Malachi",
+    "shortname": "Mal",
+    "matching1": "Ml",
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Matthew",
+    "shortname": "Matt",
+    "matching1": "Mt",
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "Mark",
+    "shortname": "Mark",
+    "matching1": "Mk",
+    "matching2": "Mr"
+  },
+  {
+    "id": 42,
+    "name": "Luke",
+    "shortname": "Luke",
+    "matching1": "Lk",
+    "matching2": "Lu"
+  },
+  {
+    "id": 43,
+    "name": "John",
+    "shortname": "John",
+    "matching1": "Jn",
+    "matching2": "Jhn"
+  },
+  {
+    "id": 44,
+    "name": "Acts",
+    "shortname": "Acts",
+    "matching1": "Ac",
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "Romans",
+    "shortname": "Rom",
+    "matching1": "Rm",
+    "matching2": "Ro"
+  },
+  {
+    "id": 46,
+    "name": "1 Corinthians",
+    "shortname": "1 Cor",
+    "matching1": "1Corinthians First Corinthians I Corinthians",
+    "matching2": "1st Corinthians"
+  },
+  {
+    "id": 47,
+    "name": "2 Corinthians",
+    "shortname": "2 Cor",
+    "matching1": "2Corinthians Second Corinthians II Corinthians",
+    "matching2": "2nd Corinthians"
+  },
+  {
+    "id": 48,
+    "name": "Galatians",
+    "shortname": "Gal",
+    "matching1": "Ga",
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "Ephesians",
+    "shortname": "Eph",
+    "matching1": "Ephes",
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "Philippians",
+    "shortname": "Phil",
+    "matching1": "Php",
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "Colossians",
+    "shortname": "Col",
+    "matching1": "Col",
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "1 Thessalonians",
+    "shortname": "1 Thess",
+    "matching1": "1Thessalonians First Thessalonians I Thessalonians",
+    "matching2": "1st Thessalonians"
+  },
+  {
+    "id": 53,
+    "name": "2 Thessalonians",
+    "shortname": "2 Thess",
+    "matching1": "2Thessalonians Second Thessalonians II Thessalonians",
+    "matching2": "2nd Thessalonians"
+  },
+  {
+    "id": 54,
+    "name": "1 Timothy",
+    "shortname": "1 Tim",
+    "matching1": "1Timothy First Timothy I Timothy",
+    "matching2": "1st Timothy"
+  },
+  {
+    "id": 55,
+    "name": "2 Timothy",
+    "shortname": "2 Tim",
+    "matching1": "2Timothy Second Timothy II Timothy",
+    "matching2": "2nd Timothy"
+  },
+  {
+    "id": 56,
+    "name": "Titus",
+    "shortname": "Titus",
+    "matching1": "Tit",
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "Philemon",
+    "shortname": "Phm",
+    "matching1": "Phlm",
+    "matching2": "Philem"
+  },
+  {
+    "id": 58,
+    "name": "Hebrews",
+    "shortname": "Heb",
+    "matching1": "Hbr",
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "James",
+    "shortname": "Jas",
+    "matching1": "Jm",
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "1 Peter",
+    "shortname": "1 Pet",
+    "matching1": "1Peter 1Pt 1 Pt 1st Pt I Peter First Peter",
+    "matching2": "1st Peter"
+  },
+  {
+    "id": 61,
+    "name": "2 Peter",
+    "shortname": "2 Pet",
+    "matching1": "2Peter 2Pt 2 Pt 2nd Pt II Peter Second Peter",
+    "matching2": "2nd Peter"
+  },
+  {
+    "id": 62,
+    "name": "1 John",
+    "shortname": "1 John",
+    "matching1": "1Jn 1 Jn 1John 1st Jn I John First John",
+    "matching2": "1st John"
+  },
+  {
+    "id": 63,
+    "name": "2 John",
+    "shortname": "2 John",
+    "matching1": "2Jn 2 Jn 2John 2nd Jn II John Second John",
+    "matching2": "2nd John"
+  },
+  {
+    "id": 64,
+    "name": "3 John",
+    "shortname": "3 John",
+    "matching1": "3Jn 3 Jn 3John 3rd Jn III John Third John",
+    "matching2": "3rd John"
+  },
+  {
+    "id": 65,
+    "name": "Jude",
+    "shortname": "Jude",
+    "matching1": "Jde",
+    "matching2": "Jud"
+  },
+  {
+    "id": 66,
+    "name": "Revelation",
+    "shortname": "Rev",
+    "matching1": "Rv Apocalypse",
+    "matching2": "The Revelation"
+  }
+]

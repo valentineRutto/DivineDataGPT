@@ -1,0 +1,464 @@
+[
+  {
+    "id": 1,
+    "name": "Pirm\u0101 Mozus gr\u0101mata (Genesis)",
+    "shortname": "1. Moz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 2,
+    "name": "Otr\u0101 Mozus gr\u0101mata (Exodus)",
+    "shortname": "2. Moz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 3,
+    "name": "Tre\u0161\u0101 Mozus gr\u0101mata (Leviticus)",
+    "shortname": "3. Moz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 4,
+    "name": "Ceturt\u0101 Mozus gr\u0101mata (Numeri)",
+    "shortname": "4. Moz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 5,
+    "name": "Piekt\u0101 Mozus gr\u0101mata (Deuteronomium)",
+    "shortname": "5. Moz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 6,
+    "name": "Jozuas gr\u0101mata",
+    "shortname": "Joz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 7,
+    "name": "So\u0123u gr\u0101mata",
+    "shortname": "So\u0123u",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 8,
+    "name": "Rutes gr\u0101mata",
+    "shortname": "Rt.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 9,
+    "name": "Pirm\u0101 Samu\u0113la gr\u0101mata",
+    "shortname": "1. Sam.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 10,
+    "name": "Otr\u0101 Samu\u0113la gr\u0101mata",
+    "shortname": "2. Sam.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 11,
+    "name": "Pirm\u0101 \u0136\u0113ni\u0146u gr\u0101mata",
+    "shortname": "1. \u0136\u0113n.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 12,
+    "name": "Otr\u0101 \u0136\u0113ni\u0146u gr\u0101mata",
+    "shortname": "2. \u0136\u0113n.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 13,
+    "name": "Pirm\u0101 Laiku gr\u0101mata",
+    "shortname": "1. Lku.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 14,
+    "name": "Otr\u0101 Laiku gr\u0101mata",
+    "shortname": "2. Lku.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 15,
+    "name": "Ezras gr\u0101mata",
+    "shortname": "Ez.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 16,
+    "name": "Nehemijas gr\u0101mata",
+    "shortname": "Neh.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 17,
+    "name": "Esteres gr\u0101mata",
+    "shortname": "Est.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 18,
+    "name": "\u012ajaba gr\u0101mata",
+    "shortname": "\u012aj.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 19,
+    "name": "Psalmi",
+    "shortname": "Ps.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 20,
+    "name": "Salamana Pam\u0101c\u012bbas",
+    "shortname": "Sal.p.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 21,
+    "name": "Salamans M\u0101c\u012bt\u0101js",
+    "shortname": "Sal.m.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 22,
+    "name": "Salamana Augst\u0101 dziesma",
+    "shortname": "A.dz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 23,
+    "name": "Jesajas gr\u0101mata",
+    "shortname": "Jes.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 24,
+    "name": "Jeremijas gr\u0101mata",
+    "shortname": "Jer.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 25,
+    "name": "Raudu dziesmas",
+    "shortname": "R.dz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 26,
+    "name": "Ec\u0113hi\u0113la gr\u0101mata",
+    "shortname": "Ec.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 27,
+    "name": "Dani\u0113la gr\u0101mata",
+    "shortname": "Dan.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 28,
+    "name": "Hozejas gr\u0101mata",
+    "shortname": "Hoz.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 29,
+    "name": "Jo\u0113la gr\u0101mata",
+    "shortname": "Jo\u0113la",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 30,
+    "name": "\u0100mosa gr\u0101mata",
+    "shortname": "Am.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 31,
+    "name": "Obadjas gr\u0101mata",
+    "shortname": "Ob.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 32,
+    "name": "Jonas gr\u0101mata",
+    "shortname": "Jon.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 33,
+    "name": "Mihas gr\u0101mata",
+    "shortname": "Mih.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 34,
+    "name": "Nahuma gr\u0101mata",
+    "shortname": "Nah.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 35,
+    "name": "Habakuka gr\u0101mata",
+    "shortname": "Hab.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 36,
+    "name": "Cefanjas gr\u0101mata",
+    "shortname": "Cef.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 37,
+    "name": "Hagaja gr\u0101mata",
+    "shortname": "Hag.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 38,
+    "name": "Caharijas gr\u0101mata",
+    "shortname": "Cah.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 39,
+    "name": "Maleahija gr\u0101mata",
+    "shortname": "Mal.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 40,
+    "name": "Mateja eva\u0146\u0123\u0113lijs",
+    "shortname": "Mt.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 41,
+    "name": "Marka eva\u0146\u0123\u0113lijs",
+    "shortname": "Mk.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 42,
+    "name": "L\u016bkas eva\u0146\u0123\u0113lijs",
+    "shortname": "Lk.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 43,
+    "name": "J\u0101\u0146a eva\u0146\u0123\u0113lijs",
+    "shortname": "J\u0146.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 44,
+    "name": "Apustu\u013cu darbi",
+    "shortname": "Ap.d.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 45,
+    "name": "P\u0101vila v\u0113stule romie\u0161iem",
+    "shortname": "Rom.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 46,
+    "name": "P\u0101vila 1. v\u0113stule korintie\u0161iem",
+    "shortname": "1. Kor.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 47,
+    "name": "P\u0101vila 2. v\u0113stule korintie\u0161iem",
+    "shortname": "2. Kor.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 48,
+    "name": "P\u0101vila v\u0113stule galatie\u0161iem",
+    "shortname": "Gal.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 49,
+    "name": "P\u0101vila v\u0113stule efezie\u0161iem",
+    "shortname": "Ef.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 50,
+    "name": "P\u0101vila v\u0113stule filipie\u0161iem",
+    "shortname": "Fil.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 51,
+    "name": "P\u0101vila v\u0113stule kolosie\u0161iem",
+    "shortname": "Kol.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 52,
+    "name": "P\u0101vila 1. v\u0113stule tesaloni\u0137ie\u0161iem",
+    "shortname": "1. Tes.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 53,
+    "name": "P\u0101vila 2. v\u0113stule tesaloni\u0137ie\u0161iem",
+    "shortname": "2. Tes.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 54,
+    "name": "P\u0101vila 1. v\u0113stule Timotejam",
+    "shortname": "1. Tim.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 55,
+    "name": "P\u0101vila 2. v\u0113stule Timotejam",
+    "shortname": "2. Tim.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 56,
+    "name": "P\u0101vila v\u0113stule Titam",
+    "shortname": "Tit.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 57,
+    "name": "P\u0101vila v\u0113stule Filemonam",
+    "shortname": "Filem.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 58,
+    "name": "V\u0113stule ebrejiem",
+    "shortname": "Ebr.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 59,
+    "name": "J\u0113kaba v\u0113stule",
+    "shortname": "J\u0113k.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 60,
+    "name": "P\u0113tera 1. v\u0113stule",
+    "shortname": "1. P\u0113t.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 61,
+    "name": "P\u0113tera 2. v\u0113stule",
+    "shortname": "2. P\u0113t.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 62,
+    "name": "J\u0101\u0146a 1. v\u0113stule",
+    "shortname": "1. J\u0146.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 63,
+    "name": "J\u0101\u0146a 2. v\u0113stule",
+    "shortname": "2. J\u0146.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 64,
+    "name": "J\u0101\u0146a 3. v\u0113stule",
+    "shortname": "3. J\u0146.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 65,
+    "name": "J\u016bdas v\u0113stule",
+    "shortname": "J\u016bd.",
+    "matching1": null,
+    "matching2": null
+  },
+  {
+    "id": 66,
+    "name": "J\u0101\u0146a atkl\u0101smes gr\u0101mata",
+    "shortname": "J\u0146.atkl.",
+    "matching1": null,
+    "matching2": null
+  }
+]
