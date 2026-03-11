@@ -53,9 +53,6 @@ fun NavGraph(navController: NavHostController) {
                     navController.navigate(Screen.Home.route) {
                         popUpTo(Screen.Home.route) { inclusive = false }
                     }
-                },
-                onNavigateToJournal = {
-                    navController.navigate(Screen.Journal.route)
                 })
         }
     }
