@@ -1,7 +1,9 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -47,6 +49,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
 import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
@@ -113,6 +116,61 @@ fun BibleScreen(
     )
 }
 
+@Composable
+fun VerseItem(
+    verse: BibleVerseEntity2,
+    isHighlighted: Boolean,
+    onClick: () -> Unit,
+    onLongClick: () -> Unit
+) {
+    val backgroundColor = when {
+        isHighlighted -> PurplePrimary.copy(alpha = 0.15f)
+        verse.verse == 3 -> PurplePrimary.copy(alpha = 0.3f) // Special highlight like in image
+        else -> Color.Transparent
+    }
+
+    val borderColor = if (verse.verse == 3) PurplePrimary else Color.Transparent
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(backgroundColor)
+            .border(
+                width = if (verse.verse == 3) 2.dp else 0.dp,
+                color = borderColor,
+                shape = RoundedCornerShape(8.dp)
+            )
+            .combinedClickable(
+                onClick = onClick,
+                onLongClick = onLongClick
+            )
+            .padding(horizontal = 12.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.spacedBy(8.dp)
+    ) {
+        // Verse Number
+        Text(
+            text = "${verse.verse}",
+            style = MaterialTheme.typography.labelSmall.copy(
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Bold
+            ),
+            color = if (verse.verse == 3) PurpleAccent else TextMuted,
+            modifier = Modifier.padding(top = 2.dp)
+        )
+
+        // Verse Text
+        Text(
+            text = verse.text,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                fontSize = 16.sp,
+                lineHeight = 26.sp
+            ),
+            color = TextPrimary,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
 @Composable
 fun ErrorContent(
     error: String,
