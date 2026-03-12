@@ -27,6 +27,8 @@ class DivineDataViewModel(
 
     private val _reflectionuiState = MutableStateFlow(ReflectionUiState())
     val reflectionuistate: StateFlow<ReflectionUiState> = _reflectionuiState.asStateFlow()
+   private val _bibleuiState = MutableStateFlow(BibleUIState())
+    val bibleuistate: StateFlow<BibleUIState> = _bibleuiState.asStateFlow()
 
     private val conversationHistory = mutableListOf<Pair<String, String>>()
 
@@ -204,6 +206,17 @@ data class ReflectionUiState(
         ChatMessage(
             "Welcome to your reflection space.\nHow is your soul feeling today?",
             isUser = false
+        )
+    ),
+    val isLoading: Boolean = false,
+    val error: String? = null
+)
+
+data class BibleUiState(
+
+    val messages: List<BibleEntity2> = listOf(
+        BibleEntity2(
+
         )
     ),
     val isLoading: Boolean = false,
