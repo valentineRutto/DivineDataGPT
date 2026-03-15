@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.data.network.ai.model.ChatMessage
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
@@ -27,8 +28,8 @@ class DivineDataViewModel(
 
     private val _reflectionuiState = MutableStateFlow(ReflectionUiState())
     val reflectionuistate: StateFlow<ReflectionUiState> = _reflectionuiState.asStateFlow()
-   private val _bibleuiState = MutableStateFlow(BibleUIState())
-    val bibleuistate: StateFlow<BibleUIState> = _bibleuiState.asStateFlow()
+    private val _bibleuiState = MutableStateFlow(BibleUiState())
+    val bibleuistate: StateFlow<BibleUiState> = _bibleuiState.asStateFlow()
 
     private val conversationHistory = mutableListOf<Pair<String, String>>()
 
@@ -214,11 +215,7 @@ data class ReflectionUiState(
 
 data class BibleUiState(
 
-    val messages: List<BibleEntity2> = listOf(
-        BibleEntity2(
-
-        )
-    ),
+    val messages: List<BibleVerseEntity> = emptyList(),
     val isLoading: Boolean = false,
     val error: String? = null
 )
