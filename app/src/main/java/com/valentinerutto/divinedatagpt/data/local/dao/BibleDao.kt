@@ -14,6 +14,8 @@ interface BibleDao {
     @Query("SELECT * FROM bible_verses WHERE book = :book AND chapter = :chapter")
     suspend fun getChapter(book: String, chapter: Int): List<BibleVerseEntity2>
 
+    @Query("SELECT * FROM bible_verses WHERE verse = :reference")
+    suspend fun getVerseByReference(reference: String): BibleVerseEntity2?
 
     @Query("SELECT COUNT(*) FROM bible_verses")
     suspend fun count(): Int

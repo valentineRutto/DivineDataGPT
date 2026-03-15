@@ -2,18 +2,20 @@ package com.valentinerutto.divinedatagpt.data
 
 import com.google.gson.Gson
 import com.google.gson.JsonObject
+import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
-import com.valentinerutto.divinedatagpt.data.network.bible.ESVResponse
 import org.json.JSONObject
 
 
 class BibleRepository(
     private val esvApi: ApiService,
     private val huggingFaceApi: AiApi,
+    private val dao: BibleDao
 
     ) {
 
@@ -27,16 +29,20 @@ class BibleRepository(
     }
 
     // Fetch Bible verse from ESV API
-    suspend fun getBibleVerse(reference: String): Result<ESVResponse> {
+    suspend fun getBibleVerse(reference: String): Result<BibleVerseEntity2> {
         return try {
-            val response = esvApi.getPassage(
+            esvApi.getPassage(
                 query = reference
             )
-            Result.success(response)
+
+            val verse = dao.getVerseByReference(reference)
+
+            Result.success(verse)
         } catch (e: Exception) {
             Result.failure(e)
-        }
+        } as Result<BibleVerseEntity2>
     }
+
     suspend fun getDailyReflection(): Result<Reflection> {
         return try {
             val prompt = buildMistralPrompt(
