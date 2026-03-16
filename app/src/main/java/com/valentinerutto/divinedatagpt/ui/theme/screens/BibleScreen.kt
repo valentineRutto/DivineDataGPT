@@ -262,3 +262,86 @@ fun TranslationChip(
         )
     }
 }
+
+@Composable
+fun BibleTopBar(
+    currentBook: String,
+    currentChapter: Int,
+    selectedTranslation: String,
+    onBookClick: () -> Unit,
+    onTranslationChange: (String) -> Unit,
+    onSearchClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(DarkBackground)
+            .padding(horizontal = 20.dp, vertical = 16.dp),
+        verticalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        // Top Row: Book Selector and Search
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            // Book Selector Button
+            Row(
+                modifier = Modifier
+                    .clip(RoundedCornerShape(12.dp))
+                    .background(CardBackground)
+                    .clickable(onClick = onBookClick)
+                    .padding(horizontal = 16.dp, vertical = 12.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Text(
+                    text = "$currentBook $currentChapter",
+                    style = MaterialTheme.typography.titleMedium,
+                    color = TextPrimary,
+                    fontWeight = FontWeight.SemiBold
+                )
+                Icon(
+                    imageVector = Icons.Default.KeyboardArrowDown,
+                    contentDescription = "Select Book",
+                    tint = TextPrimary,
+                    modifier = Modifier.size(20.dp)
+                )
+            }
+
+            // Search Button
+            IconButton(
+                onClick = onSearchClick,
+                modifier = Modifier
+                    .size(44.dp)
+                    .clip(CircleShape)
+                    .background(CardBackground)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Search,
+                    contentDescription = "Search",
+                    tint = TextPrimary,
+                    modifier = Modifier.size(22.dp)
+                )
+            }
+        }
+
+        // Translation Selector
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            TranslationChip(
+                text = "NIV",
+                isSelected = selectedTranslation == "NIV",
+                onClick = { onTranslationChange("NIV") }
+            )
+            TranslationChip(
+                text = "KJV",
+                isSelected = selectedTranslation == "KJV",
+                onClick = { onTranslationChange("KJV") }
+            )
+        }
+    }
+}
+
