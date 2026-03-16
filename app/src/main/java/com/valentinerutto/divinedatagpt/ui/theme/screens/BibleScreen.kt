@@ -27,7 +27,8 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BibleScreen(
-    viewModel: BibleViewModel = koinViewModel()
+    viewModel: BibleViewModel = koinViewModel(),
+    onNavigateToHome: () -> Unit
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showBookSelector by remember { mutableStateOf(false) }
