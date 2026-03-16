@@ -1,18 +1,58 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
 
-import androidx.compose.animation.*
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.combinedClickable
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.*
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material.icons.filled.Bookmark
+import androidx.compose.material.icons.filled.BorderColor
+import androidx.compose.material.icons.filled.Edit
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.KeyboardArrowDown
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Share
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,8 +60,10 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import com.valentinerutto.divinedatagpt.BibleUiEvent
 import com.valentinerutto.divinedatagpt.BibleViewModel
+import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import com.valentinerutto.divinedatagpt.data.models.BibleVerse
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
@@ -109,11 +151,7 @@ fun BibleScreen(
                         // Verses List
                         LazyColumn(
                             state = listState,
-                            contentPadding = PaddingValues(
-                                horizontal = 20.dp,
-                                vertical = 16.dp,
-                                bottom = 80.dp
-                            ),
+                            contentPadding = PaddingValues(16.dp),
                             verticalArrangement = Arrangement.spacedBy(16.dp)
                         ) {
                             // Chapter Header
@@ -520,6 +558,141 @@ fun BottomActionButton(
                 letterSpacing = 0.5.sp
             ),
             color = TextPrimary
+        )
+    }
+}
+
+
+@Composable
+fun BookSelectorDialog(
+    books: List<BibleBook>,
+    currentBook: String,
+    onBookSelected: (BibleBook) -> Unit,
+    onDismiss: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Dialog(onDismissRequest = onDismiss) {
+        Card(
+            modifier = modifier
+                .fillMaxWidth()
+                .heightIn(max = 600.dp),
+            shape = RoundedCornerShape(20.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = CardBackground
+            )
+        ) {
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(20.dp)
+            ) {
+                // Header
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Select Book",
+                        style = MaterialTheme.typography.titleLarge,
+                        color = TextPrimary,
+                        fontWeight = FontWeight.Bold
+                    )
+
+                    TextButton(onClick = onDismiss) {
+                        Text(
+                            text = "Close",
+                            style = MaterialTheme.typography.labelLarge,
+                            color = PurplePrimary
+                        )
+                    }
+                }
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                Divider(color = DarkSurface, thickness = 1.dp)
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                // Books List
+                LazyColumn(
+                    verticalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    // Old Testament Section
+                    item {
+                        Text(
+                            text = "Old Testament",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = PurpleAccent,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
+
+                    items(books.filter { it.testament == "Old Testament" }) { book ->
+                        BookItem(
+                            book = book,
+                            isSelected = book.name == currentBook,
+                            onSelected = onBookSelected
+                        )
+                    }
+
+                    // New Testament Section
+                    item {
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Text(
+                            text = "New Testament",
+                            style = MaterialTheme.typography.titleMedium,
+                            color = PurpleAccent,
+                            fontWeight = FontWeight.Bold,
+                            modifier = Modifier.padding(vertical = 8.dp)
+                        )
+                    }
+
+                    items(books.filter { it.testament == "New Testament" }) { book ->
+                        BookItem(
+                            book = book,
+                            isSelected = book.name == currentBook,
+                            onSelected = onBookSelected
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun BookItem(
+    book: BibleBook,
+    isSelected: Boolean,
+    onSelected: (BibleBook) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(
+                if (isSelected) PurplePrimary.copy(alpha = 0.2f)
+                else Color.Transparent
+            )
+            .clickable { onSelected(book) }
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = book.name,
+            style = MaterialTheme.typography.bodyLarge,
+            color = if (isSelected) PurpleAccent else TextPrimary,
+            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
+        )
+
+        Text(
+            text = "${book.totalChapters} ch",
+            style = MaterialTheme.typography.bodySmall,
+            color = TextMuted
         )
     }
 }
