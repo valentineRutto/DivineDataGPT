@@ -1,138 +1,154 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.expandVertically
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.shrinkVertically
-import androidx.compose.foundation.background
-import androidx.compose.foundation.border
-import androidx.compose.foundation.clickable
-import androidx.compose.foundation.combinedClickable
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import androidx.compose.animation.*
+import androidx.compose.foundation.*
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
-import androidx.compose.material.icons.filled.ChevronLeft
-import androidx.compose.material.icons.filled.ChevronRight
-import androidx.compose.material.icons.filled.Close
-import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.MenuBook
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Share
-import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material.icons.filled.*
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.valentinerutto.divinedatagpt.DivineDataViewModel
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
-import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
+import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
-import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
-import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
-import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
-import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
-import com.valentinerutto.divinedatagpt.ui.theme.TextPrimary
-import com.valentinerutto.divinedatagpt.ui.theme.TextSecondary
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BibleScreen(
-    viewModel: DivineDataViewModel = koinViewModel(),
-    onNavigateToHome: () -> Unit,
+    viewModel: BibleViewModel = koinViewModel()
 ) {
-
-    val uiState by viewModel.bibleuistate.collectAsState()
+    val uiState by viewModel.uiState.collectAsState()
     var showBookSelector by remember { mutableStateOf(false) }
+    var showSearch by remember { mutableStateOf(false) }
+    var selectedTranslation by remember { mutableStateOf("NIV") }
+    val listState = rememberLazyListState()
 
     Scaffold(
         containerColor = DarkBackground,
-        bottomBar = { BibleBottomBar() },
-        content = { padding ->
-            Column(
-                modifier = Modifier
-                    .padding(padding)
-                    .fillMaxWidth()
-            ) {
-
+        bottomBar = {
+            BibleBottomBar()
+        }
+    ) { padding ->
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(padding)
+        ) {
+            // Top Bar
             BibleTopBar(
-                    currentBook = uiState.currentBook,
-                    currentChapter = uiState.currentChapter,
-                    selectedTranslation = selectedTranslation,
-                    onBookClick = { showBookSelector = true },
-                    onTranslationChange = { selectedTranslation = it },
-                    onSearchClick = { showSearch = !showSearch }
+                currentBook = uiState.currentBook,
+                currentChapter = uiState.currentChapter,
+                selectedTranslation = selectedTranslation,
+                onBookClick = { showBookSelector = true },
+                onTranslationChange = { selectedTranslation = it },
+                onSearchClick = { showSearch = !showSearch }
+            )
+
+            // Search Bar
+            AnimatedVisibility(
+                visible = showSearch,
+                enter = expandVertically() + fadeIn(),
+                exit = shrinkVertically() + fadeOut()
+            ) {
+                SearchBar(
+                    query = uiState.searchQuery,
+                    onQueryChange = { viewModel.searchBible(it) },
+                    onClose = { showSearch = false }
                 )
+            }
 
-                AnimatedVisibility(
-                    visible = showSearch,
-                    enter = expandVertically() + fadeIn(),
-                    exit = shrinkVertically() + fadeOut()
-                ) {
-                    SearchBar(
-                        query = uiState.searchQuery,
-                        onQueryChange = { viewModel.searchBible(it) },
-                        onClose = { showSearch = false }
-                    )
-                }
+            // Content
+            Box(modifier = Modifier.fillMaxSize()) {
+                when {
+                    uiState.isLoading -> {
+                        LoadingScreen()
+                    }
 
-                if (showBookSelector) {
-                    BookSelectorDialog(
-                        books = uiState.books,
-                        currentBook = uiState.currentBook,
-                        onBookSelected = { book ->
-                            viewModel.loadChapter(book.bookName, 1)
-                            showBookSelector = false
-                        },
-                        onDismiss = { showBookSelector = false }
-                    )
+                    uiState.error != null -> {
+                        ErrorContent(
+                            error = uiState.error!!,
+                            onRetry = {
+                                viewModel.loadChapter(
+                                    uiState.currentBook,
+                                    uiState.currentChapter
+                                )
+                            }
+                        )
+                    }
+
+                    uiState.verses.isNotEmpty() -> {
+                        LazyColumn(
+                            state = listState,
+                            contentPadding = PaddingValues(horizontal = 20.dp, vertical = 16.dp),
+                            verticalArrangement = Arrangement.spacedBy(16.dp)
+                        ) {
+                            // Chapter Header
+                            item {
+                                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                                    Text(
+                                        text = uiState.currentBook,
+                                        style = MaterialTheme.typography.headlineLarge.copy(
+                                            fontSize = 32.sp,
+                                            fontWeight = FontWeight.Bold
+                                        ),
+                                        color = TextPrimary
+                                    )
+                                    Text(
+                                        text = "Chapter ${uiState.currentChapter}",
+                                        style = MaterialTheme.typography.titleLarge,
+                                        color = PurpleAccent
+                                    )
+                                }
+                            }
+
+                            // Verses
+                            items(
+                                items = uiState.verses,
+                                key = { it.id }
+                            ) { verse ->
+                                VerseItem(
+                                    verse = verse,
+                                    isHighlighted = verse.verse == uiState.highlightedVerse,
+                                    onClick = { viewModel.highlightVerse(verse.verse) },
+                                    onLongClick = { /* Show verse menu */ }
+                                )
+                            }
+
+                            // Bottom spacing
+                            item {
+                                Spacer(modifier = Modifier.height(80.dp))
+                            }
+                        }
+                    }
                 }
             }
         }
-    )
+    }
+
+    // Book Selector Dialog
+    if (showBookSelector) {
+        BookSelectorDialog(
+            books = uiState.books,
+            currentBook = uiState.currentBook,
+            onBookSelected = { book ->
+                viewModel.loadChapter(book.bookName, 1)
+                showBookSelector = false
+            },
+            onDismiss = { showBookSelector = false }
+        )
+    }
 }
 
 @Composable
@@ -197,9 +213,46 @@ fun BibleTopBar(
         }
 
         Spacer(modifier = Modifier.height(12.dp))
+
+        // Translation Selector
+        Row(
+            horizontalArrangement = Arrangement.spacedBy(8.dp)
+        ) {
+            TranslationChip(
+                text = "NIV",
+                isSelected = selectedTranslation == "NIV",
+                onClick = { onTranslationChange("NIV") }
+            )
+            TranslationChip(
+                text = "KJV",
+                isSelected = selectedTranslation == "KJV",
+                onClick = { onTranslationChange("KJV") }
+            )
+        }
     }
 }
 
+@Composable
+fun TranslationChip(
+    text: String,
+    isSelected: Boolean,
+    onClick: () -> Unit
+) {
+    Box(
+        modifier = Modifier
+            .clip(RoundedCornerShape(8.dp))
+            .background(if (isSelected) PurplePrimary else CardBackground)
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge,
+            color = TextPrimary,
+            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Normal
+        )
+    }
+}
 
 @Composable
 fun SearchBar(
@@ -256,7 +309,7 @@ fun SearchBar(
 
 @Composable
 fun VerseItem(
-    verse: BibleVerseEntity2,
+    verse: BibleVerseEntity,
     isHighlighted: Boolean,
     onClick: () -> Unit,
     onLongClick: () -> Unit
@@ -299,77 +352,13 @@ fun VerseItem(
 
         // Verse Text
         Text(
-            text = verse.kingJamesBibleKjv ?: "",
+            text = verse.text,
             style = MaterialTheme.typography.bodyLarge.copy(
                 fontSize = 16.sp,
                 lineHeight = 26.sp
             ),
             color = TextPrimary,
             modifier = Modifier.weight(1f)
-        )
-    }
-}
-
-@Composable
-fun ErrorContent(
-    error: String,
-    onRetry: () -> Unit
-) {
-    Box(
-        modifier = Modifier.fillMaxSize(),
-        contentAlignment = Alignment.Center
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
-            Text(
-                text = "⚠️ $error",
-                style = MaterialTheme.typography.bodyLarge,
-                color = MaterialTheme.colorScheme.error,
-                textAlign = TextAlign.Center
-            )
-            Button(
-                onClick = onRetry,
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = PurplePrimary
-                )
-            ) {
-                Text(
-                    "Retry",
-                    style = MaterialTheme.typography.labelLarge
-                )
-            }
-        }
-    }
-}
-
-@Composable
-fun BookItem(
-    book: BibleBookEntity,
-    isSelected: Boolean,
-    onSelected: (BibleBookEntity) -> Unit
-) {
-    Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(8.dp))
-            .background(if (isSelected) PurplePrimary.copy(0.2f) else Color.Transparent)
-            .clickable { onSelected(book) }
-            .padding(horizontal = 12.dp, vertical = 10.dp),
-        horizontalArrangement = Arrangement.SpaceBetween,
-        verticalAlignment = Alignment.CenterVertically
-    ) {
-        Text(
-            text = book.bookName,
-            style = MaterialTheme.typography.bodyLarge,
-            color = if (isSelected) PurpleAccent else TextPrimary,
-            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
-        )
-        Text(
-            text = "${book.totalChapters} ch",
-            style = MaterialTheme.typography.bodySmall,
-            color = TextMuted
         )
     }
 }
@@ -413,7 +402,7 @@ fun BibleBottomBar() {
         ) {
             NavigationBarItem(
                 selected = false,
-                onClick = { onNavigateToHome },
+                onClick = { /* Navigate to Home */ },
                 icon = {
                     Icon(
                         Icons.Default.Home,
@@ -456,6 +445,27 @@ fun BibleBottomBar() {
                 )
             )
 
+            NavigationBarItem(
+                selected = false,
+                onClick = { /* Navigate to Journal */ },
+                icon = {
+                    Icon(
+                        Icons.Default.BorderColor,
+                        contentDescription = "Journal",
+                        tint = TextMuted
+                    )
+                },
+                label = {
+                    Text(
+                        "JOURNAL",
+                        fontSize = 10.sp,
+                        color = TextMuted
+                    )
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.Transparent
+                )
+            )
 
             NavigationBarItem(
                 selected = false,
@@ -484,7 +494,7 @@ fun BibleBottomBar() {
 
 @Composable
 fun BottomActionButton(
-    icon: ImageVector,
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
     label: String,
     onClick: () -> Unit
 ) {
@@ -516,9 +526,9 @@ fun BottomActionButton(
 
 @Composable
 fun BookSelectorDialog(
-    books: List<BibleBookEntity>,
+    books: List<com.divinemirror.app.data.local.entity.BibleBookEntity>,
     currentBook: String,
-    onBookSelected: (BibleBookEntity) -> Unit,
+    onBookSelected: (com.divinemirror.app.data.local.entity.BibleBookEntity) -> Unit,
     onDismiss: () -> Unit
 ) {
     AlertDialog(
@@ -586,134 +596,65 @@ fun BookSelectorDialog(
 }
 
 @Composable
-fun BottomNavigationBar(
-    currentBook: String,
-    currentChapter: Int,
-    totalChapters: Int,
-    onPrevious: () -> Unit,
-    onNext: () -> Unit,
-    onHighlight: () -> Unit,
-    onNote: () -> Unit,
-    onShare: () -> Unit,
-    onNavigateToHome: () -> Unit,
-    onNavigateToSettings: () -> Unit
+fun BookItem(
+    book: com.divinemirror.app.data.local.entity.BibleBookEntity,
+    isSelected: Boolean,
+    onSelected: (com.divinemirror.app.data.local.entity.BibleBookEntity) -> Unit
 ) {
-    Column {
-        // Chapter Progress
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(DarkSurface)
-                .padding(horizontal = 20.dp, vertical = 12.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            IconButton(onClick = onPrevious) {
-                Icon(
-                    Icons.Default.ChevronLeft,
-                    contentDescription = "Previous",
-                    tint = TextPrimary
-                )
-            }
-            Text(
-                "$currentChapter / $totalChapters",
-                color = TextSecondary,
-                fontSize = 14.sp
-            )
-            IconButton(onClick = onNext) {
-                Icon(
-                    Icons.Default.ChevronRight,
-                    contentDescription = "Next",
-                    tint = TextPrimary
-                )
-            }
-        }
-
-        // Action Bar
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .background(DarkSurface)
-                .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            ActionButton(
-                icon = Icons.Default.Bookmark,
-                label = "HIGHLIGHT",
-                onClick = onHighlight
-            )
-            ActionButton(icon = Icons.Default.Edit, label = "NOTE", onClick = onNote)
-            ActionButton(icon = Icons.Default.Share, label = "SHARE", onClick = onShare)
-        }
-
-        NavigationBar(
-            containerColor = DarkSurface,
-            contentColor = TextSecondary,
-            tonalElevation = 0.dp
-        ) {
-            NavigationBarItem(
-                selected = false,
-                onClick = onNavigateToHome,
-                icon = {
-                    Icon(
-                        Icons.Default.Home,
-                        contentDescription = "Home",
-                        tint = TextMuted
-                    )
-                },
-                label = { Text("HOME", fontSize = 10.sp, color = TextMuted) },
-                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-            )
-            NavigationBarItem(
-                selected = true,
-                onClick = { /* Already on Bible */ },
-                icon = {
-                    Icon(
-                        Icons.Default.MenuBook,
-                        contentDescription = "Bible",
-                        tint = PurplePrimary
-                    )
-                },
-                label = { Text("BIBLE", fontSize = 10.sp, color = PurplePrimary) },
-                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-            )
-
-            NavigationBarItem(
-                selected = false,
-                onClick = onNavigateToSettings,
-                icon = {
-                    Icon(
-                        Icons.Default.Settings,
-                        contentDescription = "Settings",
-                        tint = TextMuted
-                    )
-                },
-                label = { Text("SETTINGS", fontSize = 10.sp, color = TextMuted) },
-                colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-            )
-        }
-
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .clip(RoundedCornerShape(8.dp))
+            .background(if (isSelected) PurplePrimary.copy(0.2f) else Color.Transparent)
+            .clickable { onSelected(book) }
+            .padding(horizontal = 12.dp, vertical = 10.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Text(
+            text = book.bookName,
+            style = MaterialTheme.typography.bodyLarge,
+            color = if (isSelected) PurpleAccent else TextPrimary,
+            fontWeight = if (isSelected) FontWeight.SemiBold else FontWeight.Normal
+        )
+        Text(
+            text = "${book.totalChapters} ch",
+            style = MaterialTheme.typography.bodySmall,
+            color = TextMuted
+        )
     }
 }
 
-
 @Composable
-fun ActionButton(
-    icon: ImageVector,
-    label: String,
-    onClick: () -> Unit
+fun ErrorContent(
+    error: String,
+    onRetry: () -> Unit
 ) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = Modifier.clickable(onClick = onClick)
+    Box(
+        modifier = Modifier.fillMaxSize(),
+        contentAlignment = Alignment.Center
     ) {
-        Icon(
-            icon,
-            contentDescription = label,
-            tint = PurplePrimary,
-            modifier = Modifier.size(24.dp)
-        )
-        Spacer(Modifier.height(4.dp))
-        Text(label, color = TextPrimary, fontSize = 11.sp, fontWeight = FontWeight.Medium)
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Text(
+                text = "⚠️ $error",
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.error,
+                textAlign = TextAlign.Center
+            )
+            Button(
+                onClick = onRetry,
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = PurplePrimary
+                )
+            ) {
+                Text(
+                    "Retry",
+                    style = MaterialTheme.typography.labelLarge
+                )
+            }
+        }
     }
 }
