@@ -1,6 +1,186 @@
 package com.valentinerutto.divinedatagpt
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
+import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.flow.debounce
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.update
+import kotlinx.coroutines.launch
 
-class BibleViewModel(private val bibleRepository: BibleRepository) : ViewModel()
+class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
+    private val _uiState = MutableStateFlow(BibleUiState())
+    val uiState: StateFlow<BibleUiState> = _uiState.asStateFlow()
+
+    private val _searchQuery = MutableStateFlow("")
+
+    init {
+        loadBooks()
+        observeSearchQuery()
+    }
+
+    private fun loadBooks() {
+        viewModelScope.launch {
+            repository.getAllBooks().collect { books ->
+                _uiState.update { it.copy(books = books) }
+                if (books.isNotEmpty()) {
+                    loadChapter(_uiState.value.currentBook, _uiState.value.currentChapter)
+                }
+            }
+        }
+    }
+
+    fun onEvent(event: BibleUiEvent) {
+        when (event) {
+            is BibleUiEvent.LoadChapter -> loadChapter(event.book, event.chapter)
+            is BibleUiEvent.NextChapter -> navigateToNextChapter()
+            is BibleUiEvent.PreviousChapter -> navigateToPreviousChapter()
+            is BibleUiEvent.SelectTranslation -> selectTranslation(event.translation)
+            is BibleUiEvent.HighlightVerse -> highlightVerse(event.verseId)
+            is BibleUiEvent.SearchQuery -> updateSearchQuery(event.query)
+            is BibleUiEvent.ToggleBookSelector -> toggleBookSelector()
+            is BibleUiEvent.ToggleSearch -> toggleSearch()
+            is BibleUiEvent.AddBookmark -> addBookmark(event.verseId)
+            is BibleUiEvent.AddNote -> addNote(event.verseId, event.note)
+            is BibleUiEvent.ShareVerse -> shareVerse(event.verseId)
+        }
+    }
+
+    private fun loadChapter(book: String, chapter: Int) {
+        viewModelScope.launch {
+            _uiState.update { it.copy(isLoading = true, error = null) }
+
+            repository.getChapterVerses(book, chapter)
+                .catch { exception ->
+                    _uiState.update {
+                        it.copy(
+                            isLoading = false,
+                            error = exception.message ?: "Failed to load chapter"
+                        )
+                    }
+                }
+                .collect { verses ->
+                    _uiState.update {
+                        it.copy(
+                            currentBook = book,
+                            currentChapter = chapter,
+                            verses = verses,
+                            isLoading = false,
+                            error = null
+                        )
+                    }
+
+                    // Record reading history
+                    repository.recordReading(book, chapter)
+                }
+        }
+    }
+
+    private fun navigateToNextChapter() {
+        val currentState = _uiState.value
+        val currentBookData = currentState.books.find { it.name == currentState.currentBook }
+
+        currentBookData?.let { book ->
+            if (currentState.currentChapter < book.totalChapters) {
+                loadChapter(currentState.currentBook, currentState.currentChapter + 1)
+            } else {
+                // Move to next book
+                val nextBook = currentState.books.getOrNull(book.order)
+                nextBook?.let {
+                    loadChapter(it.name, 1)
+                }
+            }
+        }
+    }
+
+    private fun navigateToPreviousChapter() {
+        val currentState = _uiState.value
+
+        if (currentState.currentChapter > 1) {
+            loadChapter(currentState.currentBook, currentState.currentChapter - 1)
+        } else {
+            // Move to previous book's last chapter
+            val currentBookData = currentState.books.find { it.name == currentState.currentBook }
+            currentBookData?.let { book ->
+                if (book.order > 1) {
+                    val previousBook = currentState.books.getOrNull(book.order - 2)
+                    previousBook?.let {
+                        loadChapter(it.name, it.totalChapters)
+                    }
+                }
+            }
+        }
+    }
+
+    private fun selectTranslation(translation: String) {
+        _uiState.update { it.copy(selectedTranslation = translation) }
+        // Reload chapter with new translation
+        loadChapter(_uiState.value.currentBook, _uiState.value.currentChapter)
+    }
+
+    private fun highlightVerse(verseId: Long?) {
+        _uiState.update { it.copy(highlightedVerseId = verseId) }
+    }
+
+    private fun updateSearchQuery(query: String) {
+        _searchQuery.value = query
+        _uiState.update { it.copy(searchQuery = query) }
+    }
+
+    @OptIn(FlowPreview::class)
+    private fun observeSearchQuery() {
+        viewModelScope.launch {
+            _searchQuery
+                .debounce(300)
+                .distinctUntilChanged()
+                .filter { it.length >= 3 }
+                .collectLatest { query ->
+                    repository.searchVerses(query).collect { results ->
+                        _uiState.update { it.copy(searchResults = results) }
+                    }
+                }
+        }
+    }
+
+    private fun toggleBookSelector() {
+        _uiState.update { it.copy(showBookSelector = !it.showBookSelector) }
+    }
+
+    private fun toggleSearch() {
+        _uiState.update {
+            it.copy(
+                showSearch = !it.showSearch,
+                searchQuery = if (!it.showSearch) "" else it.searchQuery
+            )
+        }
+    }
+
+    private fun addBookmark(verseId: Long) {
+        viewModelScope.launch {
+            val verse = _uiState.value.verses.find { it.id == verseId }
+            verse?.let {
+                repository.addBookmark(it.book, it.chapter, it.verse, null)
+            }
+        }
+    }
+
+    private fun addNote(verseId: Long, note: String) {
+        viewModelScope.launch {
+            val verse = _uiState.value.verses.find { it.id == verseId }
+            verse?.let {
+                repository.addBookmark(it.book, it.chapter, it.verse, note)
+            }
+        }
+    }
+
+    private fun shareVerse(verseId: Long) {
+        // Implementation for sharing verse
+        // This would typically use Android's share intent
+    }
+}
