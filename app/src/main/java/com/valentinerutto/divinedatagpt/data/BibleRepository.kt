@@ -4,20 +4,75 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
+import com.valentinerutto.divinedatagpt.data.models.BibleBook
+import com.valentinerutto.divinedatagpt.data.models.BibleVerse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
+import kotlinx.coroutines.flow.Flow
 import org.json.JSONObject
 
 
 class BibleRepository(
     private val esvApi: ApiService,
     private val huggingFaceApi: AiApi,
-    private val dao: BibleDao
+    private val bibleDao: BibleDao
 
     ) {
+
+
+    fun getAllBooks(): Flow<List<BibleBook>> {
+        return bibleDao.getAllBooks().map { books ->
+            books.map { it.toDomain() }
+        }
+    }
+
+    fun getBooksByTestament(testament: String): Flow<List<BibleBook>> {
+        return bibleDao.getBooksByTestament(testament).map { books ->
+            books.map { it.toDomain() }
+        }
+    }
+
+    fun getChapterVerses(book: String, chapter: Int): Flow<List<BibleVerse>> {
+        return bibleDao.getChapterVerses(book, chapter).map { verses ->
+            verses.map { it.toDomain() }
+        }
+    }
+
+    fun searchVerses(query: String): Flow<List<BibleVerse>> {
+        return bibleDao.searchVerses(query).map { verses ->
+            verses.map { it.toDomain() }
+        }
+    }
+
+    suspend fun highlightVerse(verseId: Long, color: String?) {
+        // Implementation for highlighting verses
+        // You might need to add this to your DAO
+    }
+
+    suspend fun addBookmark(book: String, chapter: Int, verse: Int, note: String?) {
+        bibleDao.insertBookmark(
+            BookmarkEntity(
+                book = book,
+                chapter = chapter,
+                verse = verse,
+                note = note,
+                color = "purple"
+            )
+        )
+    }
+
+    suspend fun recordReading(book: String, chapter: Int) {
+        bibleDao.insertReadingHistory(
+            ReadingHistoryEntity(
+                book = book,
+                chapter = chapter
+            )
+        )
+    }
+
 
     // Popular Hugging Face instruction-tuned models
     companion object {
