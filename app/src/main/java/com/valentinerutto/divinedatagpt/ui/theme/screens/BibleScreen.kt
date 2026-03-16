@@ -7,10 +7,13 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
@@ -22,9 +25,11 @@ import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.data.models.BibleVerse
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
+import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
 import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextPrimary
+import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
 import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 import org.koin.androidx.compose.koinViewModel
 
@@ -342,6 +347,180 @@ fun BibleTopBar(
                 onClick = { onTranslationChange("KJV") }
             )
         }
+    }
+}
+
+@Composable
+fun BibleBottomBar(
+    onHighlightClick: () -> Unit,
+    onNoteClick: () -> Unit,
+    onShareClick: () -> Unit,
+    onHomeClick: () -> Unit,
+    onJournalClick: () -> Unit,
+    onSettingsClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        modifier = modifier
+            .fillMaxWidth()
+            .background(DarkSurface)
+    ) {
+        // Action Buttons Row
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(vertical = 16.dp),
+            horizontalArrangement = Arrangement.SpaceEvenly
+        ) {
+            BottomActionButton(
+                icon = Icons.Default.Bookmark,
+                label = "HIGHLIGHT",
+                onClick = onHighlightClick
+            )
+            BottomActionButton(
+                icon = Icons.Default.Edit,
+                label = "NOTE",
+                onClick = onNoteClick
+            )
+            BottomActionButton(
+                icon = Icons.Default.Share,
+                label = "SHARE",
+                onClick = onShareClick
+            )
+        }
+
+        // Bottom Navigation Bar
+        NavigationBar(
+            containerColor = DarkSurface,
+            contentColor = TextSecondary,
+            tonalElevation = 0.dp
+        ) {
+            NavigationBarItem(
+                selected = false,
+                onClick = onHomeClick,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Home,
+                        contentDescription = "Home",
+                        tint = TextMuted
+                    )
+                },
+                label = {
+                    Text(
+                        text = "HOME",
+                        fontSize = 10.sp,
+                        color = TextMuted,
+                        letterSpacing = 0.5.sp
+                    )
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.Transparent
+                )
+            )
+
+            NavigationBarItem(
+                selected = true,
+                onClick = { /* Already on Bible */ },
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.MenuBook,
+                        contentDescription = "Bible",
+                        tint = PurplePrimary
+                    )
+                },
+                label = {
+                    Text(
+                        text = "BIBLE",
+                        fontSize = 10.sp,
+                        color = PurplePrimary,
+                        fontWeight = FontWeight.Bold,
+                        letterSpacing = 0.5.sp
+                    )
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.Transparent
+                )
+            )
+
+            NavigationBarItem(
+                selected = false,
+                onClick = onJournalClick,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.BorderColor,
+                        contentDescription = "Journal",
+                        tint = TextMuted
+                    )
+                },
+                label = {
+                    Text(
+                        text = "JOURNAL",
+                        fontSize = 10.sp,
+                        color = TextMuted,
+                        letterSpacing = 0.5.sp
+                    )
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.Transparent
+                )
+            )
+
+            NavigationBarItem(
+                selected = false,
+                onClick = onSettingsClick,
+                icon = {
+                    Icon(
+                        imageVector = Icons.Default.Settings,
+                        contentDescription = "Settings",
+                        tint = TextMuted
+                    )
+                },
+                label = {
+                    Text(
+                        text = "SETTINGS",
+                        fontSize = 10.sp,
+                        color = TextMuted,
+                        letterSpacing = 0.5.sp
+                    )
+                },
+                colors = NavigationBarItemDefaults.colors(
+                    indicatorColor = Color.Transparent
+                )
+            )
+        }
+    }
+}
+
+@Composable
+fun BottomActionButton(
+    icon: androidx.compose.ui.graphics.vector.ImageVector,
+    label: String,
+    onClick: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = modifier
+            .clip(RoundedCornerShape(8.dp))
+            .clickable(onClick = onClick)
+            .padding(horizontal = 16.dp, vertical = 8.dp)
+    ) {
+        Icon(
+            imageVector = icon,
+            contentDescription = label,
+            tint = PurplePrimary,
+            modifier = Modifier.size(24.dp)
+        )
+        Spacer(modifier = Modifier.height(4.dp))
+        Text(
+            text = label,
+            style = MaterialTheme.typography.labelSmall.copy(
+                fontSize = 11.sp,
+                fontWeight = FontWeight.Medium,
+                letterSpacing = 0.5.sp
+            ),
+            color = TextPrimary
+        )
     }
 }
 
