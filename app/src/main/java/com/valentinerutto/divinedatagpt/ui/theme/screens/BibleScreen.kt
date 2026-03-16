@@ -4,6 +4,7 @@ import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.expandVertically
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -50,6 +51,11 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -59,7 +65,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.valentinerutto.divinedatagpt.BibleViewModel
+import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
@@ -75,9 +81,13 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BibleScreen(
-    viewModel: BibleViewModel = koinViewModel(),
+    viewModel: DivineDataViewModel = koinViewModel(),
     onNavigateToHome: () -> Unit,
 ) {
+
+    val uiState by viewModel.bibleuistate.collectAsState()
+    var showBookSelector by remember { mutableStateOf(false) }
+
     Scaffold(
         containerColor = DarkBackground,
         bottomBar = { BibleBottomBar() },
@@ -87,7 +97,8 @@ fun BibleScreen(
                     .padding(padding)
                     .fillMaxWidth()
             ) {
-                BibleTopBar(
+
+            BibleTopBar(
                     currentBook = uiState.currentBook,
                     currentChapter = uiState.currentChapter,
                     selectedTranslation = selectedTranslation,
