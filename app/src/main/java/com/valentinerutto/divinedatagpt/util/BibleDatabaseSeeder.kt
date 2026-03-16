@@ -53,8 +53,10 @@ class BibleDatabaseSeeder(
                     jsonReader.beginArray()                      // [
 
                     while (jsonReader.hasNext()) {
+
                         val dto: BibleVerseDto =
                             gson.fromJson(jsonReader, BibleVerseDto::class.java)
+
                         batch.add(dto.toEntity())
 
                         if (batch.size >= BATCH_SIZE) {
@@ -102,4 +104,6 @@ class BibleDatabaseSeeder(
         onkelosAramaic = onkelosAramaic,
         onkelosEnglish = onkelosEnglish
     )
+
+
 }
