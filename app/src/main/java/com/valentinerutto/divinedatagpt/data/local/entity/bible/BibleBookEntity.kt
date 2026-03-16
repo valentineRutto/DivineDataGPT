@@ -7,8 +7,8 @@ import androidx.room.PrimaryKey
 @Entity(tableName = "bible_books")
 data class BibleBookEntity(
     @PrimaryKey
-    val bookName: String,
     val bookId: Int,
+    val bookName: String,
     // "Genesis"
     val abbreviation: String,      // "genesis"
     val bookOrder: Int,            // 1-66
