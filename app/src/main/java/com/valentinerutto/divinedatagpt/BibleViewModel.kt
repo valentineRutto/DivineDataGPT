@@ -3,10 +3,13 @@ package com.valentinerutto.divinedatagpt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
+import com.valentinerutto.divinedatagpt.data.models.BibleBook
+import com.valentinerutto.divinedatagpt.data.models.BibleVerse
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
@@ -183,4 +186,33 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
         // Implementation for sharing verse
         // This would typically use Android's share intent
     }
+}
+
+data class BibleUiState(
+    val books: List<BibleBook> = emptyList(),
+    val currentBook: String = "Genesis",
+    val currentChapter: Int = 1,
+    val verses: List<BibleVerse> = emptyList(),
+    val selectedTranslation: String = "NIV",
+    val highlightedVerseId: Long? = null,
+    val searchQuery: String = "",
+    val searchResults: List<BibleVerse> = emptyList(),
+    val isLoading: Boolean = false,
+    val error: String? = null,
+    val showBookSelector: Boolean = false,
+    val showSearch: Boolean = false
+)
+
+sealed class BibleUiEvent {
+    data class LoadChapter(val book: String, val chapter: Int) : BibleUiEvent()
+    object NextChapter : BibleUiEvent()
+    object PreviousChapter : BibleUiEvent()
+    data class SelectTranslation(val translation: String) : BibleUiEvent()
+    data class HighlightVerse(val verseId: Long?) : BibleUiEvent()
+    data class SearchQuery(val query: String) : BibleUiEvent()
+    object ToggleBookSelector : BibleUiEvent()
+    object ToggleSearch : BibleUiEvent()
+    data class AddBookmark(val verseId: Long) : BibleUiEvent()
+    data class AddNote(val verseId: Long, val note: String) : BibleUiEvent()
+    data class ShareVerse(val verseId: Long) : BibleUiEvent()
 }
