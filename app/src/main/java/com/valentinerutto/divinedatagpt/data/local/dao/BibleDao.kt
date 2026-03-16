@@ -54,6 +54,15 @@ interface BibleDao {
     @Query("SELECT * FROM bible_verses WHERE book = :book AND chapter = :chapter")
     suspend fun getChapter(book: String, chapter: Int): List<BibleVerseEntity2>
 
+    @Query(
+        """
+        SELECT * FROM bible_verses 
+        WHERE book = :book AND chapter = :chapter 
+        ORDER BY verse ASC
+    """
+    )
+    fun getChapterVerses(book: String, chapter: Int): Flow<List<BibleVerseEntity>>
+
     @Query("SELECT * FROM bible_verses WHERE verse = :reference")
     suspend fun getVerseByReference(reference: String): BibleVerseEntity2?
 
@@ -75,12 +84,41 @@ interface BibleDao {
     @Query("SELECT * FROM bible_verses WHERE id = :verseId LIMIT 1")
     suspend fun getVerseById(verseId: Long): BibleVerseEntity?
 
+    @Query(
+        """
+        SELECT * FROM bible_verses 
+        WHERE text LIKE '%' || :query || '%' 
+        ORDER BY bookOrder ASC, chapter ASC, verse ASC
+        LIMIT :limit
+    """
+    )
+    fun searchVerses(query: String, limit: Int = 50): Flow<List<BibleVerseEntity>>
+
+    /**
+     * Search verses in a specific book
+     */
+    @Query(
+        """
+        SELECT * FROM bible_verses 
+        WHERE book = :book AND text LIKE '%' || :query || '%' 
+        ORDER BY chapter ASC, verse ASC
+        LIMIT :limit
+    """
+    )
+    fun searchVersesInBook(
+        book: String,
+        query: String,
+        limit: Int = 50
+    ): Flow<List<BibleVerseEntity>>
 
     /**
      * Get total verse count in database
      */
     @Query("SELECT COUNT(*) FROM bible_verses")
     suspend fun getTotalVerseCount(): Int
+
+    @Query("DELETE FROM bible_verses")
+    suspend fun deleteAllVerses()
 
 }
 

@@ -6,12 +6,14 @@ import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import com.valentinerutto.divinedatagpt.data.models.BibleVerse
+import com.valentinerutto.divinedatagpt.data.models.toDomain
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 import org.json.JSONObject
 
 
@@ -53,24 +55,24 @@ class BibleRepository(
     }
 
     suspend fun addBookmark(book: String, chapter: Int, verse: Int, note: String?) {
-        bibleDao.insertBookmark(
-            BookmarkEntity(
-                book = book,
-                chapter = chapter,
-                verse = verse,
-                note = note,
-                color = "purple"
-            )
-        )
+//        bibleDao.insertBookmark(
+//            BookmarkEntity(
+//                book = book,
+//                chapter = chapter,
+//                verse = verse,
+//                note = note,
+//                color = "purple"
+//            )
+//        )
     }
 
     suspend fun recordReading(book: String, chapter: Int) {
-        bibleDao.insertReadingHistory(
-            ReadingHistoryEntity(
-                book = book,
-                chapter = chapter
-            )
-        )
+//        bibleDao.insertReadingHistory(
+//            ReadingHistoryEntity(
+//                book = book,
+//                chapter = chapter
+//            )
+        // )
     }
 
 
@@ -90,7 +92,7 @@ class BibleRepository(
                 query = reference
             )
 
-            val verse = dao.getVerseByReference(reference)
+            val verse = bibleDao.getVerseByReference(reference)
 
             Result.success(verse)
         } catch (e: Exception) {
