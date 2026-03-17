@@ -8,7 +8,8 @@ import androidx.room.PrimaryKey
 @Entity(
     tableName = "bible_verses", indices = [
         Index(value = ["book", "chapter", "verse"]),
-        Index(value = ["book"])]
+        Index(value = ["book"]),
+        Index(value = ["bookAbbrev"])]
 )
 data class BibleVerseEntity(
     @PrimaryKey(autoGenerate = true)
@@ -23,6 +24,26 @@ data class BibleVerseEntity(
     val testament: String
 )
 
+@Entity(tableName = "bookmarks")
+data class BookmarkEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    val book: String,
+    val chapter: Int,
+    val verse: Int,
+    val note: String? = null,
+    val color: String = "purple",
+    val createdAt: Long = System.currentTimeMillis()
+)
+
+@Entity(tableName = "reading_history")
+data class ReadingHistoryEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Long = 0,
+    val book: String,
+    val chapter: Int,
+    val readAt: Long = System.currentTimeMillis()
+)
 
 /**
  * Room entity representing a single Bible verse.
