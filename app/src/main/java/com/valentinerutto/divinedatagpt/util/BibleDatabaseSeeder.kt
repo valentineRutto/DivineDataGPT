@@ -21,6 +21,7 @@ class BibleDatabaseSeeder(
         private const val TAG = "BibleDatabaseSeeder"
         private const val ASSET_FILE = "AlamoPolyglot2.json"
         private const val ASSET_FILE_WEB = "web_complete.json"
+        private const val ASSET_FILE_KJV = "kjv.json"
         private const val BATCH_SIZE = 500
     }
 
@@ -63,7 +64,7 @@ class BibleDatabaseSeeder(
                             dao.insertAll(batch)
                             totalInserted += batch.size
                             Log.v(TAG, "Inserted $totalInserted verses so far…")
-                            batch.clear()                        // release before next batch
+                            batch.clear()
                         }
                     }
 
