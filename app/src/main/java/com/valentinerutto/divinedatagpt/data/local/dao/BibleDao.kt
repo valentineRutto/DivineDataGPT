@@ -27,8 +27,8 @@ interface BibleDao {
     /**
      * Get all books ordered by book order (Genesis to Revelation)
      */
-    @Query("SELECT * FROM bible_book ORDER BY book_id ASC")
-    fun getAllBooks(): Flow<List<BibleVerseEntity2>>
+    @Query("SELECT * FROM bible_books ORDER BY bookOrder ASC")
+    fun getAllBooks(): Flow<List<BibleBookEntity>>
 
     @Query("SELECT * FROM bible_books WHERE testament = :testament ORDER BY bookOrder ASC")
     fun getBooksByTestament(testament: String): Flow<List<BibleBookEntity>>
@@ -51,8 +51,8 @@ interface BibleDao {
     @Query("SELECT * FROM bible_books WHERE bookOrder = :order LIMIT 1")
     suspend fun getBookByOrder(order: Int): BibleBookEntity?
 
-    @Query("SELECT * FROM bible_verses WHERE book = :book AND chapter = :chapter")
-    suspend fun getChapter(book: String, chapter: Int): List<BibleVerseEntity2>
+    //    @Query("SELECT * FROM bible_verses WHERE book = :book AND chapter = :chapter")
+//    suspend fun getChapter(book: String, chapter: Int): List<BibleVerseEntity2>
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertVerses(verses: List<BibleVerseEntity>)
 

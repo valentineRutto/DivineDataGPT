@@ -9,12 +9,14 @@ import com.valentinerutto.divinedatagpt.data.local.dao.MemorySummaryDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MessageDao
 import com.valentinerutto.divinedatagpt.data.local.entity.MemorySummaryEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
 
 @Database(
-    entities = [Verse::class, MemorySummaryEntity::class, MessageEntity::class, BibleVerseEntity::class, BibleVerseEntity2::class],
-    version = 2,
+    entities = [Verse::class, MemorySummaryEntity::class, MessageEntity::class, BibleVerseEntity::class, BibleVerseEntity2::class, BibleBookEntity::class, BookmarkEntity::class],
+    version = 3,
     exportSchema = false
 )
 abstract class DivineDatabase : RoomDatabase() {
