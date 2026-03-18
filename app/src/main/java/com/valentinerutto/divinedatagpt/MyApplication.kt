@@ -41,6 +41,7 @@ class MyApplication: Application() {
         }
         applicationScope.launch {
             seeder.seedIfEmpty()
+            seeder.seedKjvIfEmpty()
         }
     }
 }

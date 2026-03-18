@@ -48,11 +48,19 @@ interface BibleDao {
     /**
      * Get a book by order number
      */
-    @Query("SELECT * FROM bible_book WHERE book_id = :order LIMIT 1")
+    @Query("SELECT * FROM bible_books WHERE bookOrder = :order LIMIT 1")
     suspend fun getBookByOrder(order: Int): BibleBookEntity?
 
     @Query("SELECT * FROM bible_verses WHERE book = :book AND chapter = :chapter")
     suspend fun getChapter(book: String, chapter: Int): List<BibleVerseEntity2>
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertVerses(verses: List<BibleVerseEntity>)
+
+    /**
+     * Insert a single verse
+     */
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertVerse(verse: BibleVerseEntity)
 
     @Query(
         """
@@ -66,8 +74,11 @@ interface BibleDao {
     @Query("SELECT * FROM bible_verses WHERE verse = :reference")
     suspend fun getVerseByReference(reference: String): BibleVerseEntity2?
 
-    @Query("SELECT COUNT(*) FROM bible_verses")
+    @Query("SELECT COUNT(*) FROM bible_book")
     suspend fun count(): Int
+
+    @Query("SELECT COUNT(*) FROM bible_books")
+    suspend fun countBooks(): Int
 
     @Query(
         """

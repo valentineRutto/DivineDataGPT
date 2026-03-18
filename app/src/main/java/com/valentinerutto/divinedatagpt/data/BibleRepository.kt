@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import com.valentinerutto.divinedatagpt.data.models.BibleVerse
 import com.valentinerutto.divinedatagpt.data.models.toDomain
@@ -55,15 +56,15 @@ class BibleRepository(
     }
 
     suspend fun addBookmark(book: String, chapter: Int, verse: Int, note: String?) {
-//        bibleDao.insertBookmark(
-//            BookmarkEntity(
-//                book = book,
-//                chapter = chapter,
-//                verse = verse,
-//                note = note,
-//                color = "purple"
-//            )
-//        )
+        // bibleDao.insertBookmark(
+        BookmarkEntity(
+            book = book,
+            chapter = chapter,
+            verse = verse,
+            note = note,
+            color = "purple"
+        )
+        // )
     }
 
     suspend fun recordReading(book: String, chapter: Int) {
