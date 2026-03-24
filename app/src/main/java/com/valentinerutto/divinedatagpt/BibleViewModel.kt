@@ -83,7 +83,6 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
                         )
                     }
 
-                    // Record reading history
                     repository.recordReading(book, chapter)
                 }
         }

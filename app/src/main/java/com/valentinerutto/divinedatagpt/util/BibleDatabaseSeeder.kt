@@ -106,12 +106,12 @@ class BibleDatabaseSeeder(
         try {
 
             if (dao.getTotalVerseCount() > 0) {
-                Log.d(TAG, "Database already seeded – skipping.")
+                Log.d(TAG, "Database kjv already seeded – skipping.")
                 return@withContext false
             }
 
 
-            val inputStream = context.assets.open(ASSET_FILE_KJV)
+            val inputStream = context.assets.open(ASSET_FILE)
             val reader = inputStream.bufferedReader()
             val jsonText = reader.readText()
             reader.close()
@@ -131,12 +131,12 @@ class BibleDatabaseSeeder(
             }
 
             if (kjvData.books == null) {
-                Log.e(TAG, "Books list is null")
+                Log.e(TAG, "kjv Books list is null")
                 return@withContext false
             }
 
             if (kjvData.books.isEmpty()) {
-                Log.e(TAG, "Books list is empty")
+                Log.e(TAG, "kjv Books list is empty")
                 return@withContext false
             }
 
@@ -203,7 +203,7 @@ class BibleDatabaseSeeder(
                 Log.v(TAG, "Inserted $progress / ${verseEntities.size} verses...")
             }
 
-            Log.d(TAG, "Seeding complete – ${verseEntities.size} verses inserted.")
+            Log.d(TAG, "kjv Seeding complete – ${verseEntities.size} verses inserted.")
             true
         } catch (e: Exception) {
             e.printStackTrace()
