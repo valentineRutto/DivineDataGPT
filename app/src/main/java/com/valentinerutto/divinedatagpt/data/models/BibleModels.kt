@@ -2,6 +2,7 @@ package com.valentinerutto.divinedatagpt.data.models
 
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 
 
 data class BibleVerse(
@@ -52,4 +53,17 @@ fun BibleBookEntity.toDomain(): BibleBook {
         totalChapters = totalChapters,
         totalVerses = totalVerses
     )
+}
+
+fun BibleVerseEntity2.toDomain(): BibleBook {
+    return BibleBook(
+        name = bookName ?: "genesis",
+        abbreviation =
+            " abbr",
+        order = bookId ?: 1,
+        testament = kingJamesBibleKjv ?: "",
+        totalChapters = chapter,
+        totalVerses = verse
+    )
+
 }

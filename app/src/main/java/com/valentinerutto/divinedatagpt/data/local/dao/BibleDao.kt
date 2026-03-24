@@ -33,6 +33,8 @@ interface BibleDao {
     @Query("SELECT * FROM bible_books WHERE testament = :testament ORDER BY bookOrder ASC")
     fun getBooksByTestament(testament: String): Flow<List<BibleBookEntity>>
 
+    @Query("SELECT * FROM bible_book ORDER BY book_id ASC")
+    fun getkjvBooks(): Flow<List<BibleVerseEntity2>>
     /**
      * Get a single book by name
      */

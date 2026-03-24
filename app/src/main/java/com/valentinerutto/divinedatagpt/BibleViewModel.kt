@@ -29,15 +29,19 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
     }
 
     private fun loadBooks() {
+
         viewModelScope.launch {
-            repository.getAllBooks().collect { books ->
+            repository.getkjvBooks().collect { books ->
                 _uiState.update { it.copy(books = books) }
                 if (books.isNotEmpty()) {
                     loadChapter(_uiState.value.currentBook, _uiState.value.currentChapter)
                 }
             }
+
+
         }
     }
+
 
     fun onEvent(event: BibleUiEvent) {
         when (event) {

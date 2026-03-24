@@ -32,6 +32,12 @@ class BibleRepository(
         }
     }
 
+    fun getkjvBooks(): Flow<List<BibleBook>> {
+        return bibleDao.getkjvBooks().map {
+            it.map { it.toDomain() }
+        }
+    }
+
     fun getBooksByTestament(testament: String): Flow<List<BibleBook>> {
         return bibleDao.getBooksByTestament(testament).map { books ->
             books.map { it.toDomain() }
