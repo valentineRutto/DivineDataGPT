@@ -110,8 +110,9 @@ class BibleDatabaseSeeder(
                 return@withContext false
             }
 
+            Log.d(TAG, "Seeding Bible database from $ASSET_FILE_KJV …")
 
-            val inputStream = context.assets.open(ASSET_FILE)
+            val inputStream = context.assets.open(ASSET_FILE_KJV)
             val reader = inputStream.bufferedReader()
             val jsonText = reader.readText()
             reader.close()
