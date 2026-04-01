@@ -6,11 +6,8 @@ import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
 import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseDto
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
-import com.valentinerutto.divinedatagpt.data.models.KjvBibleData
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -100,119 +97,5 @@ class BibleDatabaseSeeder(
         onkelosEnglish = onkelosEnglish
     )
 
-    suspend fun seedKjvIfEmpty(): Boolean = withContext(Dispatchers.IO) {
-
-
-        try {
-
-            if (dao.getTotalVerseCount() > 0) {
-                Log.d(TAG, "Database kjv already seeded – skipping.")
-                return@withContext false
-            }
-
-            Log.d(TAG, "Seeding Bible database from $ASSET_FILE_KJV …")
-
-            val inputStream = context.assets.open(ASSET_FILE_KJV)
-            val reader = inputStream.bufferedReader()
-            val jsonText = reader.readText()
-            reader.close()
-            inputStream.close()
-
-            val kjvData: KjvBibleData? = try {
-                gson.fromJson(jsonText, KjvBibleData::class.java)
-            } catch (e: Exception) {
-                Log.e(TAG, "Failed to parse JSON", e)
-                return@withContext false
-            }
-
-            // Validate parsed data
-            if (kjvData == null) {
-                Log.e(TAG, "Parsed data is null")
-                return@withContext false
-            }
-
-            if (kjvData.books == null) {
-                Log.e(TAG, "kjv Books list is null")
-                return@withContext false
-            }
-
-            if (kjvData.books.isEmpty()) {
-                Log.e(TAG, "kjv Books list is empty")
-                return@withContext false
-            }
-
-            val bookEntities = mutableListOf<BibleBookEntity>()
-            val verseEntities = mutableListOf<BibleVerseEntity>()
-
-            kjvData.books.forEach { kjvBook ->
-
-                val bookInfo = BibleBookMapper.getBookInfo(kjvBook.name) ?: return@forEach
-
-
-                var bookTotalVerses = 0
-
-                // Process each chapter
-                kjvBook.chapters.forEachIndexed { chapterIndex, verses ->
-                    val chapterNumber = chapterIndex + 1
-
-                    // Process each verse in the chapter
-                    verses.forEachIndexed { verseIndex, verseText ->
-                        val verseNumber = verseIndex + 1
-
-                        val verse = BibleVerseEntity(
-                            book = bookInfo.displayName,
-                            bookAbbrev = bookInfo.abbreviation,
-                            chapter = chapterNumber,
-                            verse = verseNumber,
-                            text = verseText.trim(),
-                            sectionNumber = 1,
-                            bookOrder = bookInfo.order,
-                            testament = bookInfo.testament
-                        )
-
-                        verseEntities.add(verse)
-
-                        bookTotalVerses++
-                    }
-                }
-
-                // Create book entity
-                val bookEntity = BibleBookEntity(
-                    bookName = bookInfo.displayName,
-                    abbreviation = bookInfo.abbreviation,
-                    bookOrder = bookInfo.order,
-                    testament = bookInfo.testament,
-                    totalChapters = kjvBook.chapters.size,
-                    totalVerses = bookTotalVerses
-                )
-
-                bookEntities.add(bookEntity)
-                Log.d(
-                    TAG,
-                    "   ✅ ${bookInfo.displayName}: ${kjvBook.chapters.size} chapters, $bookTotalVerses verses"
-                )
-            }
-
-            // Insert books
-            dao.insertBooks(bookEntities)
-            Log.d(TAG, "Inserted ${bookEntities.size} books")
-
-            // Insert verses in batches
-            verseEntities.chunked(BATCH_SIZE).forEachIndexed { index, batch ->
-                dao.insertVerses(batch)
-                val progress = ((index + 1) * BATCH_SIZE).coerceAtMost(verseEntities.size)
-                Log.v(TAG, "Inserted $progress / ${verseEntities.size} verses...")
-            }
-
-            Log.d(TAG, "kjv Seeding complete – ${verseEntities.size} verses inserted.")
-            true
-        } catch (e: Exception) {
-            e.printStackTrace()
-
-            false
-        }
-
-
-    }
 
 }
