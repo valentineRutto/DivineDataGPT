@@ -28,15 +28,12 @@ import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Bookmark
 import androidx.compose.material.icons.filled.BorderColor
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Divider
@@ -100,9 +97,6 @@ fun BibleScreen(
         },
         bottomBar = {
             BibleBottomBar(
-                onHighlightClick = { /* Handle highlight */ },
-                onNoteClick = { /* Handle note */ },
-                onShareClick = { /* Handle share */ },
                 onHomeClick = onNavigateToHome,
                 onJournalClick = onNavigateToJournal,
                 onSettingsClick = onNavigateToSettings
@@ -390,9 +384,6 @@ fun BibleTopBar(
 
 @Composable
 fun BibleBottomBar(
-    onHighlightClick: () -> Unit,
-    onNoteClick: () -> Unit,
-    onShareClick: () -> Unit,
     onHomeClick: () -> Unit,
     onJournalClick: () -> Unit,
     onSettingsClick: () -> Unit,
@@ -403,31 +394,9 @@ fun BibleBottomBar(
             .fillMaxWidth()
             .background(DarkSurface)
     ) {
-        // Action Buttons Row
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 16.dp),
-            horizontalArrangement = Arrangement.SpaceEvenly
-        ) {
-            BottomActionButton(
-                icon = Icons.Default.Bookmark,
-                label = "HIGHLIGHT",
-                onClick = onHighlightClick
-            )
-            BottomActionButton(
-                icon = Icons.Default.Edit,
-                label = "NOTE",
-                onClick = onNoteClick
-            )
-            BottomActionButton(
-                icon = Icons.Default.Share,
-                label = "SHARE",
-                onClick = onShareClick
-            )
-        }
 
-        // Bottom Navigation Bar
+
+    // Bottom Navigation Bar
         NavigationBar(
             containerColor = DarkSurface,
             contentColor = TextSecondary,
