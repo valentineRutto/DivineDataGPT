@@ -189,4 +189,43 @@ class AiRepository(
         return "Take a quiet moment to reflect on this verse and how it speaks to your heart."
 
     }
+
+
+    fun buildReflectionPrompt(
+        emotion: String,
+        verses: List<String>
+    ): String {
+
+        val formattedVerses = verses.joinToString("\n\n")
+
+        return """
+        A user is feeling: $emotion
+
+        Here are Bible verses:
+        $formattedVerses
+
+        TASK:
+        1. Write one short encouragement paragraph (max 100 words)
+        2. Write one short prayer (max 60 words)
+
+        RULES:
+        - Be warm, calm, and supportive
+        - Do not repeat the verses
+        - Do not quote new scripture
+        - Keep it personal and relatable
+        - Avoid preaching tone
+
+        FORMAT:
+        Encouragement:
+        <text>
+
+        Prayer:
+        <text>
+        """.trimIndent()
+    }
+
+
 }
+
+
+
