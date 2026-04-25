@@ -98,4 +98,59 @@ class BibleDatabaseSeeder(
     )
 
 
-}
+        suspend fun preloadIfNeeded() {
+            val prefs = context.getSharedPreferences("app", Context.MODE_PRIVATE)
+
+            if (prefs.getBoolean("is_preloaded", false)) return
+
+            val json = context.assets.open("bible.json")
+                .bufferedReader()
+                .use { it.readText() }
+
+            val bible = Gson().fromJson(json, BibleJson::class.java)
+
+            insertIntoDb(bible)
+
+            prefs.edit().putBoolean("is_preloaded", true).apply()
+        }
+
+        private suspend fun insertIntoDb(bible: BibleJson) {
+            var bookId = 1
+            var chapterId = 1
+            var verseId = 1
+
+            val books = mutableListOf<Book>()
+            val chapters = mutableListOf<Chapter>()
+            val verses = mutableListOf<Verse>()
+
+            bible.books.forEach { b ->
+                books.add(Book(bookId, b.name))
+
+                b.chapters.forEach { ch ->
+                    chapters.add(Chapter(chapterId, bookId, ch.chapter))
+
+                    ch.verses.forEach { v ->
+                        verses.add(
+                            Verse(
+                                verseId,
+                                chapterId,
+                                v.verse,
+                                v.text
+                            )
+                        )
+                        verseId++
+                    }
+
+                    chapterId++
+                }
+
+                bookId++
+            }
+
+            // Insert in transaction
+            dao.insertBooks(books)
+            dao.insertChapters(chapters)
+            dao.insertVerses(verses)
+        }
+    }
+
