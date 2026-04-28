@@ -43,7 +43,7 @@ class BibleDatabaseSeeder(
 
                 JsonReader(reader).use { jsonReader ->
 
-                    jsonReader.beginArray()                      // [
+                    jsonReader.beginArray()
 
                     while (jsonReader.hasNext()) {
 
