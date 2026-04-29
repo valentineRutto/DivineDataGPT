@@ -4,26 +4,23 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MemorySummaryDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MessageDao
+import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
 import com.valentinerutto.divinedatagpt.data.local.entity.MemorySummaryEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 
 @Database(
-    entities = [Verse::class, MemorySummaryEntity::class, MessageEntity::class, BibleVerseEntity::class, BibleVerseEntity2::class, BibleBookEntity::class, BookmarkEntity::class],
+    entities = [Verse::class, MemorySummaryEntity::class, MessageEntity::class, BookmarkEntity::class, VerseEntity::class],
     version = 3,
     exportSchema = false
 )
 abstract class DivineDatabase : RoomDatabase() {
     abstract fun memorySummaryDao(): MemorySummaryDao
     abstract fun messageDao(): MessageDao
-
-    abstract fun bibleDao(): BibleDao
+    abstract fun verseDao(): VerseDao
 
     companion object Companion {
         @Volatile

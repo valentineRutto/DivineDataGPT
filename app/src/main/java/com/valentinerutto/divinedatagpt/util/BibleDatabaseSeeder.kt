@@ -5,97 +5,90 @@ import android.content.Context
 import android.util.Log
 import com.google.gson.Gson
 import com.google.gson.stream.JsonReader
-import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseDto
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
+import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleJson
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseJson
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.toEntity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
 class BibleDatabaseSeeder(
     private val context: Context,
-    private val dao: BibleDao,
-    private val gson: Gson
+    private val dao: VerseDao,
 ) {
 
     companion object {
         private const val TAG = "BibleDatabaseSeeder"
         private const val ASSET_FILE = "AlamoPolyglot2.json"
-        private const val ASSET_FILE_WEB = "web_complete.json"
+        private const val ASSET_FILE_WEB = "web.json"
         private const val ASSET_FILE_KJV = "kjv.json"
         private const val BATCH_SIZE = 500
     }
 
-    suspend fun seedIfEmpty(): Boolean = withContext(Dispatchers.IO) {
+    suspend fun seedIfEmpty() = withContext(Dispatchers.IO) {
 
-        if (dao.count() > 0) {
-            Log.d(TAG, "Database already seeded – skipping.")
-            return@withContext false
-        }
+        if (dao.count() > 0) return@withContext
 
         Log.d(TAG, "Seeding Bible database from $ASSET_FILE …")
 
-        try {
-            var totalInserted = 0
-            val batch = ArrayList<BibleVerseEntity2>(BATCH_SIZE)
 
+        val gson = Gson()
+        val batch = mutableListOf<VerseEntity>()
+        var shortName = "WEB"
 
-            context.assets.open(ASSET_FILE).bufferedReader().use { reader ->
+        context.assets.open(ASSET_FILE_WEB).bufferedReader().use { reader ->
+            val jsonReader = JsonReader(reader)
 
-                JsonReader(reader).use { jsonReader ->
+            jsonReader.beginObject()
 
-                    jsonReader.beginArray()
-
-                    while (jsonReader.hasNext()) {
-
-                        val dto: BibleVerseDto =
-                            gson.fromJson(jsonReader, BibleVerseDto::class.java)
-
-                        batch.add(dto.toEntity())
-
-                        if (batch.size >= BATCH_SIZE) {
-                            dao.insertAll(batch)
-                            totalInserted += batch.size
-                            Log.v(TAG, "Inserted $totalInserted verses so far…")
-                            batch.clear()
-                        }
+            while (jsonReader.hasNext()) {
+                when (jsonReader.nextName()) {
+                    "metadata" -> {
+                        gson.fromJson<BibleJson>(
+                            jsonReader,
+                            BibleJson::class.java
+                        )
+                        shortName = "shortname"
                     }
 
-                    jsonReader.endArray()                        // ]
+                    "verses" -> {
+                        jsonReader.beginArray()
+
+                        while (jsonReader.hasNext()) {
+                            val verse = gson.fromJson<VerseJson>(
+                                jsonReader,
+                                VerseJson::class.java
+                            )
+
+                            batch += verse.toEntity(translation = shortName)
+
+                            if (batch.size >= 500) {
+                                dao.insertAll(batch)
+                                batch.clear()
+                            }
+                        }
+
+                        jsonReader.endArray()
+                    }
+
+                    else -> jsonReader.skipValue()
                 }
             }
 
-            if (batch.isNotEmpty()) {
-                dao.insertAll(batch)
-                totalInserted += batch.size
-                batch.clear()
-            }
-
-            Log.d(TAG, "Seeding complete – $totalInserted verses inserted.")
-            true
-
-        } catch (e: Exception) {
-            Log.e(TAG, "Failed to seed database", e)
-            false
+            jsonReader.endObject()
         }
+
+        if (batch.isNotEmpty()) {
+            dao.insertAll(batch)
+        }
+
     }
 
-    private fun BibleVerseDto.toEntity() = BibleVerseEntity2(
-        id = id,
-        bookId = bookId,
-        bookName = bookName,
-        chapter = chapter,
-        verse = verse,
-        worldEnglishBibleWeb = worldEnglishBibleWeb,
-        kingJamesBibleKjv = kingJamesBibleKjv,
-        leningradCodex = leningradCodex,
-        jewishPublicationSocietyJps = jewishPublicationSocietyJps,
-        codexAlexandrinus = codexAlexandrinus,
-        brenton = brenton,
-        samaritanPentateuch = samaritanPentateuch,
-        samaritanPentateuchEnglish = samaritanPentateuchEnglish,
-        onkelosAramaic = onkelosAramaic,
-        onkelosEnglish = onkelosEnglish
-    )
+    }
 
-}
+
+
+
+
 

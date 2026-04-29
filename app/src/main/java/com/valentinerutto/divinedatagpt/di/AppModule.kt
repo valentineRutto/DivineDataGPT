@@ -33,7 +33,7 @@ val AppModule = module {
     viewModel { DivineDataViewModel(get(), get()) }
     viewModel { BibleViewModel(get()) }
     single { DivineDatabase.getDatabase(context = androidContext()) }
-    single { BibleDatabaseSeeder(context = androidContext(), dao = get(), gson = get()) }
+    single { BibleDatabaseSeeder(context = androidContext(), dao = get()) }
 
 
 }
@@ -41,6 +41,7 @@ val AppModule = module {
         single { get<DivineDatabase>().memorySummaryDao() }
         single { get<DivineDatabase>().messageDao() }
         single { get<DivineDatabase>().bibleDao() }
+        single { get<DivineDatabase>().verseDao() }
     }
 
     fun Scope.database() = get<DivineDatabase>()

@@ -12,6 +12,9 @@ interface VerseDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertAll(verses: List<VerseEntity>)
 
+    @Query("SELECT COUNT(*) FROM verses")
+    suspend fun count(): Int
+
     @Query(
         """
         SELECT * FROM verses

@@ -1,9 +1,6 @@
 package com.valentinerutto.divinedatagpt.data
 
 import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.valentinerutto.divinedatagpt.data.local.dao.BibleDao
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import com.valentinerutto.divinedatagpt.data.models.BibleVerse
@@ -21,7 +18,6 @@ import org.json.JSONObject
 class BibleRepository(
     private val esvApi: ApiService,
     private val huggingFaceApi: AiApi,
-    private val bibleDao: BibleDao
 
     ) {
 

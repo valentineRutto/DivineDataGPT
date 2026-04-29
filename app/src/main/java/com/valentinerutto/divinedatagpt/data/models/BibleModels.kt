@@ -1,6 +1,5 @@
 package com.valentinerutto.divinedatagpt.data.models
 
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleBookEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleVerseEntity2
 
