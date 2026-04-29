@@ -26,7 +26,7 @@ val AppModule = module {
     single { Gson() }
 
 
-    single { BibleRepository(get(), get(), get()) }
+    single { BibleRepository(get(), get()) }
 
     single { AiRepository(get(), get(), get()) }
 
@@ -40,7 +40,6 @@ val AppModule = module {
     val databaseModule = module {
         single { get<DivineDatabase>().memorySummaryDao() }
         single { get<DivineDatabase>().messageDao() }
-        single { get<DivineDatabase>().bibleDao() }
         single { get<DivineDatabase>().verseDao() }
     }
 
