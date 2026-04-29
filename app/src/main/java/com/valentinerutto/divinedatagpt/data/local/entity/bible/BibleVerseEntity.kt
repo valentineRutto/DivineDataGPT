@@ -109,3 +109,32 @@ data class BibleVerseEntity2(
     @ColumnInfo(name = "onkelos_english")
     val onkelosEnglish: String? = null
 )
+
+@Entity(
+    tableName = "verses",
+    indices = [
+        Index(value = ["translation", "book", "chapter", "verse"], unique = true)
+    ]
+)
+data class VerseEntity(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int = 0,
+    val translation: String,
+    val bookName: String,
+    val book: Int,
+    val chapter: Int,
+    val verse: Int,
+    val text: String
+)
+
+fun VerseJson.toEntity(translation: String): VerseEntity {
+    return VerseEntity(
+        translation = translation,
+        bookName = bookName,
+        book = book,
+        chapter = chapter,
+        verse = verse,
+        text = text
+    )
+}
+
