@@ -1,10 +1,11 @@
 package com.valentinerutto.divinedatagpt.data
 
 import com.google.gson.Gson
+import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import com.valentinerutto.divinedatagpt.data.models.BibleVerse
-import com.valentinerutto.divinedatagpt.data.models.toDomain
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
@@ -18,36 +19,33 @@ import org.json.JSONObject
 class BibleRepository(
     private val esvApi: ApiService,
     private val huggingFaceApi: AiApi,
+    private val dao: VerseDao
 
     ) {
 
 
     fun getAllBooks(): Flow<List<BibleBook>> {
-        return bibleDao.getAllBooks().map { books ->
+        return dao.getAllBooks().map { books ->
             books.map { it.toDomain() }
         }
     }
 
     fun getkjvBooks(): Flow<List<BibleBook>> {
-        return bibleDao.getkjvBooks().map {
+        return dao.getkjvBooks().map {
             it.map { it.toDomain() }
         }
     }
 
-    fun getBooksByTestament(testament: String): Flow<List<BibleBook>> {
-        return bibleDao.getBooksByTestament(testament).map { books ->
-            books.map { it.toDomain() }
-        }
-    }
+
 
     fun getChapterVerses(book: String, chapter: Int): Flow<List<BibleVerse>> {
-        return bibleDao.getChapterVerses(book, chapter).map { verses ->
+        return dao.getChapterVerses(book, chapter).map { verses ->
             verses.map { it.toDomain() }
         }
     }
 
     fun searchVerses(query: String): Flow<List<BibleVerse>> {
-        return bibleDao.searchVerses(query).map { verses ->
+        return dao.searchVerses(query).map { verses ->
             verses.map { it.toDomain() }
         }
     }
@@ -89,18 +87,18 @@ class BibleRepository(
     }
 
     // Fetch Bible verse from ESV API
-    suspend fun getBibleVerse(reference: String): Result<BibleVerseEntity2> {
+    suspend fun getBibleVerse(reference: String): Result<VerseEntity> {
         return try {
             esvApi.getPassage(
                 query = reference
             )
 
-            val verse = bibleDao.getVerseByReference(reference)
+            val verse = dao.getVerseByReference(reference)
 
             Result.success(verse)
         } catch (e: Exception) {
             Result.failure(e)
-        } as Result<BibleVerseEntity2>
+        } as Result<VerseEntity>
     }
 
     suspend fun getDailyReflection(): Result<Reflection> {
