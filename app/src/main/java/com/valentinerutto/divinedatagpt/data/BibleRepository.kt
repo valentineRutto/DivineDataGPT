@@ -1,18 +1,14 @@
 package com.valentinerutto.divinedatagpt.data
 
-import com.google.gson.Gson
 import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
-import com.valentinerutto.divinedatagpt.data.models.BibleBook
-import com.valentinerutto.divinedatagpt.data.models.BibleVerse
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import com.valentinerutto.divinedatagpt.data.network.bible.BibleInsight
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.map
 import org.json.JSONObject
 
 
@@ -24,30 +20,26 @@ class BibleRepository(
     ) {
 
 
-    fun getAllBooks(): Flow<List<BibleBook>> {
-        return dao.getAllBooks().map { books ->
-            books.map { it.toDomain() }
-        }
+    fun observeChapter(
+        translation: String,
+        book: Int,
+        chapter: Int
+    ): Flow<List<VerseEntity>> {
+        return dao.getChapter(
+            translation = translation,
+            book = book,
+            chapter = chapter
+        )
     }
 
-    fun getkjvBooks(): Flow<List<BibleBook>> {
-        return dao.getkjvBooks().map {
-            it.map { it.toDomain() }
-        }
-    }
-
-
-
-    fun getChapterVerses(book: String, chapter: Int): Flow<List<BibleVerse>> {
-        return dao.getChapterVerses(book, chapter).map { verses ->
-            verses.map { it.toDomain() }
-        }
-    }
-
-    fun searchVerses(query: String): Flow<List<BibleVerse>> {
-        return dao.searchVerses(query).map { verses ->
-            verses.map { it.toDomain() }
-        }
+    fun searchVerses(
+        translation: String,
+        query: String
+    ): Flow<List<VerseEntity>> {
+        return dao.searchVerses(
+            translation = translation,
+            query = query.trim()
+        )
     }
 
     suspend fun highlightVerse(verseId: Long, color: String?) {
@@ -87,19 +79,19 @@ class BibleRepository(
     }
 
     // Fetch Bible verse from ESV API
-    suspend fun getBibleVerse(reference: String): Result<VerseEntity> {
-        return try {
-            esvApi.getPassage(
-                query = reference
-            )
-
-            val verse = dao.getVerseByReference(reference)
-
-            Result.success(verse)
-        } catch (e: Exception) {
-            Result.failure(e)
-        } as Result<VerseEntity>
-    }
+//    suspend fun getBibleVerse(reference: String): Result<VerseEntity> {
+//        return try {
+//            esvApi.getPassage(
+//                query = reference
+//            )
+//
+//            val verse = dao.getVerseByReference(reference)
+//
+//            Result.success(verse)
+//        } catch (e: Exception) {
+//            Result.failure(e)
+//        } as Result<VerseEntity>
+//    }
 
     suspend fun getDailyReflection(): Result<Reflection> {
         return try {
@@ -176,45 +168,45 @@ JSON format:
     }
 
     // Parse the LLM response and extract JSON
-    private fun parseInsightFromResponse(
-        response: String,
-        reference: String,
-        verseText: String
-    ): BibleInsight {
-        return try {
-            // Try to extract JSON from the response
-            val jsonStart = response.indexOf("{")
-            val jsonEnd = response.lastIndexOf("}") + 1
-
-            if (jsonStart != -1 && jsonEnd > jsonStart) {
-                val jsonString = response.substring(jsonStart, jsonEnd)
-                val gson = Gson()
-
-                // Parse the JSON
-                val jsonObject = gson.fromJson(jsonString, JsonObject::class.java)
-
-                BibleInsight(
-                    verse = verseText.trim(),
-                    reference = reference,
-                    summary = jsonObject.get("summary")?.asString ?: "No summary available",
-                    themes = jsonObject.getAsJsonArray("themes")?.map {
-                        it.asString
-                    } ?: listOf("Faith", "Hope", "Love"),
-                    application = jsonObject.get("application")?.asString
-                        ?: "No application available",
-                    related_verses = jsonObject.getAsJsonArray("related_verses")?.map {
-                        it.asString
-                    } ?: emptyList()
-                )
-            } else {
-                // Fallback if JSON extraction fails
-                createFallbackInsight(reference, verseText, response)
-            }
-        } catch (e: Exception) {
-            // Fallback parsing
-            createFallbackInsight(reference, verseText, response)
-        }
-    }
+//    private fun parseInsightFromResponse(
+//        response: String,
+//        reference: String,
+//        verseText: String
+//    ): BibleInsight {
+//        return try {
+//            // Try to extract JSON from the response
+//            val jsonStart = response.indexOf("{")
+//            val jsonEnd = response.lastIndexOf("}") + 1
+//
+//            if (jsonStart != -1 && jsonEnd > jsonStart) {
+//                val jsonString = response.substring(jsonStart, jsonEnd)
+//                val gson = Gson()
+//
+//                // Parse the JSON
+//                val jsonObject = gson.fromJson(jsonString, JsonObject::class.java)
+//
+//                BibleInsight(
+//                    verse = verseText.trim(),
+//                    reference = reference,
+//                    summary = jsonObject.get("summary")?.asString ?: "No summary available",
+//                    themes = jsonObject.getAsJsonArray("themes")?.map {
+//                        it.asString
+//                    } ?: listOf("Faith", "Hope", "Love"),
+//                    application = jsonObject.get("application")?.asString
+//                        ?: "No application available",
+//                    related_verses = jsonObject.getAsJsonArray("related_verses")?.map {
+//                        it.asString
+//                    } ?: emptyList()
+//                )
+//            } else {
+//                // Fallback if JSON extraction fails
+//                createFallbackInsight(reference, verseText, response)
+//            }
+//        } catch (e: Exception) {
+//            // Fallback parsing
+//            createFallbackInsight(reference, verseText, response)
+//        }
+//    }
     private fun buildMistralPrompt(instruction: String): String {
         return "<s>[INST] $instruction [/INST]"
     }
