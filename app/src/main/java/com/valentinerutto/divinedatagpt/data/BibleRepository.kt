@@ -21,7 +21,7 @@ class BibleRepository(
 
 
     fun observeChapter(
-        translation: String,
+        translation: String = "shortname",
         book: Int,
         chapter: Int
     ): Flow<List<VerseEntity>> {

@@ -3,6 +3,7 @@ package com.valentinerutto.divinedatagpt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import com.valentinerutto.divinedatagpt.data.models.BibleVerse
 import kotlinx.coroutines.FlowPreview
@@ -14,6 +15,7 @@ import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.debounce
 import kotlinx.coroutines.flow.distinctUntilChanged
 import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
@@ -23,6 +25,52 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
 
     private val _searchQuery = MutableStateFlow("")
 
+    private val request = MutableStateFlow(initialRequest)
+    private val searchQuery = MutableStateFlow("")
+    private val selectedVerse = MutableStateFlow<Int?>(null)
+
+    private val chapterVerses = request
+        .flatMapLatest { current ->
+            repository.observeChapter(
+                translation = current.translation,
+                book = current.book,
+                chapter = current.chapter
+            )
+        }
+
+
+    fun onSearchQueryChange(query: String) {
+        searchQuery.value = query
+    }
+
+    fun onVerseSelected(verse: Int) {
+        selectedVerse.value = if (selectedVerse.value == verse) null else verse
+    }
+
+    fun clearSelection() {
+        selectedVerse.value = null
+    }
+
+    fun loadChapter(
+        translation: String,
+        book: Int,
+        bookName: String,
+        chapter: Int
+    ) {
+        selectedVerse.value = null
+        request.value = ChapterRequest(
+            translation = translation,
+            book = book,
+            bookName = bookName,
+            chapter = chapter
+        )
+    }
+
+
+
+
+
+
     init {
         loadBooks()
         observeSearchQuery()
@@ -31,7 +79,7 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
     private fun loadBooks() {
 
         viewModelScope.launch {
-            repository.getkjvBooks().collect { books ->
+            repository.observeChapter().collect { books ->
                 _uiState.update { it.copy(books = books) }
                 if (books.isNotEmpty()) {
                     loadChapter(_uiState.value.currentBook, _uiState.value.currentChapter)
@@ -189,7 +237,25 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
         // Implementation for sharing verse
         // This would typically use Android's share intent
     }
+
+
 }
+
+data class ChapterRequest(
+    val translation: String = "WEB",
+    val book: Int = 1,
+    val bookName: String = "Genesis",
+    val chapter: Int = 1
+)
+
+data class BibleReaderUiState(
+    val request: ChapterRequest = ChapterRequest(),
+    val verses: List<VerseEntity> = emptyList(),
+    val searchQuery: String = "",
+    val selectedVerse: Int? = null,
+    val isLoading: Boolean = true
+)
+
 
 data class BibleUiState(
     val books: List<BibleBook> = emptyList(),
