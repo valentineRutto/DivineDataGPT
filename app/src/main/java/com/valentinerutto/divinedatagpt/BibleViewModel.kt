@@ -28,7 +28,16 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
     private val request = MutableStateFlow(initialRequest)
     private val searchQuery = MutableStateFlow("")
     private val selectedVerse = MutableStateFlow<Int?>(null)
-
+    private val initialBook = repository.observeChapter(
+        translation = TODO(),
+        book = TODO(),
+        chapter = TODO()
+    )
+    private val initialRequest = ChapterRequest(
+        book = initialBook.number,
+        bookName = initialBook.name,
+        chapter = 1
+    )
     private val chapterVerses = request
         .flatMapLatest { current ->
             repository.observeChapter(
@@ -285,3 +294,5 @@ sealed class BibleUiEvent {
     data class AddNote(val verseId: Long, val note: String) : BibleUiEvent()
     data class ShareVerse(val verseId: Long) : BibleUiEvent()
 }
+
+
