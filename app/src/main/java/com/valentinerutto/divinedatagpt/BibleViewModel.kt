@@ -19,13 +19,28 @@ import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
+data class ChapterRequest(
+    val translation: String = "WEB",
+    val book: Int = 1,
+    val bookName: String = "Genesis",
+    val chapter: Int = 1
+)
+
+val isLoading: Boolean = true
+
+
+private data class ReaderContentState(
+    val request: ChapterRequest,
+    val books: List<BibleBook>,
+    val availableChapters: List<Int>,
+    val verses: List<VerseEntity>
+)
 class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(BibleUiState())
     val uiState: StateFlow<BibleUiState> = _uiState.asStateFlow()
 
     private val _searchQuery = MutableStateFlow("")
 
-    private val request = MutableStateFlow(initialRequest)
     private val searchQuery = MutableStateFlow("")
     private val selectedVerse = MutableStateFlow<Int?>(null)
     private val initialBook = repository.observeChapter(
@@ -47,6 +62,7 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
             )
         }
 
+    private val request = MutableStateFlow(initialRequest)
 
     fun onSearchQueryChange(query: String) {
         searchQuery.value = query
@@ -250,12 +266,6 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
 
 }
 
-data class ChapterRequest(
-    val translation: String = "WEB",
-    val book: Int = 1,
-    val bookName: String = "Genesis",
-    val chapter: Int = 1
-)
 
 data class BibleReaderUiState(
     val request: ChapterRequest = ChapterRequest(),
