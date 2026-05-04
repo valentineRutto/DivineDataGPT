@@ -19,6 +19,7 @@ class BibleRepository(
     private val dao: VerseDao
 
     ) {
+
     fun observeBooks(translation: String): Flow<List<BibleBook>> {
         return dao.observeBooks(translation)
     }
@@ -34,6 +35,7 @@ class BibleRepository(
             chapter = chapter
         )
     }
+
     fun observeChapters(
         translation: String,
         book: Int
