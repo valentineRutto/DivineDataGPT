@@ -4,7 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleScreen
+import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleReaderRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.DailyReflectionScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.HomeScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.ReflectionScreen
@@ -48,12 +48,25 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(Screen.Bible.route) {
-            BibleScreen(
-                onNavigateToHome = {
+
+            BibleReaderRoute(
+                onHomeClick = {
                     navController.navigate(Screen.Home.route) {
-                        popUpTo(Screen.Home.route) { inclusive = false }
+                        popUpTo(Screen.Home.route) {
+                            inclusive = false
+                        }
+                        launchSingleTop = true
                     }
-                })
+                },
+                onSettingsClick = {
+                    navController.navigate(Screen.Home.route) {
+                        popUpTo(Screen.Home.route) {
+                            inclusive = false
+                        }
+                        launchSingleTop = true
+                    }
+                }
+            )
         }
     }
 }
