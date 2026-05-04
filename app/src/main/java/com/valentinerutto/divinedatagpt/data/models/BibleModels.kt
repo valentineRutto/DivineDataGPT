@@ -14,12 +14,9 @@ data class BibleVerse(
 )
 
 data class BibleBook(
-    val name: String,
-    val abbreviation: String,
-    val order: Int,
-    val testament: String,
-    val totalChapters: Int,
-    val totalVerses: Int
+    val book: Int,
+    val bookName: String,
+    val chapterCount: Int
 )
 
 data class BibleChapter(

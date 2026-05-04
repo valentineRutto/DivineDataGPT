@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
+import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import kotlinx.coroutines.flow.Flow
 
 
@@ -16,6 +17,34 @@ interface VerseDao {
     @Query("SELECT COUNT(*) FROM verses")
     suspend fun count(): Int
 
+    @Query(
+        """
+        SELECT
+            book,
+            MIN(bookName) AS bookName,
+            MAX(chapter) AS chapterCount
+        FROM verses
+        WHERE translation = :translation
+        GROUP BY book
+        ORDER BY book ASC
+        """
+    )
+    fun observeBooks(translation: String): Flow<List<BibleBook>>
+
+
+    @Query(
+        """
+        SELECT DISTINCT chapter
+        FROM verses
+        WHERE translation = :translation
+          AND book = :book
+        ORDER BY chapter ASC
+        """
+    )
+    fun observeChapters(
+        translation: String,
+        book: Int
+    ): Flow<List<Int>>
 
     @Query(
         """
