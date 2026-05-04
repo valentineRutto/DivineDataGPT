@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 data class ChapterRequest(
     val translation: String = "WEB",
     val book: Int = 1,
-    val bookName: String = "Genesis",
+    val bookName: String = "",
     val chapter: Int = 1
 )
 
@@ -35,6 +35,19 @@ private data class ReaderContentState(
     val availableChapters: List<Int>,
     val verses: List<VerseEntity>
 )
+
+data class BibleReaderUiState(
+    val request: ChapterRequest = ChapterRequest(),
+    val books: List<BibleBook> = emptyList(),
+    val availableChapters: List<Int> = emptyList(),
+    val verses: List<VerseEntity> = emptyList(),
+    val searchResults: List<VerseEntity> = emptyList(),
+    val searchQuery: String = "",
+    val selectedVerse: Int? = null,
+    val isLoading: Boolean = true
+)
+
+
 class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
     private val _uiState = MutableStateFlow(BibleUiState())
     val uiState: StateFlow<BibleUiState> = _uiState.asStateFlow()
@@ -43,16 +56,22 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
 
     private val searchQuery = MutableStateFlow("")
     private val selectedVerse = MutableStateFlow<Int?>(null)
-    private val initialBook = repository.observeChapter(
-        translation = TODO(),
-        book = TODO(),
-        chapter = TODO()
-    )
+    private val request = MutableStateFlow(ChapterRequest())
+
+    private val books = request
+        .flatMapLatest { current ->
+            repository.observeChapter(current.translation)
+        }
+
+
+
     private val initialRequest = ChapterRequest(
         book = initialBook.number,
         bookName = initialBook.name,
         chapter = 1
     )
+
+
     private val chapterVerses = request
         .flatMapLatest { current ->
             repository.observeChapter(
@@ -62,7 +81,6 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
             )
         }
 
-    private val request = MutableStateFlow(initialRequest)
 
     fun onSearchQueryChange(query: String) {
         searchQuery.value = query
@@ -266,14 +284,6 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
 
 }
 
-
-data class BibleReaderUiState(
-    val request: ChapterRequest = ChapterRequest(),
-    val verses: List<VerseEntity> = emptyList(),
-    val searchQuery: String = "",
-    val selectedVerse: Int? = null,
-    val isLoading: Boolean = true
-)
 
 
 data class BibleUiState(

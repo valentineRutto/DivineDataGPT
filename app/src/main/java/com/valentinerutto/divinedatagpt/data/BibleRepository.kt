@@ -3,6 +3,7 @@ package com.valentinerutto.divinedatagpt.data
 import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
+import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
@@ -18,7 +19,9 @@ class BibleRepository(
     private val dao: VerseDao
 
     ) {
-
+    fun observeBooks(translation: String): Flow<List<BibleBook>> {
+        return dao.observeBooks(translation)
+    }
 
     fun observeChapter(
         translation: String = "shortname",
@@ -29,6 +32,15 @@ class BibleRepository(
             translation = translation,
             book = book,
             chapter = chapter
+        )
+    }
+    fun observeChapters(
+        translation: String,
+        book: Int
+    ): Flow<List<Int>> {
+        return dao.observeChapters(
+            translation = translation,
+            book = book
         )
     }
 
