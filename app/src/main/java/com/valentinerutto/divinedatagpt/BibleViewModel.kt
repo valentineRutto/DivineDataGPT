@@ -15,9 +15,9 @@ import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
 
 data class ChapterRequest(
-    val translation: String = "WEB",
+    val translation: String = "shortname",
     val book: Int = 1,
-    val bookName: String = "",
+    val bookName: String = "Genesis",
     val chapter: Int = 1
 )
 
