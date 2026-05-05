@@ -19,7 +19,9 @@ import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.AutoAwesome
 import androidx.compose.material.icons.rounded.Book
@@ -355,30 +357,28 @@ private fun BiblePickerMenu(
             .width(360.dp)
             .heightIn(max = 420.dp)
     ) {
+
         Row(
             modifier = Modifier
                 .fillMaxWidth()
                 .height(360.dp)
                 .padding(vertical = 8.dp)
         ) {
-            LazyColumn(
-                modifier = Modifier.weight(1f)
+
+            Column(
+                modifier = Modifier
+                    .weight(1f)
+                    .height(344.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
-                items(
-                    items = books,
-                    key = { book -> book.book }
-                ) { book ->
+
+
+                books.forEach { book ->
                     DropdownMenuItem(
                         text = {
                             Text(
                                 text = book.bookName,
-                                color = if (book.book == selectedBook) Purple else Ink,
-                                fontFamily = FontFamily.Serif,
-                                fontWeight = if (book.book == selectedBook) {
-                                    FontWeight.Bold
-                                } else {
-                                    FontWeight.Normal
-                                }
+                                color = if (book.book == selectedBook) Purple else Ink
                             )
                         },
                         onClick = {
@@ -386,6 +386,7 @@ private fun BiblePickerMenu(
                         }
                     )
                 }
+
             }
 
             Box(
@@ -395,26 +396,18 @@ private fun BiblePickerMenu(
                     .background(Color(0xFF33273A))
             )
 
-            LazyColumn(
-                modifier = Modifier.width(104.dp)
+            Column(
+                modifier = Modifier
+                    .width(104.dp)
+                    .height(344.dp)
+                    .verticalScroll(rememberScrollState())
             ) {
-                items(
-                    items = chapters,
-                    key = { chapter -> chapter }
-                ) { chapter ->
+                chapters.forEach { chapter ->
                     DropdownMenuItem(
                         text = {
                             Text(
                                 text = chapter.toString(),
-                                color = if (chapter == selectedChapter) Purple else Ink,
-                                fontFamily = FontFamily.Serif,
-                                fontWeight = if (chapter == selectedChapter) {
-                                    FontWeight.Bold
-                                } else {
-                                    FontWeight.Normal
-                                },
-                                modifier = Modifier.fillMaxWidth(),
-                                textAlign = TextAlign.Center
+                                color = if (chapter == selectedChapter) Purple else Ink
                             )
                         },
                         onClick = {
@@ -423,6 +416,7 @@ private fun BiblePickerMenu(
                     )
                 }
             }
+
         }
     }
 }
