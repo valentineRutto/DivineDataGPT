@@ -14,8 +14,8 @@ import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 
 @Database(
-    entities = [Verse::class, VersesFTS::class, MemorySummaryEntity::class, MessageEntity::class, BookmarkEntity::class, VerseEntity::class],
-    version = 3,
+    entities = [VerseEntity::class, Verse::class, MemorySummaryEntity::class, MessageEntity::class, BookmarkEntity::class, VersesFTS::class],
+    version = 4,
     exportSchema = false
 )
 abstract class DivineDatabase : RoomDatabase() {

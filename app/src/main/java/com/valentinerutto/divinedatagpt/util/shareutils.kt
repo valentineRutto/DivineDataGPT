@@ -69,3 +69,10 @@ fun shareReflection(context: Context, reflection: Reflection) {
     context.startActivity(shareIntent)
 
 }
+fun sanitizeFtsQuery(input: String): String {
+    return input
+        .trim()
+        .split("\\s+".toRegex())
+        .filter { it.isNotBlank() }
+        .joinToString(" ") { "$it*" }
+}

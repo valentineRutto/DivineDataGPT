@@ -101,6 +101,7 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
             }
         }
 
+    @OptIn(ExperimentalCoroutinesApi::class)
     private val searchResults = combine(
         activeRequest,
         searchQuery
@@ -157,7 +158,7 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
 
 
     fun onSearchQueryChange(query: String) {
-        searchQuery.value = query
+        searchQuery.value = query.trim()
         selectedVerse.value = null
 
     }
