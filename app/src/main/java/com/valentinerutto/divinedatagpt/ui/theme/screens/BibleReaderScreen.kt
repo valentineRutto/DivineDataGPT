@@ -1,5 +1,6 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -46,6 +47,7 @@ import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.mutableStateMapOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -55,6 +57,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -84,7 +87,16 @@ private val Panel = Color(0xFF1B1025)
 private val PanelSoft = Color(0xFF261132)
 private val SearchPanel = Color(0xFF26202A)
 private val Purple = Color(0xFFC15CFF)
-
+private val HighlightYellow = Color(0xFFFFD166)
+private val HighlightGreen = Color(0xFF74D99F)
+private val HighlightBlue = Color(0xFF7AB7FF)
+private val HighlightPink = Color(0xFFFF8FC7)
+private val HighlightColors = listOf(
+    HighlightYellow,
+    HighlightGreen,
+    HighlightBlue,
+    HighlightPink
+)
 @Composable
 fun BibleReaderRoute(
     onHomeClick: () -> Unit,
@@ -142,7 +154,14 @@ private fun BibleReaderContent(
     modifier: Modifier = Modifier
 ) {
 
+    val context = LocalContext.current
+
     var selectedTab by remember { mutableIntStateOf(1) }
+    val highlightedVerses = remember { mutableStateMapOf<Int, Color>() }
+
+    val selectedVerse = uiState.verses.firstOrNull { verse ->
+        verse.verse == uiState.selectedVerse
+    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
@@ -288,6 +307,8 @@ private fun BibleReaderContent(
                     ) { verse ->
                         VerseRow(
                             verse = verse,
+                            highlightColor = highlightedVerses[verse.id],
+
                             isSelected = verse.verse == uiState.selectedVerse,
                             onClick = { onVerseSelected(verse.verse) }
                         )
@@ -298,6 +319,14 @@ private fun BibleReaderContent(
             if (uiState.selectedVerse != null) {
                 VerseActionBar(
                     onDismiss = onClearSelection,
+                    onHighlightSelected = { color ->
+                        if (selectedVerse != null) {
+                            highlightedVerses[selectedVerse.id] = color
+                        }
+                    },
+                    onShare = {
+                        shareVerse(context, selectedVerse)
+                    },
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .navigationBarsPadding()
@@ -309,6 +338,19 @@ private fun BibleReaderContent(
     }
 }
 
+private fun shareVerse(
+    context: android.content.Context,
+    verse: VerseEntity? = null
+) {
+    val verseText = "${verse?.bookName} ${verse?.chapter}:${verse?.verse}\n${verse?.text}"
+    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, verseText)
+    }
+    context.startActivity(
+        Intent.createChooser(sendIntent, "Share verse")
+    )
+}
 @Composable
 private fun SearchResultsHeader(resultCount: Int) {
     Column(
@@ -571,11 +613,16 @@ private fun ChapterHeader(
 private fun VerseRow(
     verse: VerseEntity,
     isSelected: Boolean,
-    onClick: () -> Unit
+    onClick: () -> Unit,
+    highlightColor: Color?,
 ) {
     val shape = RoundedCornerShape(topEnd = 8.dp, bottomEnd = 8.dp)
-    val leftAccent = Purple
-
+    val leftAccent = highlightColor ?: Purple
+    val rowBackground = when {
+        isSelected -> PanelSoft
+        highlightColor != null -> highlightColor.copy(alpha = 0.18f)
+        else -> null
+    }
     Text(
         text = buildAnnotatedString {
             withStyle(
@@ -598,9 +645,10 @@ private fun VerseRow(
             .padding(horizontal = 10.dp)
             .padding(bottom = 16.dp)
             .then(
-                if (isSelected) {
+                if (rowBackground != null) {
+
                     Modifier
-                        .background(PanelSoft, shape)
+                        .background(rowBackground, shape)
                         .drawBehind {
                             drawLine(
                                 color = leftAccent,
@@ -662,41 +710,79 @@ private fun SearchResultRow(
 @Composable
 private fun VerseActionBar(
     onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onShare: () -> Unit,
+    onHighlightSelected: (Color) -> Unit
 ) {
-    Row(
-        modifier = modifier
-            .fillMaxWidth()
-            .height(72.dp)
-            .background(Panel, RoundedCornerShape(36.dp))
-            .clickable(onClick = onDismiss)
-            .padding(horizontal = 30.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+    var showHighlightColors by remember { mutableStateOf(false) }
+
+    Column(
+        modifier = modifier,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center
     ) {
-        ActionItem(
-            icon = Icons.Rounded.BorderColor,
-            label = "Highlight"
-        )
-        ActionDivider()
-        ActionItem(
-            icon = Icons.Rounded.EditNote,
-            label = "Note"
-        )
-        ActionDivider()
-        ActionItem(
-            icon = Icons.Rounded.Share,
-            label = "Share"
-        )
+        if (showHighlightColors) {
+            Row(
+                modifier = Modifier
+                    .padding(bottom = 12.dp)
+                    .background(Panel, RoundedCornerShape(28.dp))
+                    .padding(horizontal = 18.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HighlightColors.forEach { color ->
+                    Box(
+                        modifier = Modifier
+                            .size(34.dp)
+                            .background(color, RoundedCornerShape(17.dp))
+                            .clickable {
+                                onHighlightSelected(color)
+                                showHighlightColors = false
+                            }
+                    )
+                }
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp)
+                .background(Panel, RoundedCornerShape(36.dp))
+                .padding(horizontal = 30.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            ActionItem(
+                icon = Icons.Rounded.BorderColor,
+                label = "Highlight",
+                onClick = { showHighlightColors = !showHighlightColors }
+            )
+            ActionDivider()
+            ActionItem(
+                icon = Icons.Rounded.EditNote,
+                label = "Note",
+                onClick = onDismiss
+            )
+            ActionDivider()
+            ActionItem(
+                icon = Icons.Rounded.Share,
+                label = "Share",
+                onClick = onShare
+            )
+        }
     }
+
 }
 
 @Composable
 private fun ActionItem(
     icon: ImageVector,
-    label: String
+    label: String,
+    onClick: () -> Unit
 ) {
     Row(
+        modifier = Modifier.clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
