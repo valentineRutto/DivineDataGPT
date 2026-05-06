@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,25 +22,30 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Book
 import androidx.compose.material.icons.rounded.BorderColor
 import androidx.compose.material.icons.rounded.EditNote
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -66,7 +70,10 @@ import com.valentinerutto.divinedatagpt.BibleReaderUiState
 import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
-
+import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
+import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
+import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
+import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 import org.koin.androidx.compose.koinViewModel
 
 private val Ink = Color(0xFFF4EDF8)
@@ -82,12 +89,14 @@ private val Purple = Color(0xFFC15CFF)
 fun BibleReaderRoute(
     onHomeClick: () -> Unit,
     onSettingsClick: () -> Unit = {},
+    onBibleClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BibleViewModel = koinViewModel()
 ) {
     BibleReaderScreen(
         onHomeClick = onHomeClick,
         onSettingsClick = onSettingsClick,
+        onBibleClick = onBibleClick,
         modifier = modifier,
         viewModel = viewModel
     )
@@ -97,6 +106,7 @@ fun BibleReaderRoute(
 fun BibleReaderScreen(
     onHomeClick: () -> Unit,
     onSettingsClick: () -> Unit = {},
+    onBibleClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BibleViewModel = koinViewModel()
 ) {
@@ -111,7 +121,7 @@ fun BibleReaderScreen(
         onSearchResultSelected = viewModel::openSearchResult,
         onClearSelection = viewModel::clearSelection,
         onHomeClick = onHomeClick,
-        onBibleClick = {},
+        onBibleClick = onBibleClick,
         onSettingsClick = onSettingsClick,
         modifier = modifier
     )
@@ -131,6 +141,9 @@ private fun BibleReaderContent(
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    var selectedTab by remember { mutableIntStateOf(0) }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         containerColor = Page,
@@ -146,12 +159,78 @@ private fun BibleReaderContent(
             )
         },
         bottomBar = {
-            ReaderBottomBar(
-                onHomeClick = onHomeClick,
-                onBibleClick = onBibleClick,
-                onSettingsClick = onSettingsClick
-            )
+
+            NavigationBar(
+                containerColor = DarkSurface,
+                contentColor = TextSecondary,
+                tonalElevation = 0.dp
+            ) {
+                NavigationBarItem(
+                    selected = selectedTab == 0,
+                    onClick = {
+                        selectedTab = 0
+                        onHomeClick()
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Default.Home, contentDescription = "Home",
+                            tint = if (selectedTab == 0) PurplePrimary else TextMuted
+                        )
+                    },
+                    label = {
+                        Text(
+                            "HOME", fontSize = 10.sp,
+                            color = if (selectedTab == 0) PurplePrimary else TextMuted
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+                )
+
+                NavigationBarItem(
+                    selected = selectedTab == 1,
+                    onClick = {
+                        selectedTab = 1
+                        onBibleClick()
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Default.MenuBook, contentDescription = "Bible",
+                            tint = if (selectedTab == 1) PurplePrimary else TextMuted
+                        )
+                    },
+                    label = {
+                        Text(
+                            "BIBLE", fontSize = 10.sp,
+                            color = if (selectedTab == 1) PurplePrimary else TextMuted
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+                )
+
+                NavigationBarItem(
+                    selected = selectedTab == 2,
+                    onClick = {
+                        selectedTab = 2
+                        onSettingsClick()
+
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Default.Settings, contentDescription = "Settings",
+                            tint = if (selectedTab == 2) PurplePrimary else TextMuted
+                        )
+                    },
+                    label = {
+                        Text(
+                            "SETTINGS", fontSize = 10.sp,
+                            color = if (selectedTab == 2) PurplePrimary else TextMuted
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+                )
+            }
         }
+
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -277,14 +356,7 @@ private fun ReaderTopBar(
             .padding(horizontal = 44.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            imageVector = Icons.Rounded.Menu,
-            contentDescription = "Open menu",
-            tint = Purple,
-            modifier = Modifier.size(28.dp)
-        )
 
-        Spacer(modifier = Modifier.width(34.dp))
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -329,12 +401,12 @@ private fun ReaderTopBar(
             }
         }
 
-        Icon(
-            imageVector = Icons.Rounded.AutoAwesome,
-            contentDescription = "Open assistant",
-            tint = Purple,
-            modifier = Modifier.size(30.dp)
-        )
+//        Icon(
+//            imageVector = Icons.Rounded.AutoAwesome,
+//            contentDescription = "Open assistant",
+//            tint = Purple,
+//            modifier = Modifier.size(30.dp)
+//        )
     }
 }
 
@@ -661,6 +733,8 @@ private fun ReaderBottomBar(
     onBibleClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
+
+
     Row(
         modifier = Modifier
             .fillMaxWidth()

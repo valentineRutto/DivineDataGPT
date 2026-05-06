@@ -49,14 +49,18 @@ fun NavGraph(navController: NavHostController) {
 
         composable(Screen.Bible.route) {
 
+
             BibleReaderRoute(
                 onHomeClick = {
                     navController.navigate(Screen.Home.route) {
-                        popUpTo(Screen.Home.route) {
-                            inclusive = false
-                        }
-                        launchSingleTop = true
+//                        popUpTo(Screen.Home.route) {
+//                            inclusive = false
+//                        }
+//                        launchSingleTop = true
                     }
+                },
+                onBibleClick = {
+                    navController.navigate(Screen.Bible.route)
                 },
                 onSettingsClick = {
                     navController.navigate(Screen.Home.route) {
