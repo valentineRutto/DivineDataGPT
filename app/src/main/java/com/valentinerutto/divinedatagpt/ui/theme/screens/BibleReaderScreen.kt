@@ -142,7 +142,7 @@ private fun BibleReaderContent(
     modifier: Modifier = Modifier
 ) {
 
-    var selectedTab by remember { mutableIntStateOf(0) }
+    var selectedTab by remember { mutableIntStateOf(1) }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
