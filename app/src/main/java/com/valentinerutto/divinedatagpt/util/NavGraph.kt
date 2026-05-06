@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleNotesRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleReaderRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.DailyReflectionScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.HomeScreen
@@ -48,15 +49,41 @@ fun NavGraph(navController: NavHostController) {
         }
 
         composable(Screen.Bible.route) {
-
             BibleReaderRoute(
                 onHomeClick = {
+                    navController.navigate(Screen.Home.route) {
+//                        popUpTo(Screen.Home.route) {
+//                            inclusive = false
+//                        }
+//                        launchSingleTop = true
+                    }
+                },
+                onBibleClick = {
+                    navController.navigate(Screen.Bible.route)
+                },
+                onNotesClick = {
+                    navController.navigate(Screen.BibleNotes.route)
+                },
+                onSettingsClick = {
                     navController.navigate(Screen.Home.route) {
                         popUpTo(Screen.Home.route) {
                             inclusive = false
                         }
                         launchSingleTop = true
                     }
+                }
+            )
+        }
+        composable(Screen.BibleNotes.route) {
+            BibleNotesRoute(
+                onHomeClick = {
+                    navController.navigate(Screen.Home.route)
+                },
+                onBibleClick = {
+                    navController.navigate(Screen.Bible.route)
+                },
+                onNotesClick = {
+                    navController.navigate(Screen.BibleNotes.route)
                 },
                 onSettingsClick = {
                     navController.navigate(Screen.Home.route) {

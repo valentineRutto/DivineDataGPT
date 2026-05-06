@@ -1,6 +1,7 @@
 package com.valentinerutto.divinedatagpt.data
 
 import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
@@ -54,6 +55,14 @@ class BibleRepository(
             translation = translation,
             query = query.trim()
         )
+    }
+
+    fun observeBibleNotes(): Flow<List<BibleNoteEntity>> {
+        return dao.observeBibleNotes()
+    }
+
+    suspend fun saveBibleNote(note: BibleNoteEntity) {
+        dao.saveBibleNote(note)
     }
 
     suspend fun highlightVerse(verseId: Long, color: String?) {

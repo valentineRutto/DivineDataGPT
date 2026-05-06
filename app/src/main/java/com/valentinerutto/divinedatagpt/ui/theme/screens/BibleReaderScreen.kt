@@ -1,5 +1,6 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -7,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -23,25 +23,30 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.rounded.AutoAwesome
+import androidx.compose.material.icons.filled.Home
+import androidx.compose.material.icons.filled.MenuBook
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Book
 import androidx.compose.material.icons.rounded.BorderColor
 import androidx.compose.material.icons.rounded.EditNote
 import androidx.compose.material.icons.rounded.Home
 import androidx.compose.material.icons.rounded.KeyboardArrowDown
-import androidx.compose.material.icons.rounded.Menu
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -51,6 +56,7 @@ import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -66,7 +72,10 @@ import com.valentinerutto.divinedatagpt.BibleReaderUiState
 import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
-
+import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
+import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
+import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
+import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 import org.koin.androidx.compose.koinViewModel
 
 private val Ink = Color(0xFFF4EDF8)
@@ -78,16 +87,32 @@ private val PanelSoft = Color(0xFF261132)
 private val SearchPanel = Color(0xFF26202A)
 private val Purple = Color(0xFFC15CFF)
 
+private data class HighlightOption(
+    val key: String,
+    val color: Color
+)
+
+private val HighlightColors = listOf(
+    HighlightOption("yellow", Color(0xFFFFD166)),
+    HighlightOption("green", Color(0xFF74D99F)),
+    HighlightOption("blue", Color(0xFF7AB7FF)),
+    HighlightOption("pink", Color(0xFFFF8FC7))
+)
+
 @Composable
 fun BibleReaderRoute(
     onHomeClick: () -> Unit,
     onSettingsClick: () -> Unit = {},
+    onBibleClick: () -> Unit,
+    onNotesClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BibleViewModel = koinViewModel()
 ) {
     BibleReaderScreen(
         onHomeClick = onHomeClick,
         onSettingsClick = onSettingsClick,
+        onBibleClick = onBibleClick,
+        onNotesClick = onNotesClick,
         modifier = modifier,
         viewModel = viewModel
     )
@@ -97,6 +122,8 @@ fun BibleReaderRoute(
 fun BibleReaderScreen(
     onHomeClick: () -> Unit,
     onSettingsClick: () -> Unit = {},
+    onBibleClick: () -> Unit,
+    onNotesClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BibleViewModel = koinViewModel()
 ) {
@@ -110,8 +137,10 @@ fun BibleReaderScreen(
         onChapterSelected = viewModel::loadChapter,
         onSearchResultSelected = viewModel::openSearchResult,
         onClearSelection = viewModel::clearSelection,
+        onSaveBibleNote = viewModel::saveBibleNote,
         onHomeClick = onHomeClick,
-        onBibleClick = {},
+        onBibleClick = onBibleClick,
+        onNotesClick = onNotesClick,
         onSettingsClick = onSettingsClick,
         modifier = modifier
     )
@@ -126,11 +155,43 @@ private fun BibleReaderContent(
     onChapterSelected: (Int) -> Unit,
     onSearchResultSelected: (VerseEntity) -> Unit,
     onClearSelection: () -> Unit,
+    onSaveBibleNote: (VerseEntity, String, String) -> Unit,
     onHomeClick: () -> Unit,
     onBibleClick: () -> Unit,
+    onNotesClick: () -> Unit,
     onSettingsClick: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+
+    var selectedTab by remember { mutableIntStateOf(1) }
+    val context = LocalContext.current
+    var noteEditorVerse by remember { mutableStateOf<VerseEntity?>(null) }
+    var noteEditorColor by remember { mutableStateOf(HighlightColors.first().key) }
+    val selectedVerse = uiState.verses.firstOrNull { verse ->
+        verse.verse == uiState.selectedVerse
+    }
+    val activeNoteEditorVerse = noteEditorVerse
+
+    if (activeNoteEditorVerse != null) {
+        val savedNote = uiState.savedNotes.firstOrNull { note ->
+            note.verseId == activeNoteEditorVerse.id
+        }
+        NoteEditorScreen(
+            verse = activeNoteEditorVerse,
+            initialNote = savedNote?.note.orEmpty(),
+            highlightColor = noteEditorColor,
+            onHighlightColorChange = { noteEditorColor = it },
+            onSave = { note ->
+                onSaveBibleNote(activeNoteEditorVerse, note, noteEditorColor)
+                noteEditorVerse = null
+                onClearSelection()
+            },
+            onBack = { noteEditorVerse = null },
+            modifier = modifier
+        )
+        return
+    }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         containerColor = Page,
@@ -146,12 +207,99 @@ private fun BibleReaderContent(
             )
         },
         bottomBar = {
-            ReaderBottomBar(
-                onHomeClick = onHomeClick,
-                onBibleClick = onBibleClick,
-                onSettingsClick = onSettingsClick
-            )
+
+            NavigationBar(
+                containerColor = DarkSurface,
+                contentColor = TextSecondary,
+                tonalElevation = 0.dp
+            ) {
+                NavigationBarItem(
+                    selected = selectedTab == 0,
+                    onClick = {
+                        selectedTab = 0
+                        onHomeClick()
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Default.Home, contentDescription = "Home",
+                            tint = if (selectedTab == 0) PurplePrimary else TextMuted
+                        )
+                    },
+                    label = {
+                        Text(
+                            "HOME", fontSize = 10.sp,
+                            color = if (selectedTab == 0) PurplePrimary else TextMuted
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+                )
+
+                NavigationBarItem(
+                    selected = selectedTab == 1,
+                    onClick = {
+                        selectedTab = 1
+                        onBibleClick()
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Default.MenuBook, contentDescription = "Bible",
+                            tint = if (selectedTab == 1) PurplePrimary else TextMuted
+                        )
+                    },
+                    label = {
+                        Text(
+                            "BIBLE", fontSize = 10.sp,
+                            color = if (selectedTab == 1) PurplePrimary else TextMuted
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+                )
+
+                NavigationBarItem(
+                    selected = selectedTab == 2,
+                    onClick = {
+                        selectedTab = 2
+                        onNotesClick()
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Rounded.EditNote, contentDescription = "Notes",
+                            tint = if (selectedTab == 2) PurplePrimary else TextMuted
+                        )
+                    },
+                    label = {
+                        Text(
+                            "NOTES", fontSize = 10.sp,
+                            color = if (selectedTab == 2) PurplePrimary else TextMuted
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+                )
+
+                NavigationBarItem(
+                    selected = selectedTab == 3,
+                    onClick = {
+                        selectedTab = 3
+                        onSettingsClick()
+
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Default.Settings, contentDescription = "Settings",
+                            tint = if (selectedTab == 3) PurplePrimary else TextMuted
+                        )
+                    },
+                    label = {
+                        Text(
+                            "SETTINGS", fontSize = 10.sp,
+                            color = if (selectedTab == 3) PurplePrimary else TextMuted
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+                )
+            }
         }
+
     ) { innerPadding ->
         Box(
             modifier = Modifier
@@ -210,14 +358,33 @@ private fun BibleReaderContent(
                         VerseRow(
                             verse = verse,
                             isSelected = verse.verse == uiState.selectedVerse,
+                            highlightColor = uiState.highlightedVerseColors[verse.id].toHighlightColor(),
                             onClick = { onVerseSelected(verse.verse) }
                         )
                     }
                 }
             }
 
-            if (uiState.selectedVerse != null) {
+            if (selectedVerse != null) {
+                val selectedNote = uiState.savedNotes.firstOrNull { note ->
+                    note.verseId == selectedVerse.id
+                }
                 VerseActionBar(
+                    onHighlightSelected = { option ->
+                        onSaveBibleNote(
+                            selectedVerse,
+                            selectedNote?.note.orEmpty(),
+                            option.key
+                        )
+                    },
+                    onNote = {
+                        noteEditorColor =
+                            selectedNote?.highlightColor ?: HighlightColors.first().key
+                        noteEditorVerse = selectedVerse
+                    },
+                    onShare = {
+                        shareVerse(context, selectedVerse)
+                    },
                     onDismiss = onClearSelection,
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
@@ -257,6 +424,173 @@ private fun SearchResultsHeader(resultCount: Int) {
 }
 
 @Composable
+private fun NoteEditorScreen(
+    verse: VerseEntity,
+    initialNote: String,
+    highlightColor: String,
+    onHighlightColorChange: (String) -> Unit,
+    onSave: (String) -> Unit,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var noteDraft by remember(verse.id) { mutableStateOf(initialNote) }
+    val wordCount = noteDraft.trim()
+        .split(Regex("\\s+"))
+        .count { word -> word.isNotBlank() }
+
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        containerColor = Page,
+        topBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(TopBar)
+                    .statusBarsPadding()
+                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = "Cancel",
+                    color = MutedInk,
+                    fontFamily = FontFamily.Serif,
+                    fontSize = 16.sp,
+                    modifier = Modifier.clickable(onClick = onBack)
+                )
+                Text(
+                    text = "Note",
+                    color = Ink,
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp
+                )
+                Text(
+                    text = "Save",
+                    color = Purple,
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    modifier = Modifier.clickable { onSave(noteDraft) }
+                )
+            }
+        }
+    ) { innerPadding ->
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding),
+            contentPadding = PaddingValues(horizontal = 24.dp, vertical = 24.dp)
+        ) {
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .background(
+                            highlightColor.toHighlightColor() ?: PanelSoft,
+                            RoundedCornerShape(8.dp)
+                        )
+                        .padding(18.dp)
+                ) {
+                    Text(
+                        text = "${verse.bookName} ${verse.chapter}:${verse.verse}",
+                        color = Page,
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 16.sp
+                    )
+                    Text(
+                        text = verse.text,
+                        color = Page,
+                        fontFamily = FontFamily.Serif,
+                        fontSize = 23.sp,
+                        lineHeight = 34.sp,
+                        modifier = Modifier.padding(top = 10.dp)
+                    )
+                }
+            }
+
+            item {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 18.dp),
+                    horizontalArrangement = Arrangement.spacedBy(14.dp)
+                ) {
+                    HighlightColors.forEach { option ->
+                        Box(
+                            modifier = Modifier
+                                .size(36.dp)
+                                .background(option.color, RoundedCornerShape(18.dp))
+                                .then(
+                                    if (option.key == highlightColor) {
+                                        Modifier.drawBehind {
+                                            drawCircle(
+                                                color = Ink,
+                                                radius = 22.dp.toPx(),
+                                                style = androidx.compose.ui.graphics.drawscope.Stroke(
+                                                    width = 2.dp.toPx()
+                                                )
+                                            )
+                                        }
+                                    } else {
+                                        Modifier
+                                    }
+                                )
+                                .clickable { onHighlightColorChange(option.key) }
+                        )
+                    }
+                }
+            }
+
+            item {
+                TextField(
+                    value = noteDraft,
+                    onValueChange = { noteDraft = it },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .heightIn(min = 260.dp)
+                        .padding(top = 22.dp),
+                    placeholder = {
+                        Text(
+                            text = "Write your note...",
+                            color = MutedInk,
+                            fontFamily = FontFamily.Serif
+                        )
+                    },
+                    textStyle = TextStyle(
+                        color = Ink,
+                        fontFamily = FontFamily.Serif,
+                        fontSize = 20.sp,
+                        lineHeight = 30.sp
+                    ),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = Panel,
+                        unfocusedContainerColor = Panel,
+                        focusedIndicatorColor = Purple,
+                        unfocusedIndicatorColor = Color.Transparent,
+                        cursorColor = Purple
+                    )
+                )
+            }
+
+            item {
+                Text(
+                    text = "$wordCount words",
+                    color = MutedInk,
+                    fontFamily = FontFamily.Serif,
+                    fontSize = 13.sp,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 12.dp),
+                    textAlign = TextAlign.End
+                )
+            }
+        }
+    }
+}
+
+@Composable
 private fun ReaderTopBar(
     title: String,
     books: List<BibleBook>,
@@ -277,14 +611,7 @@ private fun ReaderTopBar(
             .padding(horizontal = 44.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            imageVector = Icons.Rounded.Menu,
-            contentDescription = "Open menu",
-            tint = Purple,
-            modifier = Modifier.size(28.dp)
-        )
 
-        Spacer(modifier = Modifier.width(34.dp))
 
         Row(
             verticalAlignment = Alignment.CenterVertically,
@@ -329,12 +656,12 @@ private fun ReaderTopBar(
             }
         }
 
-        Icon(
-            imageVector = Icons.Rounded.AutoAwesome,
-            contentDescription = "Open assistant",
-            tint = Purple,
-            modifier = Modifier.size(30.dp)
-        )
+//        Icon(
+//            imageVector = Icons.Rounded.AutoAwesome,
+//            contentDescription = "Open assistant",
+//            tint = Purple,
+//            modifier = Modifier.size(30.dp)
+//        )
     }
 }
 
@@ -499,10 +826,16 @@ private fun ChapterHeader(
 private fun VerseRow(
     verse: VerseEntity,
     isSelected: Boolean,
+    highlightColor: Color?,
     onClick: () -> Unit
 ) {
     val shape = RoundedCornerShape(topEnd = 8.dp, bottomEnd = 8.dp)
-    val leftAccent = Purple
+    val leftAccent = highlightColor ?: Purple
+    val rowBackground = when {
+        isSelected -> PanelSoft
+        highlightColor != null -> highlightColor.copy(alpha = 0.18f)
+        else -> null
+    }
 
     Text(
         text = buildAnnotatedString {
@@ -526,9 +859,9 @@ private fun VerseRow(
             .padding(horizontal = 10.dp)
             .padding(bottom = 16.dp)
             .then(
-                if (isSelected) {
+                if (rowBackground != null) {
                     Modifier
-                        .background(PanelSoft, shape)
+                        .background(rowBackground, shape)
                         .drawBehind {
                             drawLine(
                                 color = leftAccent,
@@ -589,42 +922,80 @@ private fun SearchResultRow(
 
 @Composable
 private fun VerseActionBar(
+    onHighlightSelected: (HighlightOption) -> Unit,
+    onNote: () -> Unit,
+    onShare: () -> Unit,
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
-    Row(
+    var showHighlightColors by remember { mutableStateOf(false) }
+
+    Column(
         modifier = modifier
-            .fillMaxWidth()
-            .height(72.dp)
-            .background(Panel, RoundedCornerShape(36.dp))
-            .clickable(onClick = onDismiss)
-            .padding(horizontal = 30.dp),
-        verticalAlignment = Alignment.CenterVertically,
-        horizontalArrangement = Arrangement.SpaceBetween
+            .fillMaxWidth(),
+        horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        ActionItem(
-            icon = Icons.Rounded.BorderColor,
-            label = "Highlight"
-        )
-        ActionDivider()
-        ActionItem(
-            icon = Icons.Rounded.EditNote,
-            label = "Note"
-        )
-        ActionDivider()
-        ActionItem(
-            icon = Icons.Rounded.Share,
-            label = "Share"
-        )
+        if (showHighlightColors) {
+            Row(
+                modifier = Modifier
+                    .padding(bottom = 12.dp)
+                    .background(Panel, RoundedCornerShape(28.dp))
+                    .padding(horizontal = 18.dp, vertical = 12.dp),
+                horizontalArrangement = Arrangement.spacedBy(14.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                HighlightColors.forEach { option ->
+                    Box(
+                        modifier = Modifier
+                            .size(34.dp)
+                            .background(option.color, RoundedCornerShape(17.dp))
+                            .clickable {
+                                onHighlightSelected(option)
+                                showHighlightColors = false
+                            }
+                    )
+                }
+            }
+        }
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .height(72.dp)
+                .background(Panel, RoundedCornerShape(36.dp))
+                .padding(horizontal = 30.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            ActionItem(
+                icon = Icons.Rounded.BorderColor,
+                label = "Highlight",
+                onClick = { showHighlightColors = !showHighlightColors }
+            )
+            ActionDivider()
+            ActionItem(
+                icon = Icons.Rounded.EditNote,
+                label = "Note",
+                onClick = onNote
+            )
+            ActionDivider()
+            ActionItem(
+                icon = Icons.Rounded.Share,
+                label = "Share",
+                onClick = onShare
+            )
+        }
     }
 }
 
 @Composable
 private fun ActionItem(
     icon: ImageVector,
-    label: String
+    label: String,
+    onClick: () -> Unit
 ) {
     Row(
+        modifier = Modifier.clickable(onClick = onClick),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = Arrangement.Center
     ) {
@@ -655,12 +1026,34 @@ private fun ActionDivider() {
     )
 }
 
+private fun shareVerse(
+    context: android.content.Context,
+    verse: VerseEntity
+) {
+    val verseText = "${verse.bookName} ${verse.chapter}:${verse.verse}\n${verse.text}"
+    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, verseText)
+    }
+    context.startActivity(
+        Intent.createChooser(sendIntent, "Share verse")
+    )
+}
+
+private fun String?.toHighlightColor(): Color? {
+    return HighlightColors.firstOrNull { option ->
+        option.key == this
+    }?.color
+}
+
 @Composable
 private fun ReaderBottomBar(
     onHomeClick: () -> Unit,
     onBibleClick: () -> Unit,
     onSettingsClick: () -> Unit
 ) {
+
+
     Row(
         modifier = Modifier
             .fillMaxWidth()

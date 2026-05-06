@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import kotlinx.coroutines.flow.Flow
@@ -80,5 +81,17 @@ interface VerseDao {
         query: String,
         limit: Int = 80
     ): Flow<List<VerseEntity>>
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun saveBibleNote(note: BibleNoteEntity)
+
+    @Query(
+        """
+        SELECT *
+        FROM bible_notes
+        ORDER BY createdAt DESC
+        """
+    )
+    fun observeBibleNotes(): Flow<List<BibleNoteEntity>>
 
 }

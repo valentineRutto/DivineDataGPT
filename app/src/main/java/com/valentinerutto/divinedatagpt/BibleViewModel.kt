@@ -3,6 +3,7 @@ package com.valentinerutto.divinedatagpt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import kotlinx.coroutines.ExperimentalCoroutinesApi
@@ -13,6 +14,7 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flowOf
 import kotlinx.coroutines.flow.stateIn
+import kotlinx.coroutines.launch
 
 data class ChapterRequest(
     val translation: String = "shortname",
@@ -37,6 +39,8 @@ data class BibleReaderUiState(
     val availableChapters: List<Int> = emptyList(),
     val verses: List<VerseEntity> = emptyList(),
     val searchResults: List<VerseEntity> = emptyList(),
+    val savedNotes: List<BibleNoteEntity> = emptyList(),
+    val highlightedVerseColors: Map<Int, String> = emptyMap(),
     val searchQuery: String = "",
     val selectedVerse: Int? = null,
     val isLoading: Boolean = true
@@ -117,6 +121,8 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
         }
     }
 
+    private val savedNotes = repository.observeBibleNotes()
+
     private val readerContent = combine(
         activeRequest,
         books,
@@ -135,14 +141,19 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
         readerContent,
         searchQuery,
         searchResults,
-        selectedVerse
-    ) { content, query, results, selected ->
+        selectedVerse,
+        savedNotes
+    ) { content, query, results, selected, notes ->
         BibleReaderUiState(
             request = content.request,
             books = content.books,
             availableChapters = content.availableChapters,
             verses = content.verses,
             searchResults = results,
+            savedNotes = notes,
+            highlightedVerseColors = notes.associate { note ->
+                note.verseId to note.highlightColor
+            },
             searchQuery = query,
             selectedVerse = selected,
             isLoading = false
@@ -214,6 +225,28 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
         searchQuery.value = ""
     }
 
+    fun saveBibleNote(
+        verse: VerseEntity,
+        note: String,
+        highlightColor: String
+    ) {
+        viewModelScope.launch {
+            repository.saveBibleNote(
+                BibleNoteEntity(
+                    verseId = verse.id,
+                    translation = verse.translation,
+                    bookName = verse.bookName,
+                    book = verse.book,
+                    chapter = verse.chapter,
+                    verse = verse.verse,
+                    verseText = verse.text,
+                    note = note.trim(),
+                    highlightColor = highlightColor
+                )
+            )
+        }
+    }
+
     private fun shareVerse(verseId: Long) {
         // Implementation for sharing verse
         // This would typically use Android's share intent
@@ -221,7 +254,6 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
 
 
 }
-
 
 
 
