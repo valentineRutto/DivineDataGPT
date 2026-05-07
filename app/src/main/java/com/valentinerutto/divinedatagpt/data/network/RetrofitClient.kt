@@ -13,6 +13,7 @@ object RetrofitClient {
     const val GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/"
 
     const val HUGGING_FACE_BASE_URL = "https://api-inference.huggingface.co/"
+    const val MISTRAL_BASE_URL = "https://api.mistral.ai/"
 
     fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
 

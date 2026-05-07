@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -93,9 +94,7 @@ fun DailyReflectionScreen(
                 actions = {
                     IconButton(onClick = {
 
-
-                        viewModel.loadDailyReflection()
-
+                        viewModel.loadVerseOfDay()
 
                     }) {
                         Icon(
@@ -139,7 +138,7 @@ fun DailyReflectionScreen(
                             .fillMaxWidth()
                             .padding(16.dp)
                             .clip(RoundedCornerShape(24.dp))
-                            .height(380.dp)
+                            .heightIn(min = 380.dp)
                             .background(
                                 Brush.verticalGradient(
                                     listOf(Color(0xFF8B4513), Color(0xFF2C4A2E), Color(0xFF1A1A3E))
@@ -148,9 +147,8 @@ fun DailyReflectionScreen(
                     ) {
                         Column(
                             modifier = Modifier
-                                .fillMaxSize()
+                                .fillMaxWidth()
                                 .padding(24.dp),
-                            verticalArrangement = Arrangement.SpaceBetween
                         ) {
                             Column {
                                 Box(
@@ -183,6 +181,8 @@ fun DailyReflectionScreen(
                                     fontWeight = FontWeight.Medium
                                 )
                             }
+
+                            Spacer(Modifier.height(22.dp))
 
                             // AI Insight
                             Box(
@@ -307,7 +307,7 @@ fun DailyReflectionScreen(
                             )
                             Spacer(Modifier.height(16.dp))
                             Button(
-                                onClick = { viewModel.loadDailyReflection() },
+                                onClick = { viewModel.loadVerseOfDay() },
                                 colors = ButtonDefaults.buttonColors(containerColor = PurplePrimary)
                             ) {
                                 Text("Try Again")

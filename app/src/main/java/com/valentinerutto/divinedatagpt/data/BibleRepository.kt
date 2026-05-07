@@ -57,6 +57,12 @@ class BibleRepository(
         )
     }
 
+    suspend fun getRandomDailyVerse(
+        translation: String = "shortname"
+    ): VerseEntity? {
+        return dao.getRandomDailyVerse(translation)
+    }
+
     fun observeBibleNotes(): Flow<List<BibleNoteEntity>> {
         return dao.observeBibleNotes()
     }

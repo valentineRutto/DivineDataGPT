@@ -69,7 +69,7 @@ class AiRepository(
 //    val summary = response.choices.firstOrNull()?.message?.content ?: ""
 //    memoryDao.insert(MemorySummaryEntity(summary = summary))
 //    messageDao.deleteOldMessages(messages.dropLast(5))
-//
+
 
     }
 
@@ -119,7 +119,7 @@ class AiRepository(
                 Respond ONLY in this exact JSON format (no markdown, no extra text):
                 {
                   "verse": "the full Bible verse text",
-                  "reference": "Book Chapter:Verse (NIV)",
+                  "reference": "Book Chapter:Verse ",
                   "insight": "3-4 sentences of deep, inspiring spiritual insight for today's meditation"
                 }
             """.trimIndent()

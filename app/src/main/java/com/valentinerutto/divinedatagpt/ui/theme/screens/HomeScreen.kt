@@ -25,7 +25,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MenuBook
-import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
@@ -148,57 +147,57 @@ fun HomeScreen(
                 .verticalScroll(rememberScrollState())
         ) {
             // ── Top Bar ──────────────────────────────────────────
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp, vertical = 16.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Box(
-                        modifier = Modifier
-                            .size(48.dp)
-                            .clip(CircleShape)
-                            .background(PurplePrimary),
-                        contentAlignment = Alignment.Center
-                    ) {
-                        Text(
-                            "S",
-                            color = TextPrimary,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 20.sp
-                        )
-                    }
-                    Spacer(Modifier.width(12.dp))
-                    Column {
-                        Text(
-                            "GOOD MORNING",
-                            color = TextMuted,
-                            fontSize = 11.sp,
-                            letterSpacing = 1.sp
-                        )
-                        Text(
-                            "God's Child",
-                            color = TextPrimary,
-                            fontSize = 18.sp,
-                            fontWeight = FontWeight.Bold
-                        )
-                    }
-                }
-                Box(
-                    modifier = Modifier
-                        .size(44.dp)
-                        .clip(CircleShape)
-                        .background(CardBackground),
-                    contentAlignment = Alignment.Center
-                ) {
-                    Icon(
-                        Icons.Default.Notifications, contentDescription = "Notifications",
-                        tint = TextPrimary, modifier = Modifier.size(22.dp)
-                    )
-                }
-            }
+//            Row(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding(horizontal = 20.dp, vertical = 16.dp),
+//                horizontalArrangement = Arrangement.SpaceBetween,
+//                verticalAlignment = Alignment.CenterVertically
+//            ) {
+//                Row(verticalAlignment = Alignment.CenterVertically) {
+//                    Box(
+//                        modifier = Modifier
+//                            .size(48.dp)
+//                            .clip(CircleShape)
+//                            .background(PurplePrimary),
+//                        contentAlignment = Alignment.Center
+//                    ) {
+//                        Text(
+//                            "S",
+//                            color = TextPrimary,
+//                            fontWeight = FontWeight.Bold,
+//                            fontSize = 20.sp
+//                        )
+//                    }
+//                    Spacer(Modifier.width(12.dp))
+//                    Column {
+//                        Text(
+//                            "GOOD MORNING",
+//                            color = TextMuted,
+//                            fontSize = 11.sp,
+//                            letterSpacing = 1.sp
+//                        )
+//                        Text(
+//                            "God's Child",
+//                            color = TextPrimary,
+//                            fontSize = 18.sp,
+//                            fontWeight = FontWeight.Bold
+//                        )
+//                    }
+//                }
+//                Box(
+//                    modifier = Modifier
+//                        .size(44.dp)
+//                        .clip(CircleShape)
+//                        .background(CardBackground),
+//                    contentAlignment = Alignment.Center
+//                ) {
+//                    Icon(
+//                        Icons.Default.Notifications, contentDescription = "Notifications",
+//                        tint = TextPrimary, modifier = Modifier.size(22.dp)
+//                    )
+//                }
+            //  }
 
             Spacer(Modifier.height(8.dp))
 

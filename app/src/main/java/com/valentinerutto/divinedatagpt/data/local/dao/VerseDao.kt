@@ -82,6 +82,29 @@ interface VerseDao {
         limit: Int = 80
     ): Flow<List<VerseEntity>>
 
+    @Query(
+        """
+        SELECT *
+        FROM verses
+        WHERE translation = :translation
+          AND (
+            text LIKE '%' || :hopeKeyword || '%'
+            OR text LIKE '%' || :faithKeyword || '%'
+            OR text LIKE '%' || :trustKeyword || '%'
+            OR text LIKE '%' || :believeKeyword || '%'
+          )
+        ORDER BY RANDOM()
+        LIMIT 1
+        """
+    )
+    suspend fun getRandomDailyVerse(
+        translation: String = "shortname",
+        hopeKeyword: String = "hope",
+        faithKeyword: String = "faith",
+        trustKeyword: String = "trust",
+        believeKeyword: String = "believe"
+    ): VerseEntity?
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveBibleNote(note: BibleNoteEntity)
 

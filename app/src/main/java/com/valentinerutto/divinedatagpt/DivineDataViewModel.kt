@@ -4,6 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.data.network.ai.model.ChatMessage
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
@@ -37,7 +38,6 @@ class DivineDataViewModel(
     init {
         updateGreeting()
         loadVerseOfDay()
-        loadDailyReflection()
     }
 
     //homescreen methods
@@ -55,27 +55,23 @@ class DivineDataViewModel(
 
     fun loadVerseOfDay() {
         viewModelScope.launch {
+
             _homeuiState.update { it.copy(isLoading = true, error = null) }
-            aiRepository.getDailyReflection(BuildConfig.GEMINI_API_KEY).fold(
-                onSuccess = { reflection ->
-                    _homeuiState.update { it.copy(verseOfDay = reflection, isLoading = false) }
-                },
-                onFailure = { exception ->
-                    _homeuiState.update {
-                        it.copy(
-                            error = exception.message, isLoading = false,
-                            verseOfDay = Reflection(
-                                verse = "The Lord is my shepherd; I shall not want. He makes me lie down in green pastures. He leads me beside still waters.",
-                                reference = "PSALM 23:1-2",
-                                "This verse reminds us that when we trust in God’s guidance, we lack nothing essential because He provides, protects, and sustains us. It paints a picture of peace and restoration, showing that God leads us into places of rest and renewal even in the midst of life’s pressures."
-                            )
-                        )
-                    }
-                }
-            )
+            _dailyUiState.update { it.copy(isLoading = true, error = null) }
+
+            val reflection = bibleRepository.getRandomDailyVerse()?.toDailyReflection()
+                ?: fallbackDailyReflection()
+
+            _homeuiState.update {
+                it.copy(verseOfDay = reflection, isLoading = false)
+            }
+            _dailyUiState.update {
+                it.copy(reflection = reflection, isLoading = false)
+            }
 
         }
     }
+
 
     //reflectionscreenmethods
     fun initWithEmotion(emotion: String) {
@@ -157,26 +153,23 @@ class DivineDataViewModel(
         }
     }
 
-    fun loadDailyReflection() {
-        viewModelScope.launch {
-            _dailyUiState.update { it.copy(isLoading = true) }
-            aiRepository.getDailyReflection(BuildConfig.GEMINI_API_KEY).fold(
 
-                onSuccess = { reflection ->
-                    _dailyUiState.update { it.copy(reflection = reflection, isLoading = false) }
-                },
+}
 
+private fun VerseEntity.toDailyReflection(): Reflection {
+    return Reflection(
+        verse = text,
+        reference = "$bookName $chapter:$verse",
+        insight = "Take a quiet moment with this verse today. Notice the word or phrase that stands out, and carry it into your next decision, conversation, or prayer."
+    )
+}
 
-                onFailure = { exception ->
-                    _dailyUiState.update {
-                        it.copy(isLoading = false, error = exception.message)
-                    }
-
-                })
-        }
-    }
-
-
+private fun fallbackDailyReflection(): Reflection {
+    return Reflection(
+        verse = "The Lord is my shepherd; I shall not want. He makes me lie down in green pastures. He leads me beside still waters.",
+        reference = "PSALM 23:1-2",
+        insight = "This verse reminds us that when we trust in God's guidance, we lack nothing essential because He provides, protects, and sustains us. It paints a picture of peace and restoration, showing that God leads us into places of rest and renewal even in the midst of life's pressures."
+    )
 }
 
 data class DailyUiState(
@@ -209,7 +202,6 @@ data class ReflectionUiState(
     val isLoading: Boolean = false,
     val error: String? = null
 )
-
 
 
 
