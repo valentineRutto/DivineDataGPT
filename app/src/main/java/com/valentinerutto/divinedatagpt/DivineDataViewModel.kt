@@ -8,7 +8,6 @@ import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.network.ai.AiRepository
 import com.valentinerutto.divinedatagpt.data.network.ai.model.ChatMessage
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
-import com.valentinerutto.divinedatagpt.util.Resource
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,6 +29,7 @@ class DivineDataViewModel(
     val reflectionuistate: StateFlow<ReflectionUiState> = _reflectionuiState.asStateFlow()
 
     private val conversationHistory = mutableListOf<Pair<String, String>>()
+    private var hasLoadedRecentReflectionMessages = false
 
 
     private val _dailyUiState = MutableStateFlow(DailyUiState())
@@ -38,6 +38,7 @@ class DivineDataViewModel(
     init {
         updateGreeting()
         loadVerseOfDay()
+        loadRecentReflectionMessages()
     }
 
     //homescreen methods
@@ -74,62 +75,60 @@ class DivineDataViewModel(
 
 
     //reflectionscreenmethods
+    private fun loadRecentReflectionMessages() {
+        viewModelScope.launch {
+            loadRecentReflectionMessagesFromDb()
+        }
+    }
+
+    private suspend fun loadRecentReflectionMessagesFromDb() {
+        if (hasLoadedRecentReflectionMessages) return
+
+        val recentMessages = aiRepository.getRecentReflectionMessages(limit = 5)
+        hasLoadedRecentReflectionMessages = true
+        if (recentMessages.isEmpty()) return
+
+        conversationHistory.clear()
+        conversationHistory.addAll(
+            recentMessages.map { message ->
+                message.role to message.toHistoryText()
+            }
+        )
+
+        val currentMessages = _reflectionuiState.value.messages
+        val canReplaceWelcomeOnly = currentMessages.size == 1 && !currentMessages.first().isUser
+        if (canReplaceWelcomeOnly) {
+            _reflectionuiState.update {
+                it.copy(
+                    messages = recentMessages.map { message -> message.toChatMessage() },
+                    isLoading = false,
+                    error = null
+                )
+            }
+        }
+    }
+
     fun initWithEmotion(emotion: String) {
 
-        if (emotion == "general" || conversationHistory.isNotEmpty()) return
-
-         viewModelScope.launch {
-
-             _reflectionuiState.update { it.copy(isLoading = true) }
-
-             when (val result =
-                 aiRepository.getReflectionForEmotion(BuildConfig.GEMINI_API_KEY, emotion)) {
-
-                 is Resource.Success -> {
-
-                     val aiMsg = ChatMessage(
-
-                         content = result.data.insight,
-                         isUser = false,
-                         verse = result.data.verse,
-                         reference = result.data.reference
-                     )
-                     conversationHistory.add("assistant" to "${result.data.verse} - ${result.data.insight}")
-
-                     _reflectionuiState.value = ReflectionUiState(
-                         messages = _reflectionuiState.value.messages + aiMsg,
-                         isLoading = false
-                     )
-
-                 }
-
-                 is Resource.Error -> {
-
-                     _reflectionuiState.value =
-                         ReflectionUiState(error = result.message, isLoading = false)
-
-                 }
-
-                 is Resource.Loading -> {
-                     _reflectionuiState.value = ReflectionUiState(isLoading = true)
-                 }
-
-             }
-
-         }
+        if (emotion == "general") return
+        sendMessage(emotion)
     }
 
     fun sendMessage(userText: String) {
         if (userText.isBlank()) return
-        val userMsg = ChatMessage(userText, isUser = true)
-        conversationHistory.add("user" to userText)
-        _reflectionuiState.update { it.copy(messages = it.messages + userMsg, isLoading = true) }
-
 
         viewModelScope.launch {
+            loadRecentReflectionMessagesFromDb()
+
+            val userMsg = ChatMessage(userText, isUser = true)
+            conversationHistory.add("user" to userText)
+            _reflectionuiState.update {
+                it.copy(messages = it.messages + userMsg, isLoading = true, error = null)
+            }
+
             aiRepository.addMessageToDB(MessageEntity(role = "user", content = userText))
-            aiRepository.chatReflection(
-                BuildConfig.GEMINI_API_KEY,
+            aiRepository.trimReflectionMessages()
+            aiRepository.chatReflectionWithMistral(
                 userText,
                 conversationHistory.toList()
             ).fold(
@@ -139,6 +138,14 @@ class DivineDataViewModel(
                 }, onSuccess = {
 
                 conversationHistory.add("assistant" to it.first)
+                    aiRepository.addMessageToDB(
+                        MessageEntity(
+                            role = "assistant",
+                            content = it.first
+                        )
+                    )
+
+                    aiRepository.trimReflectionMessages()
 
                     _reflectionuiState.update { state ->
                         state.copy(
@@ -154,6 +161,31 @@ class DivineDataViewModel(
     }
 
 
+}
+
+private fun MessageEntity.toChatMessage(): ChatMessage {
+    return ChatMessage(
+        content = content,
+        isUser = role == "user",
+        verse = verse,
+        reference = reference
+    )
+}
+
+private fun MessageEntity.toHistoryText(): String {
+    return if (verse != null && reference != null) {
+        "$verse ($reference)\n$content"
+    } else {
+        content
+    }
+}
+
+private fun ChatMessage.toHistoryText(): String {
+    return if (verse != null && reference != null) {
+        "$verse ($reference)\n$content"
+    } else {
+        content
+    }
 }
 
 private fun VerseEntity.toDailyReflection(): Reflection {
@@ -202,7 +234,3 @@ data class ReflectionUiState(
     val isLoading: Boolean = false,
     val error: String? = null
 )
-
-
-
-

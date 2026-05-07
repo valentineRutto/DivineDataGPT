@@ -105,7 +105,7 @@ fun ReflectionScreen(
                             fontSize = 18.sp
                         )
                         Text(
-                            "DIVINEDATA AI",
+                            "DIVINE AI",
                             color = PurpleAccent,
                             fontSize = 11.sp,
                             letterSpacing = 1.sp

@@ -1,5 +1,13 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
+import android.content.ActivityNotFoundException
+import android.content.ContentValues
+import android.content.Context
+import android.content.Intent
+import android.graphics.Bitmap
+import android.os.Environment
+import android.provider.MediaStore
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,7 +31,6 @@ import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.Download
 import androidx.compose.material.icons.filled.Message
 import androidx.compose.material.icons.filled.MoreHoriz
-import androidx.compose.material.icons.filled.PhotoCamera
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -38,17 +45,24 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Rect
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.boundsInWindow
+import androidx.compose.ui.layout.onGloballyPositioned
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.content.FileProvider
+import androidx.core.view.drawToBitmap
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
@@ -58,8 +72,10 @@ import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextPrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
 import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 import com.valentinerutto.divinedatagpt.util.shareReflection
-import com.valentinerutto.divinedatagpt.util.shareToWhatsApp
 import org.koin.androidx.compose.koinViewModel
+import java.io.File
+import java.io.FileOutputStream
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,6 +86,8 @@ fun DailyReflectionScreen(
     val uiState by viewModel.dailyUiState.collectAsState()
 
     val context = LocalContext.current
+    val rootView = LocalView.current
+    val cardBounds = androidx.compose.runtime.remember { mutableStateOf<Rect?>(null) }
 
 
     Scaffold(
@@ -139,6 +157,9 @@ fun DailyReflectionScreen(
                             .padding(16.dp)
                             .clip(RoundedCornerShape(24.dp))
                             .heightIn(min = 380.dp)
+                            .onGloballyPositioned { coordinates ->
+                                cardBounds.value = coordinates.boundsInWindow()
+                            }
                             .background(
                                 Brush.verticalGradient(
                                     listOf(Color(0xFF8B4513), Color(0xFF2C4A2E), Color(0xFF1A1A3E))
@@ -213,6 +234,17 @@ fun DailyReflectionScreen(
                                     )
                                 }
                             }
+
+                            Spacer(Modifier.height(18.dp))
+
+                            Text(
+                                text = "✨ Daily Reflection from Divine AI",
+                                color = Color.White.copy(0.82f),
+                                fontSize = 13.sp,
+                                fontWeight = FontWeight.Medium,
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier.fillMaxWidth()
+                            )
                         }
                     }
 
@@ -234,19 +266,23 @@ fun DailyReflectionScreen(
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.Center
                     ) {
-                        ShareButton(
-                            color = Color(0xFFE1306C),
-                            icon = Icons.Default.PhotoCamera,
-                            label = "Stories",
-                            onClick = { shareReflection(context, reflection) }
 
-                        )
-                        Spacer(Modifier.width(20.dp))
                         ShareButton(
                             color = Color(0xFF25D366),
                             icon = Icons.Default.Message,
                             label = "WhatsApp",
-                            onClick = { shareToWhatsApp(context, reflection) }
+                            onClick = {
+                                captureScriptureCardBitmap(
+                                    rootView,
+                                    cardBounds.value
+                                )?.let { bitmap ->
+                                    shareScriptureCardToWhatsApp(context, bitmap)
+                                } ?: Toast.makeText(
+                                    context,
+                                    "Card is not ready to share yet",
+                                    Toast.LENGTH_SHORT
+                                ).show()
+                            }
 
                         )
                         Spacer(Modifier.width(20.dp))
@@ -254,7 +290,7 @@ fun DailyReflectionScreen(
                             color = CardBackground,
                             icon = Icons.Default.MoreHoriz,
                             label = "More",
-                            onClick = { shareToWhatsApp(context, reflection) }
+                            onClick = { shareReflection(context, reflection) }
 
                         )
                     }
@@ -263,7 +299,15 @@ fun DailyReflectionScreen(
 
                     // ── Save Button ──────────────────────────────
                     Button(
-                        onClick = {},
+                        onClick = {
+                            captureScriptureCardBitmap(rootView, cardBounds.value)?.let { bitmap ->
+                                saveScriptureCardToGallery(context, bitmap)
+                            } ?: Toast.makeText(
+                                context,
+                                "Card is not ready to save yet",
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(horizontal = 16.dp)
@@ -345,5 +389,99 @@ fun ShareButton(
         }
         Spacer(Modifier.height(6.dp))
         Text(label, color = TextSecondary, fontSize = 12.sp)
+    }
+}
+
+private fun captureScriptureCardBitmap(
+    rootView: android.view.View,
+    bounds: Rect?
+): Bitmap? {
+    if (bounds == null) return null
+
+    val fullBitmap = rootView.drawToBitmap()
+    val x = bounds.left.roundToInt().coerceIn(0, fullBitmap.width - 1)
+    val y = bounds.top.roundToInt().coerceIn(0, fullBitmap.height - 1)
+    val right = bounds.right.roundToInt().coerceIn(x + 1, fullBitmap.width)
+    val bottom = bounds.bottom.roundToInt().coerceIn(y + 1, fullBitmap.height)
+
+    return Bitmap.createBitmap(
+        fullBitmap,
+        x,
+        y,
+        right - x,
+        bottom - y
+    )
+}
+
+private fun saveScriptureCardToGallery(
+    context: Context,
+    bitmap: Bitmap
+) {
+    val fileName = "DivineData_${System.currentTimeMillis()}.png"
+    val values = ContentValues().apply {
+        put(MediaStore.Images.Media.DISPLAY_NAME, fileName)
+        put(MediaStore.Images.Media.MIME_TYPE, "image/png")
+        put(
+            MediaStore.Images.Media.RELATIVE_PATH,
+            "${Environment.DIRECTORY_PICTURES}/DivineData"
+        )
+        put(MediaStore.Images.Media.IS_PENDING, 1)
+    }
+
+    val resolver = context.contentResolver
+    val uri = resolver.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+    if (uri == null) {
+        Toast.makeText(context, "Could not save image", Toast.LENGTH_SHORT).show()
+        return
+    }
+
+    runCatching {
+        resolver.openOutputStream(uri)?.use { output ->
+            bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
+        }
+        values.clear()
+        values.put(MediaStore.Images.Media.IS_PENDING, 0)
+        resolver.update(uri, values, null, null)
+        Toast.makeText(context, "Saved to gallery", Toast.LENGTH_SHORT).show()
+    }.onFailure {
+        resolver.delete(uri, null, null)
+        Toast.makeText(context, "Could not save image", Toast.LENGTH_SHORT).show()
+    }
+}
+
+private fun shareScriptureCardToWhatsApp(
+    context: Context,
+    bitmap: Bitmap
+) {
+    val imageDir = File(context.cacheDir, "shared_images").apply { mkdirs() }
+    val imageFile = File(imageDir, "scripture_card.png")
+    FileOutputStream(imageFile).use { output ->
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, output)
+    }
+
+    val imageUri = FileProvider.getUriForFile(
+        context,
+        "${context.packageName}.fileprovider",
+        imageFile
+    )
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        type = "image/png"
+        putExtra(Intent.EXTRA_STREAM, imageUri)
+        addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+        setPackage("com.whatsapp")
+    }
+
+    try {
+        context.startActivity(intent)
+    } catch (_: ActivityNotFoundException) {
+        val chooser = Intent.createChooser(
+            Intent(Intent.ACTION_SEND).apply {
+                type = "image/png"
+                putExtra(Intent.EXTRA_STREAM, imageUri)
+                addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+            },
+            "Share scripture card"
+        )
+        context.startActivity(chooser)
     }
 }

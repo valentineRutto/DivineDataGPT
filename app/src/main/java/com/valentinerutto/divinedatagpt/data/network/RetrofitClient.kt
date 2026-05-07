@@ -12,7 +12,7 @@ object RetrofitClient {
     const val ESV_BASE_URL = "https://api.esv.org/"
     const val GEMINI_BASE_URL = "https://generativelanguage.googleapis.com/"
 
-    const val HUGGING_FACE_BASE_URL = "https://api-inference.huggingface.co/"
+    const val HUGGING_FACE_BASE_URL = "https://router.huggingface.co/"
     const val MISTRAL_BASE_URL = "https://api.mistral.ai/"
 
     fun provideRetrofit(baseUrl: String, okHttpClient: OkHttpClient): Retrofit {
@@ -71,7 +71,7 @@ object RetrofitClient {
                     chain.request().newBuilder()
                         .addHeader(
                             "Authorization",
-                            "Token ${BuildConfig.HF_API_KEY}"
+                            "Bearer ${BuildConfig.HF_API_KEY}"
                         )
                         .build()
                 )

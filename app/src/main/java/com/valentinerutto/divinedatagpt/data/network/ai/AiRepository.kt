@@ -7,13 +7,20 @@ import com.valentinerutto.divinedatagpt.data.network.ai.model.Content
 import com.valentinerutto.divinedatagpt.data.network.ai.model.GeminiRequest
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Part
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
+import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceChatMessage
+import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceChatRequest
 import com.valentinerutto.divinedatagpt.util.Resource
+import org.json.JSONObject
 
 class AiRepository(
     private val aiApi: AiApi,
+    private val huggingFaceApi: AiApi,
     private val messageDao: MessageDao,
     private val memorySummaryDao: MemorySummaryDao
 ) {
+    private companion object {
+        const val HF_CHAT_MODEL = "meta-llama/Llama-3.1-8B-Instruct:cerebras"
+    }
 
     suspend fun getReflectionForEmotion(apikey: String, emotion: String): Resource<Reflection> {
         return try {
@@ -35,7 +42,7 @@ class AiRepository(
             val rawText = response.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
                 ?: return Resource.Error("Empty response")
 
-            val json = org.json.JSONObject(rawText.trim())
+            val json = JSONObject(rawText.trim())
             Resource.Success(
                 Reflection(
                     verse = json.getString("verse"),
@@ -47,6 +54,57 @@ class AiRepository(
             Resource.Error(e.message.toString())
         }
     }
+
+    suspend fun getMistralReflectionForEmotion(emotion: String): Resource<Reflection> {
+        return try {
+            val prompt = """
+                You are DivineData AI, a compassionate Bible companion.
+                Analyze this user's emotional state: "$emotion".
+
+                Choose a Bible verse that directly comforts or guides that emotion.
+                Respond ONLY as valid JSON. Do not include markdown, explanations, or code fences.
+
+                {
+                  "verse": "the full Bible verse text",
+                  "reference": "Book Chapter:Verse",
+                  "insight": "2-3 warm sentences explaining why this verse speaks to the user's emotion"
+                }
+            """.trimIndent()
+
+            val response = huggingFaceApi.generateChatCompletion(
+                HuggingFaceChatRequest(
+                    model = HF_CHAT_MODEL,
+                    messages = listOf(
+                        HuggingFaceChatMessage(
+                            role = "user",
+                            content = prompt
+                        )
+                    ),
+                    max_tokens = 260,
+                    temperature = 0.45
+                )
+            )
+
+            if (!response.isSuccessful) {
+                return Resource.Error(response.errorBody()?.string() ?: "Mistral request failed")
+            }
+
+            val rawText = response.body()?.choices?.firstOrNull()?.message?.content
+                ?: return Resource.Error("Empty Mistral response")
+            val json = JSONObject(extractJsonObject(rawText))
+
+            Resource.Success(
+                Reflection(
+                    verse = json.getString("verse"),
+                    reference = json.getString("reference"),
+                    insight = json.getString("insight")
+                )
+            )
+        } catch (e: Exception) {
+            Resource.Error(e.message.toString())
+        }
+    }
+
     suspend fun addMessageToDB(message: MessageEntity) {
 
         messageDao.insert(message)
@@ -55,6 +113,14 @@ class AiRepository(
 
         if (allMessages.size >= 5) compressMemory(allMessages)
 
+    }
+
+    suspend fun getRecentReflectionMessages(limit: Int = 5): List<MessageEntity> {
+        return messageDao.getRecentMessages(limit).asReversed()
+    }
+
+    suspend fun trimReflectionMessages(keepCount: Int = 5) {
+        messageDao.deleteAllExceptLast(keepCount)
     }
 
 
@@ -110,6 +176,55 @@ class AiRepository(
 
     }
 
+    suspend fun chatReflectionWithMistral(
+        userMessage: String,
+        conversationHistory: List<Pair<String, String>>
+    ): Result<Pair<String, String?>> {
+        return try {
+            val historyText = conversationHistory.joinToString("\n") { (role, msg) ->
+                "${if (role == "user") "User" else "AI"}: $msg"
+            }
+            val prompt = """
+                You are DivineData AI, a compassionate Bible companion.
+                Analyze the user's emotion from their message and respond with biblical comfort.
+
+                ${if (historyText.isNotBlank()) "Conversation history:\n$historyText\n\n" else ""}
+                User: $userMessage
+
+                Respond warmly in under 100 words.
+                Include ONE relevant Bible verse if helpful.
+                End with one gentle reflective question.
+            """.trimIndent()
+
+            val response = huggingFaceApi.generateChatCompletion(
+                HuggingFaceChatRequest(
+                    model = HF_CHAT_MODEL,
+                    messages = listOf(
+                        HuggingFaceChatMessage(
+                            role = "user",
+                            content = prompt
+                        )
+                    ),
+                    max_tokens = 180,
+                    temperature = 0.6
+                )
+            )
+
+            if (!response.isSuccessful) {
+                return Result.failure(
+                    Exception(response.errorBody()?.string() ?: "Mistral request failed")
+                )
+            }
+
+            val text = response.body()?.choices?.firstOrNull()?.message?.content?.trim()
+                ?: return Result.failure(Exception("Empty Mistral response"))
+
+            Result.success(Pair(text, null))
+        } catch (e: Exception) {
+            Result.failure(e)
+        }
+    }
+
 
     suspend fun getDailyReflection(apiKey: String): Result<Reflection> {
         return try {
@@ -132,7 +247,7 @@ class AiRepository(
             val rawText = response.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
                 ?: return Result.failure(Exception("Empty response"))
 
-            val json = org.json.JSONObject(rawText.trim())
+            val json = JSONObject(rawText.trim())
             Result.success(
                 Reflection(
                     verse = json.getString("verse"),
@@ -224,8 +339,16 @@ class AiRepository(
         """.trimIndent()
     }
 
+    private fun buildMistralPrompt(instruction: String): String {
+        return "<s>[INST] $instruction [/INST]"
+    }
+
+    private fun extractJsonObject(text: String): String {
+        val start = text.indexOf('{')
+        val end = text.lastIndexOf('}')
+        if (start == -1 || end == -1 || end <= start) return text.trim()
+        return text.substring(start, end + 1)
+    }
+
 
 }
-
-
-

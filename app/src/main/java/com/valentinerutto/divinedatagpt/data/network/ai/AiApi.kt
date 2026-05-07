@@ -2,8 +2,8 @@ package com.valentinerutto.divinedatagpt.data.network.ai
 
 import com.valentinerutto.divinedatagpt.data.network.ai.model.GeminiRequest
 import com.valentinerutto.divinedatagpt.data.network.ai.model.GeminiResponse
-import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceRequest
-import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceResponse
+import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceChatRequest
+import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceChatResponse
 import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.POST
@@ -16,8 +16,9 @@ interface AiApi {
         @Body request: GeminiRequest
     ): GeminiResponse
 
-    @POST("models/mistralai/Mistral-7B-Instruct-v0.2")
-    suspend fun generateText(
-        @Body request: HuggingFaceRequest
-    ): Response<List<HuggingFaceResponse>>
+    @POST("v1/chat/completions")
+    suspend fun generateChatCompletion(
+        @Body request: HuggingFaceChatRequest
+    ): Response<HuggingFaceChatResponse>
+
 }

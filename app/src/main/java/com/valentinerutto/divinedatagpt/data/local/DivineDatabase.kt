@@ -17,7 +17,7 @@ import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 
 @Database(
     entities = [Verse::class, MemorySummaryEntity::class, MessageEntity::class, BookmarkEntity::class, BibleNoteEntity::class, VerseEntity::class],
-    version = 4,
+    version = 5,
     exportSchema = false
 )
 abstract class DivineDatabase : RoomDatabase() {
@@ -52,12 +52,19 @@ abstract class DivineDatabase : RoomDatabase() {
             }
         }
 
+        private val MIGRATION_4_5 = object : Migration(4, 5) {
+            override fun migrate(db: SupportSQLiteDatabase) {
+                db.execSQL("ALTER TABLE `messages` ADD COLUMN `verse` TEXT")
+                db.execSQL("ALTER TABLE `messages` ADD COLUMN `reference` TEXT")
+            }
+        }
+
         fun getDatabase(context: Context): DivineDatabase {
 
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(
                     context.applicationContext, DivineDatabase::class.java, "divine_database"
-                ).addMigrations(MIGRATION_3_4)
+                ).addMigrations(MIGRATION_3_4, MIGRATION_4_5)
                     .allowMainThreadQueries()
                     .fallbackToDestructiveMigration(false).build()
                 INSTANCE = instance

@@ -54,8 +54,8 @@ fun shareReflection(context: Context, reflection: Reflection) {
         appendLine(reflection.insight)
         appendLine()
         appendLine(
-            "✨ Daily Reflection from DivineData AI\n" +
-                    "Download on Play Store: \n"
+            "✨ Daily Reflection from Divine AI\n" +
+                    "Download on Play Store: Coming Soon \n"
         )
     }
 

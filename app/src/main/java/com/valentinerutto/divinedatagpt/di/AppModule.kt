@@ -26,9 +26,9 @@ val AppModule = module {
     single { Gson() }
 
 
-    single { BibleRepository(get(), get(), get()) }
+    single { BibleRepository(get(), get(named("HGAI_API")), get()) }
 
-    single { AiRepository(get(), get(), get()) }
+    single { AiRepository(get(), get(named("HGAI_API")), get(), get()) }
 
     viewModel { DivineDataViewModel(get(), get()) }
     viewModel { BibleViewModel(get()) }
@@ -87,6 +87,8 @@ val AppModule = module {
             get<Retrofit>(named("AI")).create(AiApi::class.java)
         }
 
+        single(named("HGAI_API")) {
+            get<Retrofit>(named("HGAI")).create(AiApi::class.java)
+        }
 
     }
-

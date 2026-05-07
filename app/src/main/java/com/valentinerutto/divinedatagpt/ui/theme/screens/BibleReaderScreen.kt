@@ -25,7 +25,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MenuBook
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.rounded.Book
 import androidx.compose.material.icons.rounded.BorderColor
 import androidx.compose.material.icons.rounded.EditNote
@@ -276,27 +275,27 @@ private fun BibleReaderContent(
                     colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
                 )
 
-                NavigationBarItem(
-                    selected = selectedTab == 3,
-                    onClick = {
-                        selectedTab = 3
-                        onSettingsClick()
-
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Default.Settings, contentDescription = "Settings",
-                            tint = if (selectedTab == 3) PurplePrimary else TextMuted
-                        )
-                    },
-                    label = {
-                        Text(
-                            "SETTINGS", fontSize = 10.sp,
-                            color = if (selectedTab == 3) PurplePrimary else TextMuted
-                        )
-                    },
-                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-                )
+//                NavigationBarItem(
+//                    selected = selectedTab == 3,
+//                    onClick = {
+//                        selectedTab = 3
+//                        onSettingsClick()
+//
+//                    },
+//                    icon = {
+//                        Icon(
+//                            Icons.Default.Settings, contentDescription = "Settings",
+//                            tint = if (selectedTab == 3) PurplePrimary else TextMuted
+//                        )
+//                    },
+//                    label = {
+//                        Text(
+//                            "SETTINGS", fontSize = 10.sp,
+//                            color = if (selectedTab == 3) PurplePrimary else TextMuted
+//                        )
+//                    },
+//                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+//                )
             }
         }
 
