@@ -65,16 +65,14 @@ interface VerseDao {
 
     @Query(
         """
-        SELECT *
-        FROM verses
-        WHERE translation = :translation
-          AND (
-            bookName LIKE '%' || :query || '%'
-            OR text LIKE '%' || :query || '%'
-          )
-        ORDER BY book ASC, chapter ASC, verse ASC
-        LIMIT :limit
-        """
+    SELECT verses.*
+    FROM verses
+    JOIN verses_fts ON verses.id = verses_fts.rowid
+    WHERE verses.translation = :translation
+      AND verses_fts MATCH :query
+    ORDER BY verses.book ASC, verses.chapter ASC, verses.verse ASC
+    LIMIT :limit
+    """
     )
     fun searchVerses(
         translation: String,

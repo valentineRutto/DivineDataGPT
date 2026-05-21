@@ -356,6 +356,7 @@ private fun BibleReaderContent(
                     ) { verse ->
                         VerseRow(
                             verse = verse,
+
                             isSelected = verse.verse == uiState.selectedVerse,
                             highlightColor = uiState.highlightedVerseColors[verse.id].toHighlightColor(),
                             onClick = { onVerseSelected(verse.verse) }
@@ -385,6 +386,7 @@ private fun BibleReaderContent(
                         shareVerse(context, selectedVerse)
                     },
                     onDismiss = onClearSelection,
+
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
                         .navigationBarsPadding()
@@ -396,6 +398,19 @@ private fun BibleReaderContent(
     }
 }
 
+private fun shareVerse(
+    context: android.content.Context,
+    verse: VerseEntity? = null
+) {
+    val verseText = "${verse?.bookName} ${verse?.chapter}:${verse?.verse}\n${verse?.text}"
+    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, verseText)
+    }
+    context.startActivity(
+        Intent.createChooser(sendIntent, "Share verse")
+    )
+}
 @Composable
 private fun SearchResultsHeader(resultCount: Int) {
     Column(
@@ -825,8 +840,8 @@ private fun ChapterHeader(
 private fun VerseRow(
     verse: VerseEntity,
     isSelected: Boolean,
+    onClick: () -> Unit,
     highlightColor: Color?,
-    onClick: () -> Unit
 ) {
     val shape = RoundedCornerShape(topEnd = 8.dp, bottomEnd = 8.dp)
     val leftAccent = highlightColor ?: Purple
@@ -835,7 +850,6 @@ private fun VerseRow(
         highlightColor != null -> highlightColor.copy(alpha = 0.18f)
         else -> null
     }
-
     Text(
         text = buildAnnotatedString {
             withStyle(
@@ -925,7 +939,7 @@ private fun VerseActionBar(
     onNote: () -> Unit,
     onShare: () -> Unit,
     onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     var showHighlightColors by remember { mutableStateOf(false) }
 
@@ -985,6 +999,7 @@ private fun VerseActionBar(
             )
         }
     }
+
 }
 
 @Composable

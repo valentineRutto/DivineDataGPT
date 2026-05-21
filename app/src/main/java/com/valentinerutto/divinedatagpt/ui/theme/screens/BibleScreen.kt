@@ -1,11 +1,6 @@
-package com.valentinerutto.divinedatagpt.ui.theme.screens
-
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.runtime.Composable
-import com.valentinerutto.divinedatagpt.BibleViewModel
-import org.koin.compose.viewmodel.koinViewModel
-
-
+//package com.valentinerutto.divinedatagpt.ui.theme.screens
+//
+//
 //import androidx.compose.animation.AnimatedVisibility
 //import androidx.compose.animation.expandVertically
 //import androidx.compose.animation.fadeIn
@@ -77,15 +72,14 @@ import org.koin.compose.viewmodel.koinViewModel
 //import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 //import org.koin.androidx.compose.koinViewModel
 //
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun BibleScreen(
-    viewModel: BibleViewModel = koinViewModel(),
-    onNavigateToHome: () -> Unit = {},
-    onNavigateToSettings: () -> Unit = {}
-) {
-
-
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun BibleScreen(
+//    viewModel: BibleViewModel = koinViewModel(),
+//    onNavigateToHome: () -> Unit = {},
+//    onNavigateToJournal: () -> Unit = {},
+//    onNavigateToSettings: () -> Unit = {}
+//) {
 //    val uiState by viewModel.uiState.collectAsState()
 //    val listState = rememberLazyListState()
 //
@@ -669,6 +663,6 @@ fun BibleScreen(
 //            style = MaterialTheme.typography.bodySmall,
 //            color = TextMuted
 //        )
-    //  }
-}
-
+//    }
+//}
+//
