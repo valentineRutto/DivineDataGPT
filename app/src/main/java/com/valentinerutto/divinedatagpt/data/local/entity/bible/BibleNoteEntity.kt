@@ -11,7 +11,7 @@ import androidx.room.PrimaryKey
         Index(value = ["verseId"], unique = true)
     ]
 )
-data class BibleNoteEntity(
+data class BibleNoteEntitynotused(
     @PrimaryKey(autoGenerate = true)
     val id: Long = 0,
     val verseId: Int,

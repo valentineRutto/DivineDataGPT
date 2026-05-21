@@ -398,19 +398,7 @@ private fun BibleReaderContent(
     }
 }
 
-private fun shareVerse(
-    context: android.content.Context,
-    verse: VerseEntity? = null
-) {
-    val verseText = "${verse?.bookName} ${verse?.chapter}:${verse?.verse}\n${verse?.text}"
-    val sendIntent = Intent(Intent.ACTION_SEND).apply {
-        type = "text/plain"
-        putExtra(Intent.EXTRA_TEXT, verseText)
-    }
-    context.startActivity(
-        Intent.createChooser(sendIntent, "Share verse")
-    )
-}
+
 @Composable
 private fun SearchResultsHeader(resultCount: Int) {
     Column(
