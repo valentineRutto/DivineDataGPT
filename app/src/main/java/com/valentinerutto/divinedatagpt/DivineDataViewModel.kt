@@ -74,7 +74,6 @@ class DivineDataViewModel(
     }
 
 
-    //reflectionscreenmethods
     private fun loadRecentReflectionMessages() {
         viewModelScope.launch {
             loadRecentReflectionMessagesFromDb()
