@@ -5,6 +5,7 @@ import com.valentinerutto.divinedatagpt.di.AppModule
 import com.valentinerutto.divinedatagpt.di.databaseModule
 import com.valentinerutto.divinedatagpt.di.networkModule
 import com.valentinerutto.divinedatagpt.util.BibleDatabaseSeeder
+import com.valentinerutto.divinedatagpt.util.notifications.DailyReflectionScheduler
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
@@ -41,6 +42,7 @@ class MyApplication: Application() {
         }
         applicationScope.launch {
             seeder.seedIfEmpty()
+            DailyReflectionScheduler.scheduleDailyReminder(this@MyApplication)
         }
     }
 }
