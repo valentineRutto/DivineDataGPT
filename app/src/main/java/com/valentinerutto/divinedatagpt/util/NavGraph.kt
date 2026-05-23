@@ -9,6 +9,7 @@ import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleNotesRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleReaderRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.DailyReflectionScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.HomeScreen
+import com.valentinerutto.divinedatagpt.ui.theme.screens.ReadingPlansRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.ReflectionScreen
 
 
@@ -28,6 +29,9 @@ fun NavGraph(navController: NavHostController) {
                 },
                 onDailyReflection = {
                     navController.navigate(Screen.Daily.route)
+                },
+                onReadingPlans = {
+                    navController.navigate(Screen.ReadingPlans.route)
                 },
                 onNavigateToBible = {
                     navController.navigate(Screen.Bible.route)
@@ -80,6 +84,11 @@ fun NavGraph(navController: NavHostController) {
                         launchSingleTop = true
                     }
                 }
+            )
+        }
+        composable(Screen.ReadingPlans.route) {
+            ReadingPlansRoute(
+                onBack = { navController.popBackStack() }
             )
         }
         composable(Screen.BibleNotes.route) {

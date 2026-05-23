@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.MyApplication
+import com.valentinerutto.divinedatagpt.ReadingPlanViewModel
 import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.local.DivineDatabase
 import com.valentinerutto.divinedatagpt.data.network.RetrofitClient
@@ -26,12 +27,13 @@ val AppModule = module {
     single { Gson() }
 
 
-    single { BibleRepository(get(), get(named("HGAI_API")), get()) }
+    single { BibleRepository(get(), get(named("HGAI_API")), get(), get()) }
 
     single { AiRepository(get(), get(named("HGAI_API")), get(), get()) }
 
     viewModel { DivineDataViewModel(get(), get()) }
     viewModel { BibleViewModel(get()) }
+    viewModel { ReadingPlanViewModel(get()) }
     single { DivineDatabase.getDatabase(context = androidContext()) }
     single { BibleDatabaseSeeder(context = androidContext(), dao = get()) }
 
@@ -41,6 +43,7 @@ val AppModule = module {
         single { get<DivineDatabase>().memorySummaryDao() }
         single { get<DivineDatabase>().messageDao() }
         single { get<DivineDatabase>().verseDao() }
+        single { get<DivineDatabase>().readingPlanDao() }
     }
 
     fun Scope.database() = get<DivineDatabase>()

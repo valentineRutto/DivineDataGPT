@@ -1,8 +1,12 @@
 package com.valentinerutto.divinedatagpt.data
 
+import com.valentinerutto.divinedatagpt.data.local.dao.ReadingPlanDao
 import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanCompletionEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanDayEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
@@ -13,7 +17,8 @@ import kotlinx.coroutines.flow.Flow
 class BibleRepository(
     private val esvApi: ApiService,
     private val huggingFaceApi: AiApi,
-    private val dao: VerseDao
+    private val dao: VerseDao,
+    private val readingPlanDao: ReadingPlanDao
 
     ) {
 
@@ -65,6 +70,42 @@ class BibleRepository(
 
     suspend fun saveBibleNote(note: BibleNoteEntity) {
         dao.saveBibleNote(note)
+    }
+
+    fun observeReadingPlans(): Flow<List<ReadingPlanEntity>> {
+        return readingPlanDao.observePlans()
+    }
+
+    fun observeReadingPlanDays(): Flow<List<ReadingPlanDayEntity>> {
+        return readingPlanDao.observePlanDays()
+    }
+
+    fun observeReadingPlanCompletions(): Flow<List<ReadingPlanCompletionEntity>> {
+        return readingPlanDao.observeCompletions()
+    }
+
+    suspend fun startReadingPlan(
+        plan: ReadingPlanEntity,
+        days: List<ReadingPlanDayEntity>
+    ): Long {
+        return readingPlanDao.insertPlanWithDays(plan, days)
+    }
+
+    suspend fun completeReadingPlanDay(planDayId: Long, completedEpochDay: Long) {
+        readingPlanDao.completeDay(
+            ReadingPlanCompletionEntity(
+                planDayId = planDayId,
+                completedEpochDay = completedEpochDay
+            )
+        )
+    }
+
+    suspend fun uncompleteReadingPlanDay(planDayId: Long) {
+        readingPlanDao.uncompleteDay(planDayId)
+    }
+
+    suspend fun deleteReadingPlan(planId: Long) {
+        readingPlanDao.deletePlan(planId)
     }
 
 
