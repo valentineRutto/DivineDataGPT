@@ -1,5 +1,6 @@
 package com.valentinerutto.divinedatagpt.ui.theme.screens
 
+import android.content.Intent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -23,15 +24,19 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.ChevronLeft
+import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
@@ -41,15 +46,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.compose.ui.window.Dialog
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.valentinerutto.divinedatagpt.ReadingPlanDayProgress
+import com.valentinerutto.divinedatagpt.ReadingPlanReading
 import com.valentinerutto.divinedatagpt.ReadingPlanSummary
 import com.valentinerutto.divinedatagpt.ReadingPlanTemplate
 import com.valentinerutto.divinedatagpt.ReadingPlanViewModel
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
@@ -69,15 +78,18 @@ fun ReadingPlansRoute(
     viewModel: ReadingPlanViewModel = koinViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
+    val selectedReading by viewModel.selectedReading.collectAsStateWithLifecycle()
 
     ReadingPlansScreen(
         isLoading = uiState.isLoading,
         templates = uiState.templates,
         summaries = uiState.summaries,
         activeSummary = uiState.activeSummary,
+        selectedReading = selectedReading,
         onBack = onBack,
         onStartPlan = viewModel::startPlan,
-        onToggleDay = viewModel::toggleDay,
+        onOpenReading = viewModel::openReading,
+        onCloseReading = viewModel::closeReadingAndComplete,
         onDeletePlan = viewModel::deletePlan
     )
 }
@@ -89,11 +101,20 @@ private fun ReadingPlansScreen(
     templates: List<ReadingPlanTemplate>,
     summaries: List<ReadingPlanSummary>,
     activeSummary: ReadingPlanSummary?,
+    selectedReading: ReadingPlanReading?,
     onBack: () -> Unit,
     onStartPlan: (ReadingPlanTemplate) -> Unit,
-    onToggleDay: (ReadingPlanDayProgress) -> Unit,
+    onOpenReading: (ReadingPlanDayProgress) -> Unit,
+    onCloseReading: () -> Unit,
     onDeletePlan: (Long) -> Unit
 ) {
+    selectedReading?.let { reading ->
+        ReadingVerseDialog(
+            reading = reading,
+            onDismiss = onCloseReading
+        )
+    }
+
     Scaffold(
         containerColor = DarkBackground,
         topBar = {
@@ -203,7 +224,7 @@ private fun ReadingPlansScreen(
                 ) { day ->
                     PlanDayRow(
                         day = day,
-                        onToggleDay = { onToggleDay(day) }
+                        onOpenReading = { onOpenReading(day) }
                     )
                 }
             } ?: item {
@@ -403,7 +424,7 @@ private fun ProgressChart(summary: ReadingPlanSummary) {
 @Composable
 private fun PlanDayRow(
     day: ReadingPlanDayProgress,
-    onToggleDay: () -> Unit
+    onOpenReading: () -> Unit
 ) {
     val statusColor = when {
         day.isCompleted -> Color(0xFF74D99F)
@@ -417,7 +438,7 @@ private fun PlanDayRow(
             .padding(horizontal = 20.dp, vertical = 6.dp)
             .clip(RoundedCornerShape(14.dp))
             .background(CardBackground)
-            .clickable(onClick = onToggleDay)
+            .clickable(onClick = onOpenReading)
             .padding(14.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -466,6 +487,146 @@ private fun PlanDayRow(
 }
 
 @Composable
+private fun ReadingVerseDialog(
+    reading: ReadingPlanReading,
+    onDismiss: () -> Unit
+) {
+    val context = LocalContext.current
+    Dialog(onDismissRequest = onDismiss) {
+        Surface(
+            modifier = Modifier
+                .fillMaxWidth()
+                .heightIn(max = 620.dp),
+            shape = RoundedCornerShape(22.dp),
+            color = DarkSurface
+        ) {
+            Column(
+                modifier = Modifier.padding(18.dp)
+            ) {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column(modifier = Modifier.weight(1f)) {
+                        Text(
+                            text = reading.day.title,
+                            color = TextPrimary,
+                            fontSize = 20.sp,
+                            fontWeight = FontWeight.Bold,
+                            lineHeight = 25.sp
+                        )
+                        Text(
+                            text = "${reading.day.bookName} ${reading.day.chapter} • ${reading.day.focus}",
+                            color = TextSecondary,
+                            fontSize = 13.sp,
+                            lineHeight = 18.sp,
+                            modifier = Modifier.padding(top = 4.dp)
+                        )
+                    }
+                    IconButton(onClick = onDismiss) {
+                        Icon(
+                            Icons.Default.Close,
+                            contentDescription = "Close reading",
+                            tint = TextPrimary
+                        )
+                    }
+                }
+
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .weight(1f, fill = false)
+                        .padding(top = 16.dp),
+                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                ) {
+                    if (reading.verses.isEmpty()) {
+                        item {
+                            Text(
+                                text = "This passage is still loading.",
+                                color = TextSecondary,
+                                fontSize = 14.sp,
+                                lineHeight = 20.sp
+                            )
+                        }
+                    } else {
+                        items(reading.verses, key = { verse -> verse.id }) { verse ->
+                            VerseLine(verse = verse)
+                        }
+                    }
+                }
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 18.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween,
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    TextButton(
+                        onClick = {
+                            shareReading(context, reading)
+                        },
+                        enabled = reading.verses.isNotEmpty()
+                    ) {
+                        Icon(
+                            Icons.Default.Share,
+                            contentDescription = null,
+                            tint = PurpleAccent,
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            text = "Share",
+                            color = PurpleAccent,
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+
+                    TextButton(onClick = onDismiss) {
+                        Icon(
+                            Icons.Default.Check,
+                            contentDescription = null,
+                            tint = Color(0xFF74D99F),
+                            modifier = Modifier.size(18.dp)
+                        )
+                        Spacer(Modifier.width(8.dp))
+                        Text(
+                            text = "Done",
+                            color = Color(0xFF74D99F),
+                            fontWeight = FontWeight.Bold
+                        )
+                    }
+                }
+            }
+        }
+    }
+}
+
+@Composable
+private fun VerseLine(verse: VerseEntity) {
+    Row(
+        modifier = Modifier.fillMaxWidth(),
+        verticalAlignment = Alignment.Top
+    ) {
+        Text(
+            text = verse.verse.toString(),
+            color = PurpleAccent,
+            fontSize = 12.sp,
+            fontWeight = FontWeight.Bold,
+            modifier = Modifier.width(30.dp)
+        )
+        Text(
+            text = verse.text,
+            color = TextPrimary,
+            fontSize = 16.sp,
+            lineHeight = 24.sp,
+            modifier = Modifier.weight(1f)
+        )
+    }
+}
+
+@Composable
 private fun EmptyPlansMessage() {
     Column(
         modifier = Modifier
@@ -487,6 +648,24 @@ private fun EmptyPlansMessage() {
             modifier = Modifier.padding(top = 8.dp)
         )
     }
+}
+
+private fun shareReading(
+    context: android.content.Context,
+    reading: ReadingPlanReading
+) {
+    val reference = "${reading.day.bookName} ${reading.day.chapter}"
+    val scripture = reading.verses.joinToString(" ") { verse ->
+        "${verse.verse}. ${verse.text}"
+    }
+    val sendIntent = Intent(Intent.ACTION_SEND).apply {
+        type = "text/plain"
+        putExtra(
+            Intent.EXTRA_TEXT,
+            "$reference\n\n$scripture\n\n${reading.day.focus}"
+        )
+    }
+    context.startActivity(Intent.createChooser(sendIntent, "Share reading"))
 }
 
 private fun String?.toColorOrDefault(default: Color): Color {

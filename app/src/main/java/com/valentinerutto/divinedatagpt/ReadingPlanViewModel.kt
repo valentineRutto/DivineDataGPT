@@ -6,9 +6,15 @@ import com.valentinerutto.divinedatagpt.data.BibleRepository
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanCompletionEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanDayEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.flatMapLatest
+import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -59,9 +65,16 @@ data class ReadingPlansUiState(
         get() = summaries.firstOrNull { it.plan.id == selectedPlanId } ?: summaries.firstOrNull()
 }
 
+data class ReadingPlanReading(
+    val day: ReadingPlanDayEntity,
+    val verses: List<VerseEntity>
+)
+
+@OptIn(ExperimentalCoroutinesApi::class)
 class ReadingPlanViewModel(
     private val repository: BibleRepository
 ) : ViewModel() {
+    private val selectedReadingDay = MutableStateFlow<ReadingPlanDayEntity?>(null)
     private val today: Long
         get() = LocalDate.now().toEpochDay()
 
@@ -114,6 +127,26 @@ class ReadingPlanViewModel(
         initialValue = ReadingPlansUiState()
     )
 
+    val selectedReading: StateFlow<ReadingPlanReading?> = selectedReadingDay
+        .flatMapLatest { day ->
+            if (day == null) {
+                flowOf(null)
+            } else {
+                repository.observeChapter(
+                    translation = "shortname",
+                    book = day.book,
+                    chapter = day.chapter
+                ).map { verses ->
+                    ReadingPlanReading(day = day, verses = verses)
+                }
+            }
+        }
+        .stateIn(
+            scope = viewModelScope,
+            started = SharingStarted.WhileSubscribed(5_000),
+            initialValue = null
+        )
+
     fun startPlan(template: ReadingPlanTemplate) {
         viewModelScope.launch {
             val plan = ReadingPlanEntity(
@@ -147,6 +180,18 @@ class ReadingPlanViewModel(
             } else {
                 repository.completeReadingPlanDay(day.day.id, today)
             }
+        }
+    }
+
+    fun openReading(day: ReadingPlanDayProgress) {
+        selectedReadingDay.value = day.day
+    }
+
+    fun closeReadingAndComplete() {
+        val day = selectedReadingDay.value ?: return
+        selectedReadingDay.value = null
+        viewModelScope.launch {
+            repository.completeReadingPlanDay(day.id, today)
         }
     }
 
