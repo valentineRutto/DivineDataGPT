@@ -8,6 +8,6 @@ object DailyReflectionNotificationConfig {
     const val EXACT_ALARM_ACTION = "com.valentinerutto.divinedatagpt.DAILY_REFLECTION_ALARM"
     const val UNIQUE_PERIODIC_WORK_NAME = "daily_reflection_periodic_work"
     const val UNIQUE_IMMEDIATE_WORK_NAME = "daily_reflection_immediate_work"
-    const val DEFAULT_HOUR = 8
+    const val DEFAULT_HOUR = 7
     const val DEFAULT_MINUTE = 0
 }
