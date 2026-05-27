@@ -251,19 +251,29 @@ fun ChatBubblereflection(message: ChatMessage) {
                 }
                 Spacer(Modifier.width(8.dp))
                 Column {
+
                     Text(
-                        "DivineData AI", color = TextMuted, fontSize = 11.sp,
+                        "Divine AI", color = TextMuted, fontSize = 11.sp,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
+
                     Box(
                         modifier = Modifier
-                            .clip(RoundedCornerShape(4.dp, 18.dp, 18.dp, 18.dp))
+                            .clip(
+                                RoundedCornerShape(
+                                    4.dp,
+                                    18.dp, 18.dp, 18.dp
+                                )
+                            )
                             .background(AiBubble)
                             .padding(16.dp)
                             .widthIn(max = 280.dp)
                     ) {
+
                         Column {
+
                             if (message.verse != null) {
+
                                 Text(
                                     text = "\"${message.verse}\" (${message.reference})",
                                     color = TextPrimary,
@@ -271,19 +281,27 @@ fun ChatBubblereflection(message: ChatMessage) {
                                     fontStyle = FontStyle.Italic,
                                     lineHeight = 22.sp
                                 )
+
                                 Spacer(Modifier.height(8.dp))
                             }
+
                             Text(
                                 message.content,
                                 color = TextPrimary,
                                 fontSize = 15.sp,
                                 lineHeight = 22.sp
                             )
+
+
                         }
                     }
                 }
             }
+
+
         } else {
+
+
             Row(verticalAlignment = Alignment.Bottom) {
                 Column(horizontalAlignment = Alignment.End) {
                     Text(
