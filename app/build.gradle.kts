@@ -142,9 +142,12 @@ dependencies {
 
     // DataStore for preferences
     implementation(libs.androidx.datastore.preferences)
+
     implementation(libs.genai.prompt)
 
     implementation(libs.generativeai.v090)
+
+    implementation("com.google.mediapipe:tasks-genai:0.10.35")
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
