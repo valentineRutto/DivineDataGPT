@@ -147,7 +147,7 @@ dependencies {
 
     implementation(libs.generativeai.v090)
 
-    implementation("com.google.mediapipe:tasks-genai:0.10.35")
+    implementation(libs.tasks.genai)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
