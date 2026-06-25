@@ -6,13 +6,13 @@ import kotlinx.coroutines.withContext
 
 
 class OnDeviceReflectionGenerator(context: Context) : ReflectionGenerator {
-    private val llmInference = LlmInference.createFromOptions(
-        context,
-        LlmInference.LlmInferenceOptions.builder()
-            .setModelPath("/data/local/tmp/model.bin") // or copied asset path
-            .setMaxTokens(80)
-            .build()
-    )
+//    private val llmInference = LlmInference.createFromOptions(
+//        context,
+//        LlmInference.LlmInferenceOptions.builder()
+//            .setModelPath("/data/local/tmp/model.bin") // or copied asset path
+//            .setMaxTokens(80)
+//            .build()
+//    )
 
     override suspend fun generate(
         userText: String,
