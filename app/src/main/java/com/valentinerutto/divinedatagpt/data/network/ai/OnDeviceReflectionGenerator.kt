@@ -6,6 +6,7 @@ import kotlinx.coroutines.withContext
 
 
 class OnDeviceReflectionGenerator(context: Context) : ReflectionGenerator {
+
 //    private val llmInference = LlmInference.createFromOptions(
 //        context,
 //        LlmInference.LlmInferenceOptions.builder()
@@ -20,10 +21,10 @@ class OnDeviceReflectionGenerator(context: Context) : ReflectionGenerator {
         verseReference: String,
         verseText: String
     ): GeneratedReflection = withContext(Dispatchers.Default) {
-        val prompt = """
+        """
             You are a gentle Christian emotional companion.
             User feeling: "$userText"
-            Emotion: ${emotion.name}
+            Emotion: ${emotion}
             Verse: $verseReference - "$verseText"
 
             Write exactly:
@@ -31,8 +32,8 @@ class OnDeviceReflectionGenerator(context: Context) : ReflectionGenerator {
             Prayer: one short prayer sentence.
         """.trimIndent()
 
-        val output = llmInference.generateResponse(prompt)
-        parseGeneratedReflection(output)
+        // val output = llmInference.generateResponse(prompt)
+        parseGeneratedReflection("output")
 
     }
 
