@@ -5,6 +5,8 @@
 Connect your emotions to the Word.  
 DivineData analyzes how you feel and suggests scripture and reflections to uplift your spirit.
 
+```When life feels heavy, DivineData helps me hear Scripture personally, pray honestly, and remember how God has carried me.
+
 ### ✨ Tech Stack
 - **Kotlin (Native Android)**
 - **MVVM + Koin + Room + Retrofit**
