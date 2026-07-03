@@ -3,6 +3,7 @@ package com.valentinerutto.divinedatagpt.ui.theme.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
@@ -24,6 +25,8 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -31,6 +34,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -77,6 +81,9 @@ fun BibleNotesRoute(
         onBibleClick = onBibleClick,
         onNotesClick = onNotesClick,
         onSettingsClick = onSettingsClick,
+        onCreateNote = { note ->
+            viewModel.saveBibleNote(note)
+        },
         onEditNote = { note, newText, highlightColor ->
             viewModel.updateBibleNote(
                 note.copy(
@@ -100,23 +107,54 @@ private fun BibleNotesScreen(
     onBibleClick: () -> Unit,
     onNotesClick: () -> Unit,
     onSettingsClick: () -> Unit,
+    onCreateNote: (String) -> Unit,
     onEditNote: (BibleNoteEntity, String, String) -> Unit,
     onDeleteNote: (BibleNoteEntity) -> Unit,
     modifier: Modifier = Modifier
 ) {
-    var editingNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
-    val activeEditingNote = editingNote
+    var isCreatingNote by remember { mutableStateOf(false) }
+    var plainEditorNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
+    var editorVerse by remember { mutableStateOf<VerseEntity?>(null) }
+    var editorNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
+    val activeEditorVerse = editorVerse
 
-    if (activeEditingNote != null) {
-        NoteEditorScreen(
-            verse = activeEditingNote.toVerseEntity(),
-            initialNote = activeEditingNote.note,
-            initialHighlightColor = activeEditingNote.highlightColor,
-            onSave = { note, highlightColor ->
-                onEditNote(activeEditingNote, note, highlightColor)
-                editingNote = null
+    if (isCreatingNote || plainEditorNote != null) {
+        val activePlainNote = plainEditorNote
+        PlainNoteEditorScreen(
+            initialNote = activePlainNote?.note.orEmpty(),
+            onSave = { note ->
+                if (activePlainNote == null) {
+                    onCreateNote(note)
+                } else {
+                    onEditNote(activePlainNote, note, activePlainNote.highlightColor)
+                }
+                isCreatingNote = false
+                plainEditorNote = null
             },
-            onBack = { editingNote = null },
+            onBack = {
+                isCreatingNote = false
+                plainEditorNote = null
+            },
+            modifier = modifier
+        )
+        return
+    }
+
+    if (activeEditorVerse != null) {
+        val activeEditorNote = editorNote
+        NoteEditorScreen(
+            verse = activeEditorVerse,
+            initialNote = activeEditorNote?.note.orEmpty(),
+            initialHighlightColor = activeEditorNote?.highlightColor ?: "yellow",
+            onSave = { note, highlightColor ->
+                onEditNote(activeEditorNote ?: return@NoteEditorScreen, note, highlightColor)
+                editorVerse = null
+                editorNote = null
+            },
+            onBack = {
+                editorVerse = null
+                editorNote = null
+            },
             modifier = modifier
         )
         return
@@ -142,14 +180,23 @@ private fun BibleNotesScreen(
             contentPadding = PaddingValues(horizontal = 24.dp, vertical = 26.dp)
         ) {
             item {
-                Text(
-                    text = "Notes",
-                    color = Ink,
-                    fontFamily = FontFamily.Serif,
-                    fontWeight = FontWeight.Bold,
-                    fontSize = 42.sp,
-                    modifier = Modifier.padding(bottom = 18.dp)
-                )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(bottom = 18.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    Text(
+                        text = "Notes",
+                        color = Ink,
+                        fontFamily = FontFamily.Serif,
+                        fontWeight = FontWeight.Bold,
+                        fontSize = 42.sp
+                    )
+                    TextButton(onClick = { isCreatingNote = true }) {
+                        Text("Create", color = Purple)
+                    }
+                }
             }
 
             if (notes.isEmpty()) {
@@ -169,12 +216,87 @@ private fun BibleNotesScreen(
                 ) { note ->
                     BibleNoteRow(
                         note = note,
-                        onEditClick = { editingNote = note },
+                        onEditClick = {
+                            if (note.isStandaloneNote()) {
+                                plainEditorNote = note
+                            } else {
+                                editorVerse = note.toVerseEntity()
+                                editorNote = note
+                            }
+                        },
                         onDeleteNote = onDeleteNote
                     )
                 }
             }
         }
+    }
+}
+
+@Composable
+private fun PlainNoteEditorScreen(
+    initialNote: String,
+    onSave: (String) -> Unit,
+    onBack: () -> Unit,
+    modifier: Modifier = Modifier
+) {
+    var noteDraft by remember { mutableStateOf(initialNote) }
+
+    Scaffold(
+        modifier = modifier.fillMaxSize(),
+        containerColor = Page,
+        topBar = {
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .background(Panel)
+                    .padding(horizontal = 20.dp, vertical = 16.dp),
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                TextButton(onClick = onBack) {
+                    Text("Cancel", color = MutedInk)
+                }
+                Text(
+                    text = "Note",
+                    color = Ink,
+                    fontFamily = FontFamily.Serif,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 22.sp
+                )
+                TextButton(onClick = { onSave(noteDraft) }) {
+                    Text("Save", color = Purple)
+                }
+            }
+        }
+    ) { innerPadding ->
+        TextField(
+            value = noteDraft,
+            onValueChange = { noteDraft = it },
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(innerPadding)
+                .padding(horizontal = 24.dp, vertical = 24.dp)
+                .heightIn(min = 260.dp),
+            placeholder = {
+                Text(
+                    text = "Write your note...",
+                    color = MutedInk,
+                    fontFamily = FontFamily.Serif
+                )
+            },
+            textStyle = TextStyle(
+                color = Ink,
+                fontFamily = FontFamily.Serif,
+                fontSize = 20.sp,
+                lineHeight = 30.sp
+            ),
+            colors = TextFieldDefaults.colors(
+                focusedContainerColor = Panel,
+                unfocusedContainerColor = Panel,
+                focusedIndicatorColor = Purple,
+                unfocusedIndicatorColor = Color.Transparent,
+                cursorColor = Purple
+            )
+        )
     }
 }
 
@@ -185,6 +307,7 @@ private fun BibleNoteRow(
     onDeleteNote: (BibleNoteEntity) -> Unit
 ) {
     var noteToDelete by remember { mutableStateOf<BibleNoteEntity?>(null) }
+    val isStandaloneNote = note.isStandaloneNote()
 
     Column(
         modifier = Modifier
@@ -194,7 +317,7 @@ private fun BibleNoteRow(
             .padding(18.dp)
     ) {
         Text(
-            text = "${note.bookName} ${note.chapter}:${note.verse}",
+            text = if (isStandaloneNote) "Personal note" else "${note.bookName} ${note.chapter}:${note.verse}",
             color = note.highlightColor.toHighlightColor() ?: Purple,
             fontFamily = FontFamily.Serif,
             fontWeight = FontWeight.Bold,
@@ -207,14 +330,16 @@ private fun BibleNoteRow(
             fontSize = 13.sp,
             modifier = Modifier.padding(top = 6.dp)
         )
-        Text(
-            text = note.verseText,
-            color = Ink,
-            fontFamily = FontFamily.Serif,
-            fontSize = 20.sp,
-            lineHeight = 30.sp,
-            modifier = Modifier.padding(top = 8.dp)
-        )
+        if (!isStandaloneNote) {
+            Text(
+                text = note.verseText,
+                color = Ink,
+                fontFamily = FontFamily.Serif,
+                fontSize = 20.sp,
+                lineHeight = 30.sp,
+                modifier = Modifier.padding(top = 8.dp)
+            )
+        }
         Text(
             text = note.note.ifBlank { "No note added yet" },
             color = if (note.note.isBlank()) MutedInk else Ink,
@@ -274,6 +399,10 @@ private fun BibleNoteEntity.toVerseEntity(): VerseEntity {
         verse = verse,
         text = verseText
     )
+}
+
+private fun BibleNoteEntity.isStandaloneNote(): Boolean {
+    return verseId < 0
 }
 
 @Composable

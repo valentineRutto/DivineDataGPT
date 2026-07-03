@@ -248,6 +248,26 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
         }
     }
 
+    fun saveBibleNote(
+        note: String
+    ) {
+        viewModelScope.launch {
+            repository.saveBibleNote(
+                BibleNoteEntity(
+                    verseId = -System.currentTimeMillis().mod(Int.MAX_VALUE).toInt(),
+                    translation = "",
+                    bookName = "Personal note",
+                    book = 0,
+                    chapter = 0,
+                    verse = 0,
+                    verseText = "",
+                    note = note.trim(),
+                    highlightColor = "yellow"
+                )
+            )
+        }
+    }
+
     fun updateBibleNote(note: BibleNoteEntity) {
         viewModelScope.launch {
             repository.updateBibleNote(note)
@@ -267,6 +287,5 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
 
 
 }
-
 
 
