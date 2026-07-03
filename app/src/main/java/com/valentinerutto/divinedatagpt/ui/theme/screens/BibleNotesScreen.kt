@@ -21,7 +21,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -42,6 +41,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
@@ -77,8 +77,14 @@ fun BibleNotesRoute(
         onBibleClick = onBibleClick,
         onNotesClick = onNotesClick,
         onSettingsClick = onSettingsClick,
-        onEditNote = { note, newText ->
-            viewModel.updateBibleNote(note.copy(note = newText.trim()))
+        onEditNote = { note, newText, highlightColor ->
+            viewModel.updateBibleNote(
+                note.copy(
+                    note = newText.trim(),
+                    highlightColor = highlightColor,
+                    createdAt = System.currentTimeMillis()
+                )
+            )
         },
         onDeleteNote = { note ->
             viewModel.deleteBibleNote(note.id)
@@ -94,10 +100,28 @@ private fun BibleNotesScreen(
     onBibleClick: () -> Unit,
     onNotesClick: () -> Unit,
     onSettingsClick: () -> Unit,
-    onEditNote: (BibleNoteEntity, String) -> Unit,
+    onEditNote: (BibleNoteEntity, String, String) -> Unit,
     onDeleteNote: (BibleNoteEntity) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    var editingNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
+    val activeEditingNote = editingNote
+
+    if (activeEditingNote != null) {
+        NoteEditorScreen(
+            verse = activeEditingNote.toVerseEntity(),
+            initialNote = activeEditingNote.note,
+            initialHighlightColor = activeEditingNote.highlightColor,
+            onSave = { note, highlightColor ->
+                onEditNote(activeEditingNote, note, highlightColor)
+                editingNote = null
+            },
+            onBack = { editingNote = null },
+            modifier = modifier
+        )
+        return
+    }
+
     Scaffold(
         modifier = modifier.fillMaxSize(),
         containerColor = Page,
@@ -145,7 +169,7 @@ private fun BibleNotesScreen(
                 ) { note ->
                     BibleNoteRow(
                         note = note,
-                        onEditNote = onEditNote,
+                        onEditClick = { editingNote = note },
                         onDeleteNote = onDeleteNote
                     )
                 }
@@ -157,11 +181,9 @@ private fun BibleNotesScreen(
 @Composable
 private fun BibleNoteRow(
     note: BibleNoteEntity,
-    onEditNote: (BibleNoteEntity, String) -> Unit,
+    onEditClick: () -> Unit,
     onDeleteNote: (BibleNoteEntity) -> Unit
 ) {
-    var editingNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
-    var noteDraft by remember { mutableStateOf("") }
     var noteToDelete by remember { mutableStateOf<BibleNoteEntity?>(null) }
 
     Column(
@@ -208,49 +230,13 @@ private fun BibleNoteRow(
                 .padding(top = 14.dp),
             horizontalArrangement = Arrangement.End
         ) {
-            TextButton(onClick = {
-                editingNote = note
-                noteDraft = note.note
-            }) {
+            TextButton(onClick = onEditClick) {
                 Text("Edit", color = Purple)
             }
             TextButton(onClick = { noteToDelete = note }) {
                 Text("Delete", color = Color(0xFFFF8A80))
             }
         }
-    }
-
-    editingNote?.let { noteToEdit ->
-        AlertDialog(
-            onDismissRequest = { editingNote = null },
-            title = { Text("Edit note", color = Ink) },
-            text = {
-                OutlinedTextField(
-                    value = noteDraft,
-                    onValueChange = { noteDraft = it },
-                    label = { Text("Note") },
-                    singleLine = false,
-                    modifier = Modifier.fillMaxWidth(),
-                    textStyle = androidx.compose.ui.text.TextStyle(color = Ink)
-                )
-            },
-            confirmButton = {
-                TextButton(onClick = {
-                    onEditNote(noteToEdit, noteDraft)
-                    editingNote = null
-                }) {
-                    Text("Save", color = Purple)
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = { editingNote = null }) {
-                    Text("Cancel", color = MutedInk)
-                }
-            },
-            containerColor = Panel,
-            titleContentColor = Ink,
-            textContentColor = Ink
-        )
     }
 
     noteToDelete?.let { noteToRemove ->
@@ -276,6 +262,18 @@ private fun BibleNoteRow(
             textContentColor = Ink
         )
     }
+}
+
+private fun BibleNoteEntity.toVerseEntity(): VerseEntity {
+    return VerseEntity(
+        id = verseId,
+        translation = translation,
+        bookName = bookName,
+        book = book,
+        chapter = chapter,
+        verse = verse,
+        text = verseText
+    )
 }
 
 @Composable
