@@ -30,6 +30,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.valentinerutto.divinedatagpt.BibleViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
@@ -148,6 +151,13 @@ private fun BibleNoteRow(note: BibleNoteEntity) {
             fontSize = 16.sp
         )
         Text(
+            text = formatNoteTimestamp(note.createdAt),
+            color = MutedInk,
+            fontFamily = FontFamily.Serif,
+            fontSize = 13.sp,
+            modifier = Modifier.padding(top = 6.dp)
+        )
+        Text(
             text = note.verseText,
             color = Ink,
             fontFamily = FontFamily.Serif,
@@ -260,4 +270,12 @@ private fun BibleNotesBottomNavBar(
 
 private fun String?.toHighlightColor(): Color? {
     return HighlightColors[this]
+}
+
+private fun formatNoteTimestamp(createdAt: Long): String {
+    return if (createdAt <= 0L) {
+        "Just saved"
+    } else {
+        SimpleDateFormat("MMM d, yyyy • h:mm a", Locale.getDefault()).format(Date(createdAt))
+    }
 }
