@@ -4,6 +4,7 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.Update
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
@@ -105,6 +106,12 @@ interface VerseDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun saveBibleNote(note: BibleNoteEntity)
+
+    @Update
+    suspend fun updateBibleNote(note: BibleNoteEntity)
+
+    @Query("DELETE FROM bible_notes WHERE id = :noteId")
+    suspend fun deleteBibleNote(noteId: Long)
 
     @Query(
         """

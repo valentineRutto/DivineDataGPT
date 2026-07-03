@@ -248,6 +248,18 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
         }
     }
 
+    fun updateBibleNote(note: BibleNoteEntity) {
+        viewModelScope.launch {
+            repository.updateBibleNote(note)
+        }
+    }
+
+    fun deleteBibleNote(noteId: Long) {
+        viewModelScope.launch {
+            repository.deleteBibleNote(noteId)
+        }
+    }
+
     private fun shareVerse(verseId: Long) {
         // Implementation for sharing verse
         // This would typically use Android's share intent

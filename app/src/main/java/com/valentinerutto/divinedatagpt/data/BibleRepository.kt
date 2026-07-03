@@ -72,6 +72,14 @@ class BibleRepository(
         dao.saveBibleNote(note)
     }
 
+    suspend fun updateBibleNote(note: BibleNoteEntity) {
+        dao.updateBibleNote(note)
+    }
+
+    suspend fun deleteBibleNote(noteId: Long) {
+        dao.deleteBibleNote(noteId)
+    }
+
     fun observeReadingPlans(): Flow<List<ReadingPlanEntity>> {
         return readingPlanDao.observePlans()
     }
