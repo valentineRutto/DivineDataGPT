@@ -69,6 +69,7 @@ fun HomeScreen(
     onDailyReflection: () -> Unit,
     onReadingPlans: () -> Unit,
     onNavigateToBible: () -> Unit,
+    onChatClick: () -> Unit,
     viewModel: DivineDataViewModel = koinViewModel()
 ) {
     val uiState by viewModel.homeuiState.collectAsState()
@@ -115,6 +116,26 @@ fun HomeScreen(
                         Text(
                             "BIBLE", fontSize = 10.sp,
                             color = if (selectedTab == 1) PurplePrimary else TextMuted
+                        )
+                    },
+                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
+                )
+                NavigationBarItem(
+                    selected = selectedTab == 2,
+                    onClick = {
+                        selectedTab = 2
+                        onChatClick()
+                    },
+                    icon = {
+                        Icon(
+                            Icons.Default.Chat, contentDescription = "Chat",
+                            tint = if (selectedTab == 2) PurplePrimary else TextMuted
+                        )
+                    },
+                    label = {
+                        Text(
+                            "CHAT", fontSize = 10.sp,
+                            color = if (selectedTab == 2) PurplePrimary else TextMuted
                         )
                     },
                     colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)

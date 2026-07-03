@@ -35,6 +35,9 @@ fun NavGraph(navController: NavHostController) {
                 },
                 onNavigateToBible = {
                     navController.navigate(Screen.Bible.route)
+                },
+                onChatClick = {
+                    navController.navigate(Screen.Reflection.createRoute("general"))
                 }
             )
         }
