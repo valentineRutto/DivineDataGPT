@@ -20,8 +20,23 @@ DivineData analyzes how you feel and suggests scripture and reflections to uplif
 ![DivineData app screenshot](docs/images/Screenshot_20260707_150234.png)
 
 ### ✨ Tech Stack
-- **Kotlin (Native Android)**
-- **MVVM + Koin + Room + Retrofit**
+
+- **Platform:** Native Android app written in **Kotlin**
+- **UI:** **Jetpack Compose**, Material 3, Navigation Compose, Compose tooling/previews, and
+  extended Material icons
+- **Architecture:** **MVVM** with `ViewModel`, coroutines, and `StateFlow` for reactive UI state
+- **Dependency Injection:** **Koin** with Android and Compose integration
+- **Local Data:** **Room** with KSP, DAOs, migrations, Bible verse storage, notes/highlights,
+  reflection messages, memory summaries, and reading-plan progress
+- **Networking:** **Retrofit**, **OkHttp**, logging interceptor, and **Gson**
+- **AI Integrations:** Gemini client libraries, Hugging Face chat/reflection API calls, MediaPipe
+  GenAI tasks, ML Kit GenAI prompt support, and Koog agents dependency
+- **Background Work & Notifications:** **WorkManager**, exact alarms where allowed,
+  boot/package-replaced rescheduling, and daily reflection notifications
+- **Images & Preferences:** **Coil Compose**, AndroidX DataStore Preferences, and AndroidX
+  Preference
+- **Build Setup:** Android Gradle Plugin, Kotlin Compose compiler plugin, KSP, Java/Kotlin 21,
+  `compileSdk`/`targetSdk` 36, and `demo`/`full` product flavors
 
 
 ### Architecture
