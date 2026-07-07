@@ -10,15 +10,11 @@ DivineData analyzes how you feel and suggests scripture and reflections to uplif
 ### App Screenshots
 
 <div align="center">
-  <img src="docs/images/Screenshot_20260707_142824.png" alt="DivineData app screenshot" width="280" />
-  <br /><br />
-  <img src="docs/images/Screenshot_20260707_145914.png" alt="DivineData app screenshot" width="280" />
-  <br /><br />
-  <img src="docs/images/Screenshot_20260707_150045.png" alt="DivineData app screenshot" width="280" />
-  <br /><br />
-  <img src="docs/images/Screenshot_20260707_150200.png" alt="DivineData app screenshot" width="280" />
-  <br /><br />
   <img src="docs/images/Screenshot_20260707_150234.png" alt="DivineData app screenshot" width="280" />
+   <img src="docs/images/Screenshot_20260707_145914.png" alt="DivineData app screenshot" width="280" />
+   <img src="docs/images/Screenshot_20260707_150045.png" alt="DivineData app screenshot" width="280" />
+  <img src="docs/images/Screenshot_20260707_142824.png" alt="DivineData app screenshot" width="280" />
+  <img src="docs/images/Screenshot_20260707_150200.png" alt="DivineData app screenshot" width="280" />
 </div>
 
 ### ✨ Tech Stack
@@ -32,7 +28,7 @@ DivineData analyzes how you feel and suggests scripture and reflections to uplif
   reflection messages, memory summaries, and reading-plan progress
 - **Networking:** **Retrofit**, **OkHttp**, logging interceptor, and **Gson**
 - **AI Integrations:** Gemini client libraries, Hugging Face chat/reflection API calls, MediaPipe
-  GenAI tasks, ML Kit GenAI prompt support, and Koog agents dependency
+  GenAI tasks dependency
 - **Background Work & Notifications:** **WorkManager**, exact alarms where allowed,
   boot/package-replaced rescheduling, and daily reflection notifications
 - **Images & Preferences:** **Coil Compose**, AndroidX DataStore Preferences, and AndroidX
