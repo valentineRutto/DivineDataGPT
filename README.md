@@ -10,10 +10,7 @@ DivineData analyzes how you feel and suggests scripture and reflections to uplif
 ### ✨ Tech Stack
 - **Kotlin (Native Android)**
 - **MVVM + Koin + Room + Retrofit**
-- **Ktor Backend Integration**
 
-### 🌐 Backend
-Backend repository: [divinedata-server](https://github.com/valentineRutto/divinedata-server)
 
 ### Architecture 
 
