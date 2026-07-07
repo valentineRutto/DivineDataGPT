@@ -9,15 +9,17 @@ DivineData analyzes how you feel and suggests scripture and reflections to uplif
 
 ### App Screenshots
 
-![DivineData app screenshot](docs/images/Screenshot_20260707_142824.png)
-
-![DivineData app screenshot](docs/images/Screenshot_20260707_145914.png)
-
-![DivineData app screenshot](docs/images/Screenshot_20260707_150045.png)
-
-![DivineData app screenshot](docs/images/Screenshot_20260707_150200.png)
-
-![DivineData app screenshot](docs/images/Screenshot_20260707_150234.png)
+<div align="center">
+  <img src="docs/images/Screenshot_20260707_142824.png" alt="DivineData app screenshot" width="280" />
+  <br /><br />
+  <img src="docs/images/Screenshot_20260707_145914.png" alt="DivineData app screenshot" width="280" />
+  <br /><br />
+  <img src="docs/images/Screenshot_20260707_150045.png" alt="DivineData app screenshot" width="280" />
+  <br /><br />
+  <img src="docs/images/Screenshot_20260707_150200.png" alt="DivineData app screenshot" width="280" />
+  <br /><br />
+  <img src="docs/images/Screenshot_20260707_150234.png" alt="DivineData app screenshot" width="280" />
+</div>
 
 ### ✨ Tech Stack
 
