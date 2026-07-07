@@ -19,7 +19,7 @@ class AiRepository(
     private val memorySummaryDao: MemorySummaryDao
 ) {
     private companion object {
-        const val HF_CHAT_MODEL = "meta-llama/Llama-3.1-8B-Instruct:cerebras"
+        const val HF_CHAT_MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
     }
 
     suspend fun getReflectionForEmotion(apikey: String, emotion: String): Resource<Reflection> {

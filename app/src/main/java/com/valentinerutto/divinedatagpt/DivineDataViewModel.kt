@@ -127,10 +127,14 @@ class DivineDataViewModel(
 
             aiRepository.addMessageToDB(MessageEntity(role = "user", content = userText))
             aiRepository.trimReflectionMessages()
+
+            //  aiRepository.chatReflection(BuildConfig.GEMINI_API_KEY, userText, conversationHistory.toList())
+
             aiRepository.chatReflectionWithMistral(
                 userText,
                 conversationHistory.toList()
-            ).fold(
+            )
+                .fold(
 
                 onFailure = { e ->
                     _reflectionuiState.update { it.copy(error = e.message, isLoading = false) }

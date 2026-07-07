@@ -1,7 +1,7 @@
 package com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels
 
 data class HuggingFaceChatRequest(
-    val model: String,
+    val model: String? = null,
     val messages: List<HuggingFaceChatMessage>,
     val max_tokens: Int = 260,
     val temperature: Double = 0.45
