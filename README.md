@@ -7,9 +7,17 @@ DivineData analyzes how you feel and suggests scripture and reflections to uplif
 
 ```When life feels heavy, DivineData helps me hear Scripture personally, pray honestly, and remember how God has carried me.```
 
-### App Screenshot
+### App Screenshots
 
 ![DivineData app screenshot](docs/images/Screenshot_20260707_142824.png)
+
+![DivineData app screenshot](docs/images/Screenshot_20260707_145914.png)
+
+![DivineData app screenshot](docs/images/Screenshot_20260707_150045.png)
+
+![DivineData app screenshot](docs/images/Screenshot_20260707_150200.png)
+
+![DivineData app screenshot](docs/images/Screenshot_20260707_150234.png)
 
 ### ✨ Tech Stack
 - **Kotlin (Native Android)**
