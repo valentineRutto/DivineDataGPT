@@ -2,14 +2,11 @@ package com.valentinerutto.divinedatagpt.util
 
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
-import androidx.navigation.navDeepLink
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleNotesRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleReaderRoute
-import com.valentinerutto.divinedatagpt.ui.theme.screens.DailyReflectionScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.HomeScreen
-import com.valentinerutto.divinedatagpt.ui.theme.screens.ReadingPlansRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.ReflectionScreen
 
 
@@ -49,19 +46,7 @@ fun NavGraph(navController: NavHostController) {
                 onViewDaily = { navController.navigate(Screen.Daily.route) }
             )
         }
-        composable(
-            route = Screen.Daily.route,
-            deepLinks = listOf(
-                navDeepLink {
-                    uriPattern = "divinedatagpt://daily-reflection"
-                }
-            )
-        ) {
 
-            DailyReflectionScreen(
-                onBack = { navController.popBackStack() }
-            )
-        }
 
         composable(Screen.Bible.route) {
             BibleReaderRoute(
@@ -89,11 +74,7 @@ fun NavGraph(navController: NavHostController) {
                 }
             )
         }
-        composable(Screen.ReadingPlans.route) {
-            ReadingPlansRoute(
-                onBack = { navController.popBackStack() }
-            )
-        }
+
         composable(Screen.BibleNotes.route) {
             BibleNotesRoute(
                 onHomeClick = {

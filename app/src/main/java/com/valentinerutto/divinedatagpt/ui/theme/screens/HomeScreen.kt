@@ -140,25 +140,7 @@ fun HomeScreen(
                     },
                     colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
                 )
-//                NavigationBarItem(
-//                    selected = selectedTab == 2,
-//                    onClick = {
-//                        selectedTab = 2
-//                    },
-//                    icon = {
-//                        Icon(
-//                            Icons.Default.Settings, contentDescription = "Settings",
-//                            tint = if (selectedTab == 2) PurplePrimary else TextMuted
-//                        )
-//                    },
-//                    label = {
-//                        Text(
-//                            "SETTINGS", fontSize = 10.sp,
-//                            color = if (selectedTab == 2) PurplePrimary else TextMuted
-//                        )
-//                    },
-//                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-//                )
+
             }
         }
     ) { padding ->

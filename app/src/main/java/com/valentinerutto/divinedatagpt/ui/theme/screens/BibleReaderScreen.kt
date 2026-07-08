@@ -169,27 +169,7 @@ private fun BibleReaderContent(
     val selectedVerse = uiState.verses.firstOrNull { verse ->
         verse.verse == uiState.selectedVerse
     }
-    val activeNoteEditorVerse = noteEditorVerse
 
-    if (activeNoteEditorVerse != null) {
-        val savedNote = uiState.savedNotes.firstOrNull { note ->
-            note.verseId == activeNoteEditorVerse.id
-        }
-        NoteEditorScreen(
-            verse = activeNoteEditorVerse,
-            initialNote = savedNote?.note.orEmpty(),
-            initialHighlightColor = noteEditorColor,
-            onSave = { note, highlightColor ->
-                noteEditorColor = highlightColor
-                onSaveBibleNote(activeNoteEditorVerse, note, highlightColor)
-                noteEditorVerse = null
-                onClearSelection()
-            },
-            onBack = { noteEditorVerse = null },
-            modifier = modifier
-        )
-        return
-    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
