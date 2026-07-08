@@ -130,7 +130,7 @@ class DivineDataViewModel(
 
             //  aiRepository.chatReflection(BuildConfig.GEMINI_API_KEY, userText, conversationHistory.toList())
 
-            aiRepository.chatReflectionWithMistral(
+            aiRepository.chatReflectionGemma(
                 userText,
                 conversationHistory.toList()
             )
@@ -138,13 +138,13 @@ class DivineDataViewModel(
 
                 onFailure = { e ->
                     _reflectionuiState.update { it.copy(error = e.message, isLoading = false) }
-                }, onSuccess = {
+                }, onSuccess = { response ->
 
-                conversationHistory.add("assistant" to it.first)
+                        conversationHistory.add("assistant" to response)
                     aiRepository.addMessageToDB(
                         MessageEntity(
                             role = "assistant",
-                            content = it.first
+                            content = response
                         )
                     )
 
@@ -153,7 +153,7 @@ class DivineDataViewModel(
                     _reflectionuiState.update { state ->
                         state.copy(
                             messages = state.messages + ChatMessage(
-                                it.first,
+                                response,
                                 isUser = false
                             ), isLoading = false
                         )

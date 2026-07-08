@@ -198,9 +198,6 @@ class AiRepository(
                 ?.generateResponse(prompt)
                 ?: error("Gemma model is not initialized")
 
-            GeminiRequest(
-                contents = listOf(Content(parts = listOf(Part(prompt))))
-            )
 
             Result.success(response)
         } catch (e: Exception) {
