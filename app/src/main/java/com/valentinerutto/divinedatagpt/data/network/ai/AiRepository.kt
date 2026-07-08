@@ -184,7 +184,8 @@ class AiRepository(
             val historyText = conversationHistory.joinToString("\n") { (role, msg) ->
                 "${if (role == "user") "User" else "AI"}: $msg"
             }
-            val prompt = """
+
+            """
                 You are DivineData AI, a compassionate Bible companion.
                 Analyze the user's emotion from their message and respond with biblical comfort.
 
@@ -196,13 +197,30 @@ class AiRepository(
                 End with one gentle reflective question.
             """.trimIndent()
 
+            val prompt2 = """
+    You are a compassionate, deeply empathetic spiritual companion. 
+    
+    Your goal is to analyse the user emotion from their message in  completely natural, conversational tone with biblical comfort.
+          ${if (historyText.isNotBlank()) "Conversation history:\n$historyText\n\n" else ""}
+                User: $userMessage
+    When a user speaks to you:
+    1. Listen carefully, identify their core emotion, and validate their feelings in 1-2 warm sentences. Do NOT use robotic headers like 'Emotion:' or 'Insight:'.
+    2. Offer a gentle, personalized prayer right then and there if they sound distressed or joyful.
+    3. Conclude by naturally asking them how they would like to continue. Present these three specific choices as a conversational question:
+       - If they want a tailored **Bible reading plan** based on this feeling.
+       - If they want a specific **Bible verse and a deeper prayer**.
+       - If they just want to talk it through with a **follow-up question** about their situation.
+
+    Keep your overall response under 4-5 short sentences so the user doesn't feel overwhelmed.
+    """.trimIndent()
+
             val response = huggingFaceApi.generateChatCompletion(
                 HuggingFaceChatRequest(
                     model = HF_CHAT_MODEL,
                     messages = listOf(
                         HuggingFaceChatMessage(
                             role = "user",
-                            content = prompt
+                            content = prompt2
                         )
                     ),
                     max_tokens = 180,
