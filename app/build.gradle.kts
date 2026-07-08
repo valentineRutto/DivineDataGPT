@@ -21,6 +21,9 @@ android {
             excludes += "/META-INF/*"
         }
     }
+    androidResources {
+        noCompress += listOf("task", "tflite", "litertlm")
+    }
     
     defaultConfig {
         applicationId = "com.valentinerutto.divinedatagpt"

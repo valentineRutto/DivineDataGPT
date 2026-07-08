@@ -1,5 +1,8 @@
 package com.valentinerutto.divinedatagpt.data.network.ai
 
+import com.google.mediapipe.tasks.genai.llminference.LlmInference
+import com.valentinerutto.divinedatagpt.MyApplication
+import com.valentinerutto.divinedatagpt.data.BibleRepository.Companion.HF_CHAT_MODEL
 import com.valentinerutto.divinedatagpt.data.local.dao.MemorySummaryDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MessageDao
 import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
@@ -9,8 +12,12 @@ import com.valentinerutto.divinedatagpt.data.network.ai.model.Part
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceChatMessage
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceChatRequest
+import com.valentinerutto.divinedatagpt.util.GemmaModelManager.Companion.modelPath
 import com.valentinerutto.divinedatagpt.util.Resource
+import kotlinx.coroutines.sync.Mutex
+import kotlinx.coroutines.sync.withLock
 import org.json.JSONObject
+import java.io.File
 
 class AiRepository(
     private val aiApi: AiApi,
@@ -18,9 +25,32 @@ class AiRepository(
     private val messageDao: MessageDao,
     private val memorySummaryDao: MemorySummaryDao
 ) {
-    private companion object {
-        const val HF_CHAT_MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
+    private var llmInference: LlmInference? = null
+    private val initMutex = Mutex()
+
+    private suspend fun initializeModel() {
+        initMutex.withLock {
+            if (llmInference != null) return
+
+            val modelFile = File(modelPath)
+
+            require(modelFile.exists()) {
+                "Gemma model not found at $modelPath"
+            }
+
+            require(modelFile.canRead()) {
+                "Gemma model exists but cannot be read at $modelPath"
+            }
+
+            val options = LlmInference.LlmInferenceOptions.builder()
+                .setModelPath(modelPath)
+                .setMaxTopK(40)
+                .build()
+
+            llmInference = LlmInference.createFromOptions(MyApplication.INSTANCE, options)
+        }
     }
+
 
     suspend fun getReflectionForEmotion(apikey: String, emotion: String): Resource<Reflection> {
         return try {
@@ -368,5 +398,9 @@ class AiRepository(
         return text.substring(start, end + 1)
     }
 
+    fun close() {
+        llmInference?.close()
+        llmInference = null
+    }
 
 }
