@@ -25,11 +25,12 @@ import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
     entities = [
         VerseEntity::class,
         Verse::class,
+        VersesFTS::class,
+
         MemorySummaryEntity::class,
         MessageEntity::class,
         BookmarkEntity::class,
         BibleNoteEntity::class,
-        VersesFTS::class,
         ReadingPlanEntity::class,
         ReadingPlanDayEntity::class,
         ReadingPlanCompletionEntity::class

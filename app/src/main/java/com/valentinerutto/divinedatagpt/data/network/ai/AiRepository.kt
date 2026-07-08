@@ -52,7 +52,6 @@ class AiRepository(
         }
     }
 
-
     suspend fun getReflectionForEmotion(apikey: String, emotion: String): Resource<Reflection> {
         return try {
             val prompt = """
@@ -171,16 +170,17 @@ class AiRepository(
     }
 
 
-
-    suspend fun chatReflection(
-        apiKey: String,
+    suspend fun chatReflectionGemma(
         userMessage: String,
         conversationHistory: List<Pair<String, String>>
-    ): Result<Pair<String, String?>> {
+    ): Result<String> {
+
         return try {
+
             val historyText = conversationHistory.joinToString("\n") { (role, msg) ->
                 "${if (role == "user") "User" else "AI"}: $msg"
             }
+
             val prompt = """
                 You are a compassionate AI Bible Companion named DivineData AI.
                 Provide comfort, wisdom, and relevant Bible verses for emotional support.
@@ -191,15 +191,18 @@ class AiRepository(
                 Respond with empathy. Include ONE relevant Bible verse in italics if appropriate.
                 Keep your response warm, personal, and under 100 words. End with a reflective question.
             """.trimIndent()
+            initializeModel()
 
-            val request = GeminiRequest(
+
+            val response = llmInference
+                ?.generateResponse(prompt)
+                ?: error("Gemma model is not initialized")
+
+            GeminiRequest(
                 contents = listOf(Content(parts = listOf(Part(prompt))))
             )
-            val response = aiApi.generateContent(apiKey, request)
-            val text = response.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
-                ?: return Result.failure(Exception("Empty response"))
 
-            Result.success(Pair(text, null))
+            Result.success(response)
         } catch (e: Exception) {
             Result.failure(e)
         }

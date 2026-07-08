@@ -3,11 +3,11 @@ package com.valentinerutto.divinedatagpt.ui.theme.screens
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -41,9 +41,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.valentinerutto.divinedatagpt.BibleViewModel
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
@@ -51,6 +48,9 @@ import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
 import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 import org.koin.androidx.compose.koinViewModel
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 private val Ink = Color(0xFFF4EDF8)
 private val MutedInk = Color(0xFF8C8294)
@@ -116,7 +116,7 @@ private fun BibleNotesScreen(
     var plainEditorNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
     var editorVerse by remember { mutableStateOf<VerseEntity?>(null) }
     var editorNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
-    val activeEditorVerse = editorVerse
+    editorVerse
 
     if (isCreatingNote || plainEditorNote != null) {
         val activePlainNote = plainEditorNote
@@ -140,25 +140,6 @@ private fun BibleNotesScreen(
         return
     }
 
-    if (activeEditorVerse != null) {
-        val activeEditorNote = editorNote
-        NoteEditorScreen(
-            verse = activeEditorVerse,
-            initialNote = activeEditorNote?.note.orEmpty(),
-            initialHighlightColor = activeEditorNote?.highlightColor ?: "yellow",
-            onSave = { note, highlightColor ->
-                onEditNote(activeEditorNote ?: return@NoteEditorScreen, note, highlightColor)
-                editorVerse = null
-                editorNote = null
-            },
-            onBack = {
-                editorVerse = null
-                editorNote = null
-            },
-            modifier = modifier
-        )
-        return
-    }
 
     Scaffold(
         modifier = modifier.fillMaxSize(),
