@@ -1,19 +1,28 @@
 package com.valentinerutto.divinedatagpt.util
 
-import android.content.Context
+import com.valentinerutto.divinedatagpt.MyApplication
 import java.io.File
 
-class GemmaModelManager(
-    private val context: Context
-) {
-    companion object {
-        const val modelPath = "/data/local/tmp/llm/gemma3-1b-it-int4.task"
+object GemmaModelManager {
 
-        const val HF_CHAT_MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
-    }
+    const val modelPath = "/data/local/tmp/llm/gemma3-1b-it-int4.task"
+
+    const val HF_CHAT_MODEL = "meta-llama/Meta-Llama-3-8B-Instruct"
+
 
     fun getModelFile(): File {
-        return File(context.filesDir, "models/gemma.task")
+        return File(MyApplication.INSTANCE.filesDir, "models/gemma.task")
+    }
+
+    fun getDebugModelPath(): String {
+        return "/data/local/tmp/llm/gemma3-1b-it-int4.task"
+    }
+
+    fun getProductionModelPath(): String {
+        return File(
+            MyApplication.INSTANCE.filesDir,
+            "models/gemma3-1b-it-int4.task"
+        ).absolutePath
     }
 
     fun isModelReady(): Boolean {

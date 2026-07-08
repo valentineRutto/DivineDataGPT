@@ -12,7 +12,8 @@ import com.valentinerutto.divinedatagpt.data.network.ai.model.Part
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceChatMessage
 import com.valentinerutto.divinedatagpt.data.network.ai.model.hgfacemodels.HuggingFaceChatRequest
-import com.valentinerutto.divinedatagpt.util.GemmaModelManager.Companion.modelPath
+import com.valentinerutto.divinedatagpt.util.GemmaModelManager.getDebugModelPath
+import com.valentinerutto.divinedatagpt.util.GemmaModelManager.modelPath
 import com.valentinerutto.divinedatagpt.util.Resource
 import kotlinx.coroutines.sync.Mutex
 import kotlinx.coroutines.sync.withLock
@@ -32,7 +33,7 @@ class AiRepository(
         initMutex.withLock {
             if (llmInference != null) return
 
-            val modelFile = File(modelPath)
+            val modelFile = File(getDebugModelPath())
 
             require(modelFile.exists()) {
                 "Gemma model not found at $modelPath"
