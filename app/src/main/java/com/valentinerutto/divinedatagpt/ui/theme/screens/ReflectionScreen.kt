@@ -55,6 +55,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.tv.material3.Border
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.data.network.ai.model.ChatMessage
 import com.valentinerutto.divinedatagpt.ui.theme.AiBubble
@@ -388,4 +389,17 @@ fun TypingIndicator() {
             }
         }
     }
+}
+
+@Composable
+private fun SuggestionChip(text: String) {
+    Text(
+        text,
+        color = TextMuted,
+        fontSize = 12.sp,
+        modifier = Modifier
+            .clip(RoundedCornerShape(20.dp))
+            .border(0.5.dp, Border, RoundedCornerShape(20.dp))
+            .padding(horizontal = 12.dp, vertical = 6.dp)
+    )
 }

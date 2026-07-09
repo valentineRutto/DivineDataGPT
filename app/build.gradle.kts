@@ -137,6 +137,7 @@ dependencies {
     // Navigation Compose
     implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.tv.material)
     ksp(libs.androidx.room.compiler)
 
 
