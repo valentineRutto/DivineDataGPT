@@ -3,6 +3,7 @@ package com.valentinerutto.divinedatagpt.di
 import com.google.gson.Gson
 import com.valentinerutto.divinedatagpt.BibleViewModel
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
+import com.valentinerutto.divinedatagpt.JournalViewModel
 import com.valentinerutto.divinedatagpt.MyApplication
 import com.valentinerutto.divinedatagpt.ReadingPlanViewModel
 import com.valentinerutto.divinedatagpt.data.BibleRepository
@@ -34,6 +35,7 @@ val AppModule = module {
     viewModel { DivineDataViewModel(get(), get()) }
     viewModel { BibleViewModel(get()) }
     viewModel { ReadingPlanViewModel(get()) }
+    viewModel { JournalViewModel(get()) }
     single { DivineDatabase.getDatabase(context = androidContext()) }
     single { BibleDatabaseSeeder(context = androidContext(), dao = get()) }
 
