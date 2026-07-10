@@ -3,6 +3,9 @@ package com.valentinerutto.divinedatagpt.util
 import android.content.Context
 import android.content.Intent
 import com.valentinerutto.divinedatagpt.data.network.ai.model.Reflection
+import java.text.SimpleDateFormat
+import java.util.Date
+import java.util.Locale
 
 fun shareText(context: Context, text: String) {
     val intent = Intent(Intent.ACTION_SEND).apply {
@@ -76,3 +79,5 @@ fun sanitizeFtsQuery(input: String): String {
         .filter { it.isNotBlank() }
         .joinToString(" ") { "$it*" }
 }
+fun formatTimestamp(millis: Long): String =
+    SimpleDateFormat("MMM d, h:mm a", Locale.getDefault()).format(Date(millis))

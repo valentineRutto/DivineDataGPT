@@ -46,6 +46,7 @@ val AppModule = module {
         single { get<DivineDatabase>().messageDao() }
         single { get<DivineDatabase>().verseDao() }
         single { get<DivineDatabase>().readingPlanDao() }
+        single { get<DivineDatabase>().journalDao() }
     }
 
     fun Scope.database() = get<DivineDatabase>()

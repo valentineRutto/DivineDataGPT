@@ -31,6 +31,7 @@ genai = "0.1.2"
 navigationCompose = "2.9.7"
 roomKtx = "2.8.4"
 tvMaterial = "1.1.0"
+foundationLayout = "1.11.4"
 
 [libraries]
 androidx-datastore-preferences = { module = "androidx.datastore:datastore-preferences", version.ref = "datastorePreferences" }
@@ -82,6 +83,7 @@ google-genai = { group = "com.google.ai.client.generativeai:generativeai", name 
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
 tasks-genai = { module = "com.google.mediapipe:tasks-genai", version.ref = "tasksGenai" }
 androidx-tv-material = { group = "androidx.tv", name = "tv-material", version.ref = "tvMaterial" }
+androidx-compose-foundation-layout = { group = "androidx.compose.foundation", name = "foundation-layout", version.ref = "foundationLayout" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

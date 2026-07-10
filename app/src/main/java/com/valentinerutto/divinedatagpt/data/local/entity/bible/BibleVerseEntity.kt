@@ -3,6 +3,7 @@ package com.valentinerutto.divinedatagpt.data.local.entity.bible
 import androidx.room.Entity
 import androidx.room.Index
 import androidx.room.PrimaryKey
+import com.valentinerutto.divinedatagpt.data.models.VerseCitation
 
 
 @Entity(tableName = "bookmarks")
@@ -75,3 +76,7 @@ fun VerseJson.toEntity(translation: String): VerseEntity {
         text = text
     )
 }
+
+fun VerseEntity.toCitation() = VerseCitation(
+    id = id, book = book, chapter = chapter, verse = verse, text = text, translation = translation
+)

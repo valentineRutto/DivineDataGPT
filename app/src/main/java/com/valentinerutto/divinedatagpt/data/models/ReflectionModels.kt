@@ -9,8 +9,8 @@ package com.valentinerutto.divinedatagpt.data.models
  * can never be a hallucinated or garbled quote.
  */
 data class VerseCitation(
-    val id: String,          // e.g. "PHP.4.6"
-    val book: String,
+    val id: Int,          // e.g. "PHP.4.6"
+    val book: Int,
     val chapter: Int,
     val verse: Int,
     val text: String,

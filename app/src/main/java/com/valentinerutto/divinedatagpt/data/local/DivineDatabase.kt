@@ -6,10 +6,12 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.migration.Migration
 import androidx.sqlite.db.SupportSQLiteDatabase
+import com.valentinerutto.divinedatagpt.data.local.dao.JournalDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MemorySummaryDao
 import com.valentinerutto.divinedatagpt.data.local.dao.MessageDao
 import com.valentinerutto.divinedatagpt.data.local.dao.ReadingPlanDao
 import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
+import com.valentinerutto.divinedatagpt.data.local.entity.JournalEntryEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.MemorySummaryEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.MessageEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.VersesFTS
@@ -26,14 +28,14 @@ import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
         VerseEntity::class,
         Verse::class,
         VersesFTS::class,
-
         MemorySummaryEntity::class,
         MessageEntity::class,
         BookmarkEntity::class,
         BibleNoteEntity::class,
         ReadingPlanEntity::class,
         ReadingPlanDayEntity::class,
-        ReadingPlanCompletionEntity::class
+        ReadingPlanCompletionEntity::class,
+        JournalEntryEntity::class
     ],
     exportSchema = false
 )
@@ -42,6 +44,8 @@ abstract class DivineDatabase : RoomDatabase() {
     abstract fun messageDao(): MessageDao
     abstract fun verseDao(): VerseDao
     abstract fun readingPlanDao(): ReadingPlanDao
+    abstract fun journalDao(): JournalDao
+
 
     companion object Companion {
         @Volatile

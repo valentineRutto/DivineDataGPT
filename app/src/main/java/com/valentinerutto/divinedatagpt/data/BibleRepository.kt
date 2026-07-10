@@ -1,24 +1,32 @@
 package com.valentinerutto.divinedatagpt.data
 
+import com.valentinerutto.divinedatagpt.data.local.dao.JournalDao
 import com.valentinerutto.divinedatagpt.data.local.dao.ReadingPlanDao
 import com.valentinerutto.divinedatagpt.data.local.dao.VerseDao
+import com.valentinerutto.divinedatagpt.data.local.entity.JournalEntryEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.BookmarkEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanCompletionEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanDayEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.ReadingPlanEntity
 import com.valentinerutto.divinedatagpt.data.local.entity.bible.VerseEntity
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.toCitation
 import com.valentinerutto.divinedatagpt.data.models.BibleBook
+import com.valentinerutto.divinedatagpt.data.models.JournalEntry
+import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
+import com.valentinerutto.divinedatagpt.data.models.VerseCitation
 import com.valentinerutto.divinedatagpt.data.network.ai.AiApi
 import com.valentinerutto.divinedatagpt.data.network.bible.ApiService
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.map
 
 
 class BibleRepository(
     private val esvApi: ApiService,
     private val huggingFaceApi: AiApi,
     private val dao: VerseDao,
-    private val readingPlanDao: ReadingPlanDao
+    private val readingPlanDao: ReadingPlanDao,
+    private val journalDao: JournalDao
 
     ) {
 
@@ -165,4 +173,36 @@ class BibleRepository(
         }
     }
 
+
+    fun observeEntries(): Flow<List<JournalEntry>> =
+        journalDao.observeEntries().map { list -> list.map { it.toDomain() } }
+
+    suspend fun save(entry: JournalEntry) {
+        journalDao.insert(entry.toEntity())
+    }
+
+    suspend fun searchVersesForAttach(query: String): Flow<List<VerseCitation>> =
+        dao.searchVerses("shortname", query).map { list -> list.map { it.toCitation() } }
 }
+
+private fun JournalEntryEntity.toDomain() = JournalEntry(
+    id = id,
+    verse = null,
+    note = note,
+    sourceType = JournalSourceType.valueOf(sourceType.uppercase()),
+    sessionId = sessionId,
+    messageId = messageId,
+    createdAt = createdAt
+)
+
+private fun JournalEntry.toEntity() = JournalEntryEntity(
+    id = id,
+    verseId = verse?.id as String?,
+    note = note,
+    sourceType = sourceType.name.lowercase(),
+    sessionId = sessionId,
+    messageId = messageId,
+    createdAt = createdAt
+)
+
+
