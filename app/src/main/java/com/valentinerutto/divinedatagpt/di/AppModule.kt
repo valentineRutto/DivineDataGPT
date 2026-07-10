@@ -28,7 +28,7 @@ val AppModule = module {
     single { Gson() }
 
 
-    single { BibleRepository(get(), get(named("HGAI_API")), get(), get()) }
+    single { BibleRepository(get(), get(named("HGAI_API")), get(), get(), get()) }
 
     single { AiRepository(get(), get(named("HGAI_API")), get(), get()) }
 

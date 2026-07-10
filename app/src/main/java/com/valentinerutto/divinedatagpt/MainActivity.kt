@@ -1,19 +1,19 @@
 package com.valentinerutto.divinedatagpt
 
 import android.Manifest
-import android.os.Bundle
-import android.os.Build
 import android.content.pm.PackageManager
-import androidx.activity.result.contract.ActivityResultContracts
+import android.os.Build
+import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.core.content.ContextCompat
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
 import com.valentinerutto.divinedatagpt.util.NavGraph
@@ -32,7 +32,6 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DivineDataGPTTheme {
-
                 val navController = rememberNavController()
                 NavGraph(navController = navController)
             }

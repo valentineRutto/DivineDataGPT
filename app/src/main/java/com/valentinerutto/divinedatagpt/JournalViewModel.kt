@@ -16,7 +16,6 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
     private val _uiState = MutableStateFlow(JournalUiState())
     val uiState: StateFlow<JournalUiState> = _uiState.asStateFlow()
 
-    private val entries = bibleRepository.observeEntries()
 
     init {
 

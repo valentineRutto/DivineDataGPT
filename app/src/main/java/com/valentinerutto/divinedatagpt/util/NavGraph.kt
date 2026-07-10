@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleNotesRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleReaderRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.HomeScreen
+import com.valentinerutto.divinedatagpt.ui.theme.screens.JournalScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.ReflectionScreen
 
 
@@ -65,12 +66,7 @@ fun NavGraph(navController: NavHostController) {
                     navController.navigate(Screen.BibleNotes.route)
                 },
                 onSettingsClick = {
-                    navController.navigate(Screen.Home.route) {
-                        popUpTo(Screen.Home.route) {
-                            inclusive = false
-                        }
-                        launchSingleTop = true
-                    }
+                    navController.navigate(Screen.Journal.route)
                 }
             )
         }
@@ -87,14 +83,20 @@ fun NavGraph(navController: NavHostController) {
                     navController.navigate(Screen.BibleNotes.route)
                 },
                 onSettingsClick = {
-                    navController.navigate(Screen.Home.route) {
-                        popUpTo(Screen.Home.route) {
-                            inclusive = false
-                        }
-                        launchSingleTop = true
-                    }
+                    navController.navigate(Screen.Journal.route)
+
                 }
             )
+        }
+        composable(Screen.Journal.route) {
+            JournalScreen(
+                onHomeClick = {
+                    navController.navigate(Screen.Home.route)
+                },
+                onBibleClick = {
+                    navController.navigate(Screen.Bible.route)
+
+                })
         }
     }
 }

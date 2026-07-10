@@ -40,17 +40,19 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.lifecycle.viewmodel.compose.viewModel
 import com.valentinerutto.divinedatagpt.JournalViewModel
 import com.valentinerutto.divinedatagpt.data.models.JournalEntry
 import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
 import com.valentinerutto.divinedatagpt.data.models.VerseCitation
 import com.valentinerutto.divinedatagpt.util.formatTimestamp
+import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JournalScreen(
-    viewModel: JournalViewModel = viewModel(),
+    onHomeClick: () -> Unit,
+    onBibleClick: () -> Unit,
+    viewModel: JournalViewModel = koinViewModel(),
     onReopenSession: (sessionId: String, messageId: String) -> Unit = { _, _ -> }
 ) {
 
