@@ -62,7 +62,7 @@ fun JournalScreen(
         topBar = {
             TopAppBar(title = {
                 Text(
-                    "Journal", fontSize = 20.sp,
+                    "My Journal", fontSize = 20.sp,
                     fontWeight = FontWeight.Medium
                 )
             })
@@ -73,7 +73,6 @@ fun JournalScreen(
             }
         }
     ) { padding ->
-        Text(text = "Journal Screen", modifier = Modifier.padding(padding))
         if (state.entries.isEmpty()) {
             JournalEmptyState(modifier = Modifier.padding(padding))
         } else {
@@ -223,7 +222,6 @@ private fun JournalComposerSheet(
                 TextButton(onClick = onCancel, enabled = !isSaving) {
                     Text("Cancel")
                 }
-                Text("New entry", fontSize = 14.sp, fontWeight = FontWeight.Medium)
                 TextButton(
                     onClick = onSave,
                     enabled = !isSaving && (note.isNotBlank() || verse != null)
