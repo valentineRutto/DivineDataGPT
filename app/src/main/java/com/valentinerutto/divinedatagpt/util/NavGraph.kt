@@ -28,17 +28,12 @@ fun NavGraph(navController: NavHostController) {
                 onDailyReflection = {
                     navController.navigate(Screen.Daily.route)
                 },
-                onJournal = {
-                    navController.navigate(Screen.Journal.route)
-                },
-                onNavigateToBible = {
-                    navController.navigate(Screen.Bible.route)
-                },
                 onChatClick = {
                     navController.navigate(Screen.Reflection.createRoute("general"))
                 }
             )
         }
+
         composable(Screen.Reflection.route) { backStack ->
             val emotion = backStack.arguments?.getString("emotion") ?: "general"
             ReflectionScreen(
@@ -48,55 +43,19 @@ fun NavGraph(navController: NavHostController) {
             )
         }
 
-
         composable(Screen.Bible.route) {
-            BibleReaderRoute(
-                onHomeClick = {
-                    navController.navigate(Screen.Home.route) {
-//                        popUpTo(Screen.Home.route) {
-//                            inclusive = false
-//                        }
-//                        launchSingleTop = true
-                    }
-                },
-                onBibleClick = {
-                    navController.navigate(Screen.Bible.route)
-                },
-                onNotesClick = {
-                    navController.navigate(Screen.BibleNotes.route)
-                },
-                onSettingsClick = {
-                    navController.navigate(Screen.Journal.route)
-                }
-            )
+            BibleReaderRoute()
+            // onHomeClick / onBibleClick / onNotesClick / onSettingsClick removed —
+            // BibleReaderRoute no longer draws its own nav bar.
         }
 
         composable(Screen.BibleNotes.route) {
-            BibleNotesRoute(
-                onHomeClick = {
-                    navController.navigate(Screen.Home.route)
-                },
-                onBibleClick = {
-                    navController.navigate(Screen.Bible.route)
-                },
-                onNotesClick = {
-                    navController.navigate(Screen.BibleNotes.route)
-                },
-                onSettingsClick = {
-                    navController.navigate(Screen.Journal.route)
-
-                }
-            )
+            BibleNotesRoute()
         }
+
         composable(Screen.Journal.route) {
-            JournalScreen(
-                onHomeClick = {
-                    navController.navigate(Screen.Home.route)
-                },
-                onBibleClick = {
-                    navController.navigate(Screen.Bible.route)
-
-                })
+            JournalScreen()
         }
+
     }
 }

@@ -100,18 +100,10 @@ private val HighlightColors = listOf(
 
 @Composable
 fun BibleReaderRoute(
-    onHomeClick: () -> Unit,
-    onSettingsClick: () -> Unit = {},
-    onBibleClick: () -> Unit,
-    onNotesClick: () -> Unit,
     modifier: Modifier = Modifier,
     viewModel: BibleViewModel = koinViewModel()
 ) {
     BibleReaderScreen(
-        onHomeClick = onHomeClick,
-        onSettingsClick = onSettingsClick,
-        onBibleClick = onBibleClick,
-        onNotesClick = onNotesClick,
         modifier = modifier,
         viewModel = viewModel
     )

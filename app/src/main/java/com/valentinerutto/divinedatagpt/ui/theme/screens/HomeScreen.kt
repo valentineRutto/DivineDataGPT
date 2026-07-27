@@ -60,8 +60,6 @@ fun HomeScreen(
     onEmotionSelected: (String) -> Unit,
     onStartReflection: () -> Unit,
     onDailyReflection: () -> Unit,
-    onJournal: () -> Unit,
-    onNavigateToBible: () -> Unit,
     onChatClick: () -> Unit,
     viewModel: DivineDataViewModel = koinViewModel()
 ) {
