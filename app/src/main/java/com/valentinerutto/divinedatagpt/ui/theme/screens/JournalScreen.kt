@@ -108,7 +108,7 @@ fun JournalScreen(
                 onNoteChanged = viewModel::onComposerNoteChanged,
                 onAttachVerse = viewModel::onAttachVerseTapped,
                 onRemoveVerse = viewModel::onVerseRemoved,
-                onDismiss = viewModel::onComposerDismissed,
+                onCancel = viewModel::onComposerCancelled,
                 onSave = viewModel::onSaveComposerEntry
             )
         }
@@ -204,10 +204,14 @@ private fun JournalComposerSheet(
     onNoteChanged: (String) -> Unit,
     onAttachVerse: () -> Unit,
     onRemoveVerse: () -> Unit,
-    onDismiss: () -> Unit,
+    onCancel: () -> Unit,
     onSave: () -> Unit
 ) {
-    ModalBottomSheet(onDismissRequest = onDismiss) {
+    ModalBottomSheet(
+        onDismissRequest = {
+            if (!isSaving) onCancel()
+        }
+    ) {
         Column(Modifier
             .padding(horizontal = 18.dp)
             .fillMaxWidth()) {
@@ -216,11 +220,8 @@ private fun JournalComposerSheet(
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = onDismiss) {
-                    Icon(
-                        Icons.Filled.Close,
-                        contentDescription = "Close"
-                    )
+                TextButton(onClick = onCancel, enabled = !isSaving) {
+                    Text("Cancel")
                 }
                 Text("New entry", fontSize = 14.sp, fontWeight = FontWeight.Medium)
                 TextButton(
@@ -298,4 +299,3 @@ private fun JournalComposerSheet(
         }
     }
 }
-

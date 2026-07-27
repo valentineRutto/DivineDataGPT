@@ -28,8 +28,8 @@ fun NavGraph(navController: NavHostController) {
                 onDailyReflection = {
                     navController.navigate(Screen.Daily.route)
                 },
-                onReadingPlans = {
-                    navController.navigate(Screen.ReadingPlans.route)
+                onJournal = {
+                    navController.navigate(Screen.Journal.route)
                 },
                 onNavigateToBible = {
                     navController.navigate(Screen.Bible.route)

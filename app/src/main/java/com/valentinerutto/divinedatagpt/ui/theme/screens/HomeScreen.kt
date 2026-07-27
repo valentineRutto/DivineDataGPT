@@ -5,7 +5,6 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -14,16 +13,13 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Chat
-import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material3.CircularProgressIndicator
@@ -50,7 +46,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
-import com.valentinerutto.divinedatagpt.data.network.ai.model.defaultEmotions
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
@@ -67,7 +62,7 @@ fun HomeScreen(
     onEmotionSelected: (String) -> Unit,
     onStartReflection: () -> Unit,
     onDailyReflection: () -> Unit,
-    onReadingPlans: () -> Unit,
+    onJournal: () -> Unit,
     onNavigateToBible: () -> Unit,
     onChatClick: () -> Unit,
     viewModel: DivineDataViewModel = koinViewModel()
@@ -150,58 +145,7 @@ fun HomeScreen(
                 .padding(padding)
                 .verticalScroll(rememberScrollState())
         ) {
-            // ── Top Bar ──────────────────────────────────────────
-//            Row(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .padding(horizontal = 20.dp, vertical = 16.dp),
-//                horizontalArrangement = Arrangement.SpaceBetween,
-//                verticalAlignment = Alignment.CenterVertically
-//            ) {
-//                Row(verticalAlignment = Alignment.CenterVertically) {
-//                    Box(
-//                        modifier = Modifier
-//                            .size(48.dp)
-//                            .clip(CircleShape)
-//                            .background(PurplePrimary),
-//                        contentAlignment = Alignment.Center
-//                    ) {
-//                        Text(
-//                            "S",
-//                            color = TextPrimary,
-//                            fontWeight = FontWeight.Bold,
-//                            fontSize = 20.sp
-//                        )
-//                    }
-//                    Spacer(Modifier.width(12.dp))
-//                    Column {
-//                        Text(
-//                            "GOOD MORNING",
-//                            color = TextMuted,
-//                            fontSize = 11.sp,
-//                            letterSpacing = 1.sp
-//                        )
-//                        Text(
-//                            "God's Child",
-//                            color = TextPrimary,
-//                            fontSize = 18.sp,
-//                            fontWeight = FontWeight.Bold
-//                        )
-//                    }
-//                }
-//                Box(
-//                    modifier = Modifier
-//                        .size(44.dp)
-//                        .clip(CircleShape)
-//                        .background(CardBackground),
-//                    contentAlignment = Alignment.Center
-//                ) {
-//                    Icon(
-//                        Icons.Default.Notifications, contentDescription = "Notifications",
-//                        tint = TextPrimary, modifier = Modifier.size(22.dp)
-//                    )
-//                }
-            //  }
+
 
             Spacer(Modifier.height(8.dp))
 
@@ -222,28 +166,8 @@ fun HomeScreen(
                 )
             }
 
-            Spacer(Modifier.height(20.dp))
-
-            // ── Emotion Grid ─────────────────────────────────────
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                contentPadding = PaddingValues(horizontal = 20.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier.height(220.dp)
-            ) {
-                items(defaultEmotions) { emotion ->
-                    EmotionChip(
-                        emoji = emotion.emoji,
-                        label = emotion.label,
-                        onClick = { onEmotionSelected(emotion.label) }
-                    )
-                }
-            }
-
             Spacer(Modifier.height(24.dp))
 
-            // ── Deep Reflection CTA ──────────────────────────────
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -297,7 +221,7 @@ fun HomeScreen(
                     .padding(horizontal = 20.dp)
                     .clip(RoundedCornerShape(18.dp))
                     .background(CardBackground)
-                    .clickable { onReadingPlans() }
+                    .clickable { onJournal() }
                     .padding(20.dp)
             ) {
                 Row(
@@ -307,14 +231,14 @@ fun HomeScreen(
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Reading Plans",
+                            text = "Divine Journal",
                             color = TextPrimary,
                             fontSize = 19.sp,
                             fontWeight = FontWeight.Bold
                         )
                         Spacer(Modifier.height(4.dp))
                         Text(
-                            "Track chapters, streaks, goals, and missed days",
+                            "Document your spiritual Journey.",
                             color = TextSecondary,
                             fontSize = 13.sp
                         )
@@ -327,7 +251,7 @@ fun HomeScreen(
                         contentAlignment = Alignment.Center
                     ) {
                         Icon(
-                            Icons.Default.DateRange,
+                            Icons.Default.Edit,
                             contentDescription = null,
                             tint = PurpleAccent,
                             modifier = Modifier.size(24.dp)

@@ -39,8 +39,17 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
         }
     }
 
-    fun onComposerDismissed() {
-        _uiState.update { it.copy(isComposerOpen = false) }
+    fun onComposerCancelled() {
+        _uiState.update {
+            it.copy(
+                isComposerOpen = false,
+                composerNote = "",
+                composerVerse = null,
+                isVersePickerOpen = false,
+                isSaving = false,
+                composerError = null
+            )
+        }
     }
 
     fun onComposerNoteChanged(text: String) {
