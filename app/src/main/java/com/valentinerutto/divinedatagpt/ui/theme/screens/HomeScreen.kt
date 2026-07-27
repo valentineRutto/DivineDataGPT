@@ -19,14 +19,8 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Chat
 import androidx.compose.material.icons.filled.Edit
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.MenuBook
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
-import androidx.compose.material3.NavigationBarItemDefaults
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -46,12 +40,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
-import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
-import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
 import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
-import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
 import com.valentinerutto.divinedatagpt.ui.theme.TextPrimary
 import org.koin.androidx.compose.koinViewModel
 
@@ -61,84 +52,16 @@ fun HomeScreen(
     onStartReflection: () -> Unit,
     onDailyReflection: () -> Unit,
     onChatClick: () -> Unit,
+    onJournal: () -> Unit,
     viewModel: DivineDataViewModel = koinViewModel()
 ) {
     val uiState by viewModel.homeuiState.collectAsState()
-    var selectedTab by remember { mutableIntStateOf(0) }
 
-    Scaffold(
-        containerColor = DarkBackground,
-        bottomBar = {
-            NavigationBar(
-                containerColor = DarkSurface,
-                contentColor = TextSecondary,
-                tonalElevation = 0.dp
-            ) {
-                NavigationBarItem(
-                    selected = selectedTab == 0,
-                    onClick = { selectedTab = 0 },
-                    icon = {
-                        Icon(
-                            Icons.Default.Home, contentDescription = "Home",
-                            tint = if (selectedTab == 0) PurplePrimary else TextMuted
-                        )
-                    },
-                    label = {
-                        Text(
-                            "HOME", fontSize = 10.sp,
-                            color = if (selectedTab == 0) PurplePrimary else TextMuted
-                        )
-                    },
-                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-                )
-                NavigationBarItem(
-                    selected = selectedTab == 1,
-                    onClick = {
-                        selectedTab = 1
-                        onNavigateToBible()
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Default.MenuBook, contentDescription = "Bible",
-                            tint = if (selectedTab == 1) PurplePrimary else TextMuted
-                        )
-                    },
-                    label = {
-                        Text(
-                            "BIBLE", fontSize = 10.sp,
-                            color = if (selectedTab == 1) PurplePrimary else TextMuted
-                        )
-                    },
-                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-                )
-                NavigationBarItem(
-                    selected = selectedTab == 2,
-                    onClick = {
-                        selectedTab = 2
-                        onChatClick()
-                    },
-                    icon = {
-                        Icon(
-                            Icons.Default.Chat, contentDescription = "Chat",
-                            tint = if (selectedTab == 2) PurplePrimary else TextMuted
-                        )
-                    },
-                    label = {
-                        Text(
-                            "REFLECT", fontSize = 10.sp,
-                            color = if (selectedTab == 2) PurplePrimary else TextMuted
-                        )
-                    },
-                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-                )
 
-            }
-        }
-    ) { padding ->
-        Column(
+    Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(padding)
+                .padding(horizontal = 20.dp)
                 .verticalScroll(rememberScrollState())
         ) {
 
@@ -307,7 +230,7 @@ fun HomeScreen(
             Spacer(Modifier.height(24.dp))
         }
     }
-}
+
 
 @Composable
 fun VerseCard(verse: String, reference: String, onClick: () -> Unit) {

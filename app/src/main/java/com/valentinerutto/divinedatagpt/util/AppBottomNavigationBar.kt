@@ -10,6 +10,7 @@ import androidx.navigation.NavDestination.Companion.hierarchy
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.currentBackStackEntryAsState
+import com.valentinerutto.divinedatagpt.util.AppDestination.Companion.bottomNavItems
 
 /**
  * There is exactly one instance of this composable in the whole app —
@@ -22,7 +23,7 @@ fun AppBottomNavigationBar(navController: NavHostController) {
     val currentRoute = backStackEntry?.destination
 
     NavigationBar {
-        AppDestination.bottomNavItems.forEach { destination ->
+        bottomNavItems.forEach { destination ->
             val isSelected = currentRoute?.hierarchy?.any { it.route == destination.route } == true
 
             NavigationBarItem(
@@ -44,6 +45,36 @@ fun AppBottomNavigationBar(navController: NavHostController) {
                     )
                 },
                 label = { Text(destination.label) }
+            )
+        }
+    }
+}
+
+@Composable
+fun AppBottomBar(navController: NavHostController) {
+    val backStackEntry by navController.currentBackStackEntryAsState()
+    val currentDestination = backStackEntry?.destination
+
+    NavigationBar {
+        bottomNavItems.forEach { item ->
+            val isSelected = currentDestination?.hierarchy?.any { it.route == item.route } == true
+
+            NavigationBarItem(
+                selected = isSelected,
+                onClick = {
+                    navController.navigate(item.route) {
+                        popUpTo(navController.graph.findStartDestination().id) { saveState = true }
+                        launchSingleTop = true
+                        restoreState = true
+                    }
+                },
+                icon = {
+                    Icon(
+                        imageVector = if (isSelected) item.selectedIcon else item.unselectedIcon,
+                        contentDescription = item.label
+                    )
+                },
+                label = { Text(item.label) }
             )
         }
     }

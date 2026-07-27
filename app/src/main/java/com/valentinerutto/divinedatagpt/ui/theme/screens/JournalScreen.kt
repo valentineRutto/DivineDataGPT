@@ -50,8 +50,6 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JournalScreen(
-    onHomeClick: () -> Unit,
-    onBibleClick: () -> Unit,
     viewModel: JournalViewModel = koinViewModel(),
     onReopenSession: (sessionId: String, messageId: String) -> Unit = { _, _ -> }
 ) {

@@ -1,6 +1,7 @@
 package com.valentinerutto.divinedatagpt.util
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -12,10 +13,13 @@ import com.valentinerutto.divinedatagpt.ui.theme.screens.ReflectionScreen
 
 
 @Composable
-fun NavGraph(navController: NavHostController) {
+fun NavGraph(
+    navController: NavHostController, modifier: Modifier
+) {
     NavHost(
         navController = navController,
-        startDestination = Screen.Home.route
+        startDestination = Screen.Home.route, modifier = modifier
+
     ) {
         composable(Screen.Home.route) {
             HomeScreen(
@@ -27,6 +31,9 @@ fun NavGraph(navController: NavHostController) {
                 },
                 onDailyReflection = {
                     navController.navigate(Screen.Daily.route)
+                },
+                onJournal = {
+                    navController.navigate(Screen.Journal.route)
                 },
                 onChatClick = {
                     navController.navigate(Screen.Reflection.createRoute("general"))

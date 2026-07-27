@@ -9,13 +9,13 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.viewModels
-import androidx.compose.material3.Text
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
+import com.valentinerutto.divinedatagpt.util.AppBottomBar
 import com.valentinerutto.divinedatagpt.util.NavGraph
 
 class MainActivity : ComponentActivity() {
@@ -32,8 +32,8 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             DivineDataGPTTheme {
-                val navController = rememberNavController()
-                NavGraph(navController = navController)
+                rememberNavController()
+                MainScreen()
             }
         }
     }
@@ -57,17 +57,17 @@ class MainActivity : ComponentActivity() {
 
 
 @Composable
-fun Greeting(name: String, modifier: Modifier = Modifier) {
-    Text(
-        text = "Hello $name!",
-        modifier = modifier
-    )
-}
+fun MainScreen() {
+    val navController = rememberNavController()
 
-@Preview(showBackground = true)
-@Composable
-fun GreetingPreview() {
-    DivineDataGPTTheme {
-        Greeting("Android")
+    Scaffold(
+        bottomBar = { AppBottomBar(navController) }
+    ) { innerPadding ->
+        NavGraph(
+            navController = navController,
+            modifier = androidx.compose.ui.Modifier.padding(innerPadding)
+        )
     }
 }
+
+
