@@ -22,5 +22,7 @@ data class JournalUiState(
     val isComposerOpen: Boolean = false,
     val composerNote: String = "",
     val composerVerse: VerseCitation? = null,
-    val isVersePickerOpen: Boolean = false
+    val isVersePickerOpen: Boolean = false,
+    val isSaving: Boolean = false,
+    val composerError: String? = null
 )

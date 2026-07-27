@@ -175,7 +175,15 @@ class BibleRepository(
 
 
     fun observeEntries(): Flow<List<JournalEntry>> =
-        journalDao.observeEntries().map { list -> list.map { it.toDomain() } }
+        journalDao.observeEntries().map { entries ->
+            entries.map { entry ->
+                entry.toDomain(
+                    entry.verseId
+                        ?.toIntOrNull()
+                        ?.let { dao.getVerseById(it)?.toCitation() }
+                )
+            }
+        }
 
     suspend fun save(entry: JournalEntry) {
         journalDao.insert(entry.toEntity())
@@ -185,9 +193,9 @@ class BibleRepository(
         dao.searchVerses("shortname", query).map { list -> list.map { it.toCitation() } }
 }
 
-private fun JournalEntryEntity.toDomain() = JournalEntry(
+private fun JournalEntryEntity.toDomain(verse: VerseCitation?) = JournalEntry(
     id = id,
-    verse = null,
+    verse = verse,
     note = note,
     sourceType = JournalSourceType.valueOf(sourceType.uppercase()),
     sessionId = sessionId,
@@ -197,12 +205,10 @@ private fun JournalEntryEntity.toDomain() = JournalEntry(
 
 private fun JournalEntry.toEntity() = JournalEntryEntity(
     id = id,
-    verseId = verse?.id as String?,
+    verseId = verse?.id?.toString(),
     note = note,
     sourceType = sourceType.name.lowercase(),
     sessionId = sessionId,
     messageId = messageId,
     createdAt = createdAt
 )
-
-

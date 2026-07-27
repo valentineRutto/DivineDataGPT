@@ -103,6 +103,8 @@ fun JournalScreen(
             JournalComposerSheet(
                 note = state.composerNote,
                 verse = state.composerVerse,
+                isSaving = state.isSaving,
+                error = state.composerError,
                 onNoteChanged = viewModel::onComposerNoteChanged,
                 onAttachVerse = viewModel::onAttachVerseTapped,
                 onRemoveVerse = viewModel::onVerseRemoved,
@@ -197,6 +199,8 @@ private fun JournalEmptyState(modifier: Modifier = Modifier) {
 private fun JournalComposerSheet(
     note: String,
     verse: VerseCitation?,
+    isSaving: Boolean,
+    error: String?,
     onNoteChanged: (String) -> Unit,
     onAttachVerse: () -> Unit,
     onRemoveVerse: () -> Unit,
@@ -219,7 +223,12 @@ private fun JournalComposerSheet(
                     )
                 }
                 Text("New entry", fontSize = 14.sp, fontWeight = FontWeight.Medium)
-                TextButton(onClick = onSave) { Text("Save") }
+                TextButton(
+                    onClick = onSave,
+                    enabled = !isSaving && (note.isNotBlank() || verse != null)
+                ) {
+                    Text(if (isSaving) "Saving…" else "Save")
+                }
             }
 
             Spacer(Modifier.height(8.dp))
@@ -277,9 +286,16 @@ private fun JournalComposerSheet(
                     .fillMaxWidth()
                     .height(140.dp)
             )
+            error?.let {
+                Spacer(Modifier.height(8.dp))
+                Text(
+                    text = it,
+                    color = MaterialTheme.colorScheme.error,
+                    fontSize = 12.sp
+                )
+            }
             Spacer(Modifier.height(16.dp))
         }
     }
 }
-
 

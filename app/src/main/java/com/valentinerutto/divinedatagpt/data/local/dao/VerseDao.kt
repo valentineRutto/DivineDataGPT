@@ -64,6 +64,9 @@ interface VerseDao {
         chapter: Int
     ): Flow<List<VerseEntity>>
 
+    @Query("SELECT * FROM verses WHERE id = :id LIMIT 1")
+    suspend fun getVerseById(id: Int): VerseEntity?
+
     @Query(
         """
     SELECT verses.*

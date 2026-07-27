@@ -3,6 +3,8 @@ package com.valentinerutto.divinedatagpt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
+import com.valentinerutto.divinedatagpt.data.models.JournalEntry
+import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
 import com.valentinerutto.divinedatagpt.data.models.JournalUiState
 import com.valentinerutto.divinedatagpt.data.models.VerseCitation
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -10,6 +12,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
+import java.util.UUID
 
 class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel() {
 
@@ -26,7 +29,14 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
         }
     }
     fun onNewEntryTapped() {
-        _uiState.update { it.copy(isComposerOpen = true, composerNote = "", composerVerse = null) }
+        _uiState.update {
+            it.copy(
+                isComposerOpen = true,
+                composerNote = "",
+                composerVerse = null,
+                composerError = null
+            )
+        }
     }
 
     fun onComposerDismissed() {
@@ -34,7 +44,7 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
     }
 
     fun onComposerNoteChanged(text: String) {
-        _uiState.update { it.copy(composerNote = text) }
+        _uiState.update { it.copy(composerNote = text, composerError = null) }
     }
 
     fun onAttachVerseTapped() {
@@ -42,7 +52,9 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
     }
 
     fun onVersePicked(verse: VerseCitation) {
-        _uiState.update { it.copy(composerVerse = verse, isVersePickerOpen = false) }
+        _uiState.update {
+            it.copy(composerVerse = verse, isVersePickerOpen = false, composerError = null)
+        }
     }
 
     fun onVerseRemoved() {
@@ -50,7 +62,46 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
     }
 
     fun onSaveComposerEntry() {
+        val draft = _uiState.value
+        val note = draft.composerNote.trim().ifEmpty { null }
 
+        if (note == null && draft.composerVerse == null) {
+            _uiState.update { it.copy(composerError = "Add a note or attach a verse.") }
+            return
+        }
+
+        viewModelScope.launch {
+            _uiState.update { it.copy(isSaving = true, composerError = null) }
+
+            runCatching {
+                bibleRepository.save(
+                    JournalEntry(
+                        id = UUID.randomUUID().toString(),
+                        verse = draft.composerVerse,
+                        note = note,
+                        sourceType = JournalSourceType.MANUAL,
+                        createdAt = System.currentTimeMillis()
+                    )
+                )
+            }.onSuccess {
+                _uiState.update {
+                    it.copy(
+                        isComposerOpen = false,
+                        composerNote = "",
+                        composerVerse = null,
+                        isSaving = false,
+                        composerError = null
+                    )
+                }
+            }.onFailure {
+                _uiState.update {
+                    it.copy(
+                        isSaving = false,
+                        composerError = "Couldn't save this entry. Please try again."
+                    )
+                }
+            }
+        }
     }
 
 }
