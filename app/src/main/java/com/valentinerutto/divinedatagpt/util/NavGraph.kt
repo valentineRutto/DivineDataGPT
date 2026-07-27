@@ -23,9 +23,6 @@ fun NavGraph(
     ) {
         composable(Screen.Home.route) {
             HomeScreen(
-                onEmotionSelected = { emotion ->
-                    navController.navigate(Screen.Reflection.createRoute(emotion))
-                },
                 onStartReflection = {
                     navController.navigate(Screen.Reflection.createRoute("general"))
                 },
@@ -52,8 +49,6 @@ fun NavGraph(
 
         composable(Screen.Bible.route) {
             BibleReaderRoute()
-            // onHomeClick / onBibleClick / onNotesClick / onSettingsClick removed —
-            // BibleReaderRoute no longer draws its own nav bar.
         }
 
         composable(Screen.BibleNotes.route) {
