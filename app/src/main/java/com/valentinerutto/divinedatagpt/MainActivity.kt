@@ -15,7 +15,7 @@ import androidx.compose.runtime.Composable
 import androidx.core.content.ContextCompat
 import androidx.navigation.compose.rememberNavController
 import com.valentinerutto.divinedatagpt.ui.theme.DivineDataGPTTheme
-import com.valentinerutto.divinedatagpt.util.AppBottomBar
+import com.valentinerutto.divinedatagpt.util.AppBottomNavigationBar
 import com.valentinerutto.divinedatagpt.util.NavGraph
 
 class MainActivity : ComponentActivity() {
@@ -61,7 +61,7 @@ fun MainScreen() {
     val navController = rememberNavController()
 
     Scaffold(
-        bottomBar = { AppBottomBar(navController) }
+        bottomBar = { AppBottomNavigationBar(navController) }
     ) { innerPadding ->
         NavGraph(
             navController = navController,

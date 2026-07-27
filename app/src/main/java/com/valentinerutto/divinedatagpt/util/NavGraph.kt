@@ -24,7 +24,7 @@ fun NavGraph(
         composable(Screen.Home.route) {
             HomeScreen(
                 onStartReflection = {
-                    navController.navigate(Screen.Reflection.createRoute("general"))
+                    navController.navigate(Screen.Reflection.route)
                 },
                 onDailyReflection = {
                     navController.navigate(Screen.Daily.route)
@@ -33,7 +33,7 @@ fun NavGraph(
                     navController.navigate(Screen.Journal.route)
                 },
                 onChatClick = {
-                    navController.navigate(Screen.Reflection.createRoute("general"))
+                    navController.navigate(Screen.Reflection.route)
                 }
             )
         }

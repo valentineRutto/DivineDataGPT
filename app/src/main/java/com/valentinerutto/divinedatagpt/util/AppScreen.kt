@@ -9,9 +9,7 @@ enum class AppScreen {
 }
 sealed class Screen(val route: String) {
 
-    object Reflection : Screen("reflection/{emotion}") {
-        fun createRoute(emotion: String) = "reflection/$emotion"
-    }
+    object Reflection : Screen("reflect")
     object Home : Screen("home")
 
     object Bible : Screen("bible")
