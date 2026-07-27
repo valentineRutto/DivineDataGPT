@@ -255,27 +255,6 @@ private fun BibleReaderContent(
                     colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
                 )
 
-//                NavigationBarItem(
-//                    selected = selectedTab == 3,
-//                    onClick = {
-//                        selectedTab = 3
-//                        onSettingsClick()
-//
-//                    },
-//                    icon = {
-//                        Icon(
-//                            Icons.Default.Settings, contentDescription = "Settings",
-//                            tint = if (selectedTab == 3) PurplePrimary else TextMuted
-//                        )
-//                    },
-//                    label = {
-//                        Text(
-//                            "SETTINGS", fontSize = 10.sp,
-//                            color = if (selectedTab == 3) PurplePrimary else TextMuted
-//                        )
-//                    },
-//                    colors = NavigationBarItemDefaults.colors(indicatorColor = Color.Transparent)
-//                )
             }
         }
 

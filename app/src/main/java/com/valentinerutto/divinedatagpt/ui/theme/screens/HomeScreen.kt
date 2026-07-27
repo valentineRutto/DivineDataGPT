@@ -127,7 +127,7 @@ fun HomeScreen(
                     },
                     label = {
                         Text(
-                            "CHAT", fontSize = 10.sp,
+                            "REFLECT", fontSize = 10.sp,
                             color = if (selectedTab == 2) PurplePrimary else TextMuted
                         )
                     },
