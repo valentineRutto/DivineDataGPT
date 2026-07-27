@@ -12,7 +12,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -49,7 +48,6 @@ import com.valentinerutto.divinedatagpt.DivineDataViewModel
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkSurface
-import com.valentinerutto.divinedatagpt.ui.theme.EmotionCard
 import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextSecondary
@@ -152,7 +150,7 @@ fun HomeScreen(
             // ── Hero Text ────────────────────────────────────────
             Column(modifier = Modifier.padding(horizontal = 20.dp)) {
                 Text(
-                    text = "How are you feeling\ntoday?",
+                    text = "Welcome.",
                     color = TextPrimary,
                     fontSize = 30.sp,
                     fontWeight = FontWeight.Bold,
@@ -160,7 +158,7 @@ fun HomeScreen(
                 )
                 Spacer(Modifier.height(6.dp))
                 Text(
-                    text = "Select an emotion to find scripture tailored for you.",
+                    text = "May your time here bring you peace and clarity.",
                     color = TextSecondary,
                     fontSize = 14.sp
                 )
@@ -309,24 +307,6 @@ fun HomeScreen(
             }
 
             Spacer(Modifier.height(24.dp))
-        }
-    }
-}
-
-@Composable
-fun EmotionChip(emoji: String, label: String, onClick: () -> Unit) {
-    Box(
-        modifier = Modifier
-            .fillMaxWidth()
-            .clip(RoundedCornerShape(16.dp))
-            .background(EmotionCard)
-            .clickable { onClick() }
-            .padding(horizontal = 16.dp, vertical = 14.dp)
-    ) {
-        Row(verticalAlignment = Alignment.CenterVertically) {
-            Text(emoji, fontSize = 20.sp)
-            Spacer(Modifier.width(10.dp))
-            Text(label, color = TextPrimary, fontSize = 15.sp, fontWeight = FontWeight.Medium)
         }
     }
 }

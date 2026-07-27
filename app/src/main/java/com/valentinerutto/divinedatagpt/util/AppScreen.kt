@@ -13,9 +13,9 @@ sealed class Screen(val route: String) {
         fun createRoute(emotion: String) = "reflection/$emotion"
     }
     object Home : Screen("home")
+
     object Bible : Screen("bible")
     object BibleNotes : Screen("bible_notes")
-    object ReadingPlans : Screen("reading_plans")
     object Journal : Screen("journal")
     object Daily : Screen("daily")
 
