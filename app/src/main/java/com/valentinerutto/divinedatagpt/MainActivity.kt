@@ -31,7 +31,7 @@ class MainActivity : ComponentActivity() {
         requestNotificationPermissionIfNeeded()
         enableEdgeToEdge()
         setContent {
-            DivineDataGPTTheme {
+            DivineDataGPTTheme(darkTheme = true) {
                 rememberNavController()
                 MainScreen()
             }
