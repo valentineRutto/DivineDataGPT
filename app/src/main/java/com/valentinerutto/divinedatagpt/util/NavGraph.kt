@@ -8,7 +8,7 @@ import androidx.navigation.compose.composable
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleNotesRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleReaderRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.HomeScreen
-import com.valentinerutto.divinedatagpt.ui.theme.screens.JournalScreen
+import com.valentinerutto.divinedatagpt.ui.theme.screens.JournalRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.ReflectionScreen
 
 
@@ -56,7 +56,7 @@ fun NavGraph(
         }
 
         composable(Screen.Journal.route) {
-            JournalScreen()
+            JournalRoute()
         }
 
     }

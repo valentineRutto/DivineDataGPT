@@ -35,6 +35,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -45,16 +46,35 @@ import com.valentinerutto.divinedatagpt.data.local.entity.JournalEntryEntity
 import com.valentinerutto.divinedatagpt.data.models.JournalEntry
 import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
 import com.valentinerutto.divinedatagpt.data.models.VerseCitation
+import com.valentinerutto.divinedatagpt.ui.theme.PurpleButton
 import com.valentinerutto.divinedatagpt.util.formatTimestamp
 import org.koin.androidx.compose.koinViewModel
+
+@OptIn(ExperimentalMaterial3Api::class)
+@Composable
+fun JournalRoute(
+    modifier: Modifier = Modifier,
+    viewModel: JournalViewModel = koinViewModel()
+) {
+
+    JournalScreen(
+
+        onDeleteJournal = {
+
+        },
+        onEditJournal = { note, newText, highlightColor ->
+
+
+        })
+}
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun JournalScreen(
     viewModel: JournalViewModel = koinViewModel(),
     onReopenSession: (sessionId: String, messageId: String) -> Unit = { _, _ -> },
-    onEditNote: (JournalEntryEntity, String, String) -> Unit,
-    onDeleteNote: (JournalEntryEntity) -> Unit,
+    onEditJournal: (JournalEntryEntity, String, String) -> Unit,
+    onDeleteJournal: (JournalEntryEntity) -> Unit,
 ) {
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -125,17 +145,35 @@ private fun JournalEntryCard(entry: JournalEntry, onClick: () -> Unit) {
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier.fillMaxWidth()
     ) {
+
         Column(Modifier.padding(12.dp)) {
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
                 verticalAlignment = Alignment.CenterVertically
             ) {
+
                 Text(
                     formatTimestamp(entry.createdAt),
                     fontSize = 10.sp,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 14.dp),
+                    horizontalArrangement = Arrangement.End
+                ) {
+                    TextButton(onClick = {}) {
+                        Text("Edit", color = PurpleButton)
+                    }
+
+                    TextButton(onClick = { }) {
+                        Text("Delete", color = Color(0xFFFF8A80))
+                    }
+                }
+
                 if (entry.sourceType == JournalSourceType.REFLECTION_CHAT) {
                     Surface(
                         shape = RoundedCornerShape(20.dp),
@@ -149,6 +187,7 @@ private fun JournalEntryCard(entry: JournalEntry, onClick: () -> Unit) {
                         )
                     }
                 }
+
             }
 
             entry.verse?.let { verse ->
