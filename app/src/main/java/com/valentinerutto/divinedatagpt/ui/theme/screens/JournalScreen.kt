@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.valentinerutto.divinedatagpt.JournalViewModel
+import com.valentinerutto.divinedatagpt.data.local.entity.JournalEntryEntity
 import com.valentinerutto.divinedatagpt.data.models.JournalEntry
 import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
 import com.valentinerutto.divinedatagpt.data.models.VerseCitation
@@ -51,7 +52,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun JournalScreen(
     viewModel: JournalViewModel = koinViewModel(),
-    onReopenSession: (sessionId: String, messageId: String) -> Unit = { _, _ -> }
+    onReopenSession: (sessionId: String, messageId: String) -> Unit = { _, _ -> },
+    onEditNote: (JournalEntryEntity, String, String) -> Unit,
+    onDeleteNote: (JournalEntryEntity) -> Unit,
 ) {
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
