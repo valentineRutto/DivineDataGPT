@@ -75,7 +75,7 @@ fun JournalScreen(
     viewModel: JournalViewModel = koinViewModel(),
     onReopenSession: (sessionId: String, messageId: String) -> Unit = { _, _ -> },
     onEditJournal: (JournalEntryEntity, String, String) -> Unit,
-    onDeleteJournal: (JournalEntryEntity) -> Unit,
+    onDeleteJournal: (JournalEntry) -> Unit,
 ) {
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -107,7 +107,10 @@ fun JournalScreen(
             ) {
                 items(state.entries) { entry ->
 
-                    JournalEntryCard(entry = entry, onClick = {
+                    JournalEntryCard(
+                        entry = entry,
+                        onDelete = { onDeleteJournal(entry) },
+                        onClick = {
                         if (entry.sourceType == JournalSourceType.REFLECTION_CHAT && entry.sessionId != null && entry.messageId != null
                         ) {
                             onReopenSession(entry.sessionId, entry.messageId)
@@ -139,7 +142,7 @@ fun JournalScreen(
 }
 
 @Composable
-private fun JournalEntryCard(entry: JournalEntry, onClick: () -> Unit) {
+private fun JournalEntryCard(entry: JournalEntry, onDelete: () -> Unit, onClick: () -> Unit) {
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(14.dp),
@@ -170,7 +173,7 @@ private fun JournalEntryCard(entry: JournalEntry, onClick: () -> Unit) {
                         Text("Edit", color = PurpleButton)
                     }
 
-                    TextButton(onClick = { }) {
+                    TextButton(onClick = { onDelete() }) {
                         Text("Delete", color = Color(0xFFFF8A80))
                     }
                 }
