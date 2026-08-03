@@ -60,10 +60,11 @@ fun JournalRoute(
     JournalScreen(
 
         onDeleteJournal = {
-
+            viewModel.deleteJournal(it.id)
         },
-        onEditJournal = { note, newText, highlightColor ->
 
+        onEditJournal = { note, newText, highlightColor ->
+            viewModel.updateJournal(note, newText, highlightColor)
 
         })
 }

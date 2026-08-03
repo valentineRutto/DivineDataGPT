@@ -87,6 +87,9 @@ class BibleRepository(
     suspend fun deleteBibleNote(noteId: Long) {
         dao.deleteBibleNote(noteId)
     }
+    suspend fun deleteJournal(noteId: String) {
+        journalDao.delete(noteId)
+    }
 
     fun observeReadingPlans(): Flow<List<ReadingPlanEntity>> {
         return readingPlanDao.observePlans()
@@ -187,6 +190,14 @@ class BibleRepository(
 
     suspend fun save(entry: JournalEntry) {
         journalDao.insert(entry.toEntity())
+    }
+
+    suspend fun update(entry: JournalEntry) {
+        journalDao.insert(entry.toEntity())
+    }
+
+    suspend fun deleteEntry(entryId: String) {
+        journalDao.delete(entryId)
     }
 
     suspend fun searchVersesForAttach(query: String): Flow<List<VerseCitation>> =
