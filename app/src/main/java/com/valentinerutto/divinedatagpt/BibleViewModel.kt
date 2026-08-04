@@ -274,6 +274,7 @@ class BibleViewModel(private val repository: BibleRepository) : ViewModel() {
         }
     }
 
+
     fun deleteBibleNote(noteId: Long) {
         viewModelScope.launch {
             repository.deleteBibleNote(noteId)

@@ -3,7 +3,6 @@ package com.valentinerutto.divinedatagpt
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.valentinerutto.divinedatagpt.data.BibleRepository
-import com.valentinerutto.divinedatagpt.data.local.entity.JournalEntryEntity
 import com.valentinerutto.divinedatagpt.data.models.JournalEntry
 import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
 import com.valentinerutto.divinedatagpt.data.models.JournalUiState
@@ -67,8 +66,15 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
         }
     }
 
-    fun updateJournal(note: JournalEntryEntity, newText: String, highlightColor: String) {
+    fun updateJournal(note: JournalEntry) {
+
+        viewModelScope.launch {
+            bibleRepository.update(note)
+        }
+
+
     }
+
 
     fun deleteJournal(noteId: String) {
         viewModelScope.launch {

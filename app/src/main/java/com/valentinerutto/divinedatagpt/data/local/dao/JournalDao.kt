@@ -13,7 +13,8 @@ interface JournalDao {
     fun observeEntries(): Flow<List<JournalEntryEntity>>
 
     @Upsert
-    suspend fun insert(entry: JournalEntryEntity)
+    suspend fun upsert(entry: JournalEntryEntity)
+
 
     @Query("DELETE FROM journal_entries WHERE id = :id")
     suspend fun delete(id: String)

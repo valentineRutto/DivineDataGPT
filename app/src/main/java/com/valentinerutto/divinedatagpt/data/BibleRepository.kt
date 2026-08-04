@@ -189,17 +189,16 @@ class BibleRepository(
         }
 
     suspend fun save(entry: JournalEntry) {
-        journalDao.insert(entry.toEntity())
+        journalDao.upsert(entry.toEntity())
     }
 
     suspend fun update(entry: JournalEntry) {
-        journalDao.insert(entry.toEntity())
+        journalDao.upsert(entry.toEntity())
     }
 
     suspend fun deleteEntry(entryId: String) {
         journalDao.delete(entryId)
     }
-
     suspend fun searchVersesForAttach(query: String): Flow<List<VerseCitation>> =
         dao.searchVerses("shortname", query).map { list -> list.map { it.toCitation() } }
 }

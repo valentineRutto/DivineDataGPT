@@ -42,7 +42,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.valentinerutto.divinedatagpt.JournalViewModel
-import com.valentinerutto.divinedatagpt.data.local.entity.JournalEntryEntity
 import com.valentinerutto.divinedatagpt.data.models.JournalEntry
 import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
 import com.valentinerutto.divinedatagpt.data.models.VerseCitation
@@ -63,8 +62,13 @@ fun JournalRoute(
             viewModel.deleteJournal(it.id)
         },
 
-        onEditJournal = { note, newText, highlightColor ->
-            viewModel.updateJournal(note, newText, highlightColor)
+        onEditJournal = { note, newText ->
+            viewModel.updateJournal(
+                note.copy(
+                    note = newText.trim(),
+                    createdAt = System.currentTimeMillis()
+                )
+            )
 
         })
 }
@@ -74,7 +78,7 @@ fun JournalRoute(
 fun JournalScreen(
     viewModel: JournalViewModel = koinViewModel(),
     onReopenSession: (sessionId: String, messageId: String) -> Unit = { _, _ -> },
-    onEditJournal: (JournalEntryEntity, String, String) -> Unit,
+    onEditJournal: (JournalEntry, String) -> Unit,
     onDeleteJournal: (JournalEntry) -> Unit,
 ) {
 
@@ -111,14 +115,23 @@ fun JournalScreen(
                 items(state.entries) { entry ->
 
                     JournalEntryCard(
+
                         entry = entry,
+
                         onDelete = { onDeleteJournal(entry) },
+
+                        onEditJournal = { entry, newText ->
+                            onEditJournal(entry, newText)
+                        },
+
                         onClick = {
                         if (entry.sourceType == JournalSourceType.REFLECTION_CHAT && entry.sessionId != null && entry.messageId != null
                         ) {
                             onReopenSession(entry.sessionId, entry.messageId)
                         }
-                    })
+                        }
+
+                    )
                 }
 
             }
@@ -145,7 +158,12 @@ fun JournalScreen(
 }
 
 @Composable
-private fun JournalEntryCard(entry: JournalEntry, onDelete: () -> Unit, onClick: () -> Unit) {
+private fun JournalEntryCard(
+    entry: JournalEntry,
+    onDelete: () -> Unit,
+    onEditJournal: (JournalEntry, String) -> Unit,
+    onClick: () -> Unit
+) {
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(14.dp),
@@ -172,7 +190,7 @@ private fun JournalEntryCard(entry: JournalEntry, onDelete: () -> Unit, onClick:
                         .padding(top = 14.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = {}) {
+                    TextButton(onClick = { onEditJournal(entry, "") }) {
                         Text("Edit", color = PurpleButton)
                     }
 
