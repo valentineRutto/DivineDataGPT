@@ -28,7 +28,8 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
             }
         }
     }
-    fun onNewEntryTapped() {
+
+    fun onNewEntryTapped(note: String? = null) {
         _uiState.update {
             it.copy(
                 isComposerOpen = true,

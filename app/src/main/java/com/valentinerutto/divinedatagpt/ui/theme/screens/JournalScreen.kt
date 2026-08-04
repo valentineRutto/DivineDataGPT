@@ -45,11 +45,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.valentinerutto.divinedatagpt.JournalViewModel
-import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.models.JournalEntry
 import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
 import com.valentinerutto.divinedatagpt.data.models.VerseCitation
-import com.valentinerutto.divinedatagpt.ui.theme.PurpleButton
 import com.valentinerutto.divinedatagpt.ui.theme.PurpleLight
 import com.valentinerutto.divinedatagpt.util.formatTimestamp
 import org.koin.androidx.compose.koinViewModel
@@ -88,6 +86,8 @@ fun JournalScreen(
 ) {
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
+    var editingEntry by remember { mutableStateOf<JournalEntry?>(null) }
+    var editingNote by remember { mutableStateOf("") }
 
     Scaffold(
 
@@ -125,8 +125,9 @@ fun JournalScreen(
 
                         onDelete = { onDeleteJournal(entry) },
 
-                        onEditJournal = { entry, newText ->
-                            onEditJournal(entry, newText)
+                        onOpenEditor = { entryToEdit ->
+                            editingEntry = entryToEdit
+                            editingNote = entryToEdit.note ?: ""
                         },
 
                         onClick = {
@@ -158,6 +159,29 @@ fun JournalScreen(
             )
         }
 
+        if (editingEntry != null) {
+            JournalComposerSheet(
+                note = editingNote,
+                verse = editingEntry?.verse,
+                isSaving = false,
+                error = null,
+                onNoteChanged = { editingNote = it },
+                onAttachVerse = { },
+                onRemoveVerse = { },
+                onCancel = {
+                    editingEntry = null
+                    editingNote = ""
+                },
+                onSave = {
+                    editingEntry?.let { entry ->
+                        onEditJournal(entry, editingNote)
+                        editingEntry = null
+                        editingNote = ""
+                    }
+                }
+            )
+        }
+
 
     }
 }
@@ -166,11 +190,9 @@ fun JournalScreen(
 private fun JournalEntryCard(
     entry: JournalEntry,
     onDelete: () -> Unit,
-    onEditJournal: (JournalEntry, String) -> Unit,
+    onOpenEditor: (JournalEntry) -> Unit,
     onClick: () -> Unit
 ) {
-    var editorNote by remember { mutableStateOf<JournalEntry?>(null) }
-
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(14.dp),
@@ -197,7 +219,9 @@ private fun JournalEntryCard(
                         .padding(top = 14.dp),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = { onEditJournal(entry, "") }) {
+                    TextButton(onClick = {
+                        onOpenEditor(entry)
+                    }) {
                         Text("Edit", color = PurpleLight)
                     }
 
