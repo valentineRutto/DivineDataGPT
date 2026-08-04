@@ -89,31 +89,46 @@ private fun BibleNotesScreen(
     modifier: Modifier = Modifier
 ) {
     var isCreatingNote by remember { mutableStateOf(false) }
+
     var plainEditorNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
+
     var editorVerse by remember { mutableStateOf<VerseEntity?>(null) }
+
     var editorNote by remember { mutableStateOf<BibleNoteEntity?>(null) }
+
     editorVerse
 
     if (isCreatingNote || plainEditorNote != null) {
+
         val activePlainNote = plainEditorNote
+
         PlainNoteEditorScreen(
+
             initialNote = activePlainNote?.note.orEmpty(),
+
             onSave = { note ->
+
                 if (activePlainNote == null) {
                     onCreateNote(note)
                 } else {
                     onEditNote(activePlainNote, note, activePlainNote.highlightColor)
                 }
+
                 isCreatingNote = false
                 plainEditorNote = null
+
             },
             onBack = {
-                isCreatingNote = false
+
+            isCreatingNote = false
                 plainEditorNote = null
+
             },
             modifier = modifier
         )
+
         return
+
     }
 
 

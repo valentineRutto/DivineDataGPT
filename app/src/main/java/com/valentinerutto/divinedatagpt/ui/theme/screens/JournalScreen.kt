@@ -81,6 +81,7 @@ fun JournalScreen(
     val state by viewModel.uiState.collectAsStateWithLifecycle()
 
     Scaffold(
+
         topBar = {
             TopAppBar(title = {
                 Text(
@@ -94,8 +95,10 @@ fun JournalScreen(
                 Icon(Icons.Filled.Add, contentDescription = "New Entry")
             }
         }
+
     ) { padding ->
-        if (state.entries.isEmpty()) {
+
+    if (state.entries.isEmpty()) {
             JournalEmptyState(modifier = Modifier.padding(padding))
         } else {
             LazyColumn(
@@ -257,7 +260,8 @@ private fun JournalComposerSheet(
     ) {
         Column(Modifier
             .padding(horizontal = 18.dp)
-            .fillMaxWidth()) {
+            .fillMaxSize()
+        ) {
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -286,7 +290,8 @@ private fun JournalComposerSheet(
                         modifier = Modifier.padding(10.dp),
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Column(Modifier.weight(1f)) {
+
+                    Column(Modifier.weight(1f)) {
                             Text(
                                 "\"${verse.text}\"",
                                 fontSize = 12.sp,
@@ -309,6 +314,7 @@ private fun JournalComposerSheet(
                     }
                 }
             } else {
+
                 OutlinedButton(onClick = onAttachVerse, modifier = Modifier.fillMaxWidth()) {
                     Icon(
                         Icons.Filled.Book,
@@ -326,7 +332,7 @@ private fun JournalComposerSheet(
                 onValueChange = onNoteChanged,
                 placeholder = { Text("What's on your heart today?") },
                 modifier = Modifier
-                    .fillMaxWidth()
+                    .fillMaxSize()
                     .height(140.dp)
             )
             error?.let {
