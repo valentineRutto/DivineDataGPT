@@ -33,6 +33,9 @@ import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -42,10 +45,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.valentinerutto.divinedatagpt.JournalViewModel
+import com.valentinerutto.divinedatagpt.data.local.entity.bible.BibleNoteEntity
 import com.valentinerutto.divinedatagpt.data.models.JournalEntry
 import com.valentinerutto.divinedatagpt.data.models.JournalSourceType
 import com.valentinerutto.divinedatagpt.data.models.VerseCitation
 import com.valentinerutto.divinedatagpt.ui.theme.PurpleButton
+import com.valentinerutto.divinedatagpt.ui.theme.PurpleLight
 import com.valentinerutto.divinedatagpt.util.formatTimestamp
 import org.koin.androidx.compose.koinViewModel
 
@@ -164,6 +169,8 @@ private fun JournalEntryCard(
     onEditJournal: (JournalEntry, String) -> Unit,
     onClick: () -> Unit
 ) {
+    var editorNote by remember { mutableStateOf<JournalEntry?>(null) }
+
     Surface(
         onClick = onClick,
         shape = RoundedCornerShape(14.dp),
@@ -191,7 +198,7 @@ private fun JournalEntryCard(
                     horizontalArrangement = Arrangement.End
                 ) {
                     TextButton(onClick = { onEditJournal(entry, "") }) {
-                        Text("Edit", color = PurpleButton)
+                        Text("Edit", color = PurpleLight)
                     }
 
                     TextButton(onClick = { onDelete() }) {
