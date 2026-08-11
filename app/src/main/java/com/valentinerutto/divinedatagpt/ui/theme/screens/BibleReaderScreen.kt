@@ -314,6 +314,7 @@ private fun ReaderTopBar(
                 }
         ) {
             Box {
+
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Text(
                         text = title.ifBlank { "Bible" },
@@ -343,6 +344,8 @@ private fun ReaderTopBar(
                         pickerExpanded = false
                     }
                 )
+
+
             }
         }
 

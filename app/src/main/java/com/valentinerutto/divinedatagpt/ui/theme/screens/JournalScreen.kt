@@ -40,7 +40,6 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -73,7 +72,8 @@ fun JournalRoute(
                 )
             )
 
-        })
+        }
+    )
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -94,8 +94,7 @@ fun JournalScreen(
         topBar = {
             TopAppBar(title = {
                 Text(
-                    "My Journal", fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium
+                    "My Journal", style = MaterialTheme.typography.headlineMedium,
                 )
             })
         },
@@ -131,10 +130,15 @@ fun JournalScreen(
                         },
 
                         onClick = {
-                        if (entry.sourceType == JournalSourceType.REFLECTION_CHAT && entry.sessionId != null && entry.messageId != null
+
+
+                            if (entry.sourceType == JournalSourceType.REFLECTION_CHAT && entry.sessionId != null && entry.messageId != null
                         ) {
                             onReopenSession(entry.sessionId, entry.messageId)
+                            } else {
                         }
+
+
                         }
 
                     )
@@ -210,7 +214,7 @@ private fun JournalEntryCard(
 
                 Text(
                     formatTimestamp(entry.createdAt),
-                    fontSize = 10.sp,
+                    style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Row(
@@ -222,11 +226,19 @@ private fun JournalEntryCard(
                     TextButton(onClick = {
                         onOpenEditor(entry)
                     }) {
-                        Text("Edit", color = PurpleLight)
+                        Text(
+                            "Edit",
+                            color = PurpleLight,
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     }
 
                     TextButton(onClick = { onDelete() }) {
-                        Text("Delete", color = Color(0xFFFF8A80))
+                        Text(
+                            "Delete",
+                            color = Color(0xFFFF8A80),
+                            style = MaterialTheme.typography.bodyLarge
+                        )
                     }
                 }
 
@@ -237,7 +249,7 @@ private fun JournalEntryCard(
                     ) {
                         Text(
                             "from a reflection",
-                            fontSize = 9.5.sp,
+                            style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                             modifier = Modifier.padding(horizontal = 8.dp, vertical = 2.dp)
                         )
@@ -250,21 +262,21 @@ private fun JournalEntryCard(
                 Spacer(Modifier.height(6.dp))
                 Text(
                     "\"${verse.text}\"",
-                    fontSize = 12.5.sp,
+                    style = MaterialTheme.typography.bodyMedium,
                     fontStyle = FontStyle.Italic,
                     lineHeight = 18.sp
                 )
                 Spacer(Modifier.height(2.dp))
                 Text(
                     verse.reference,
-                    fontSize = 10.sp,
+                    style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
             }
 
             entry.note?.let { note ->
                 Spacer(Modifier.height(6.dp))
-                Text(note, fontSize = 12.sp, lineHeight = 18.sp)
+                Text(note, style = MaterialTheme.typography.bodyLarge, lineHeight = 18.sp)
             }
         }
     }
@@ -283,7 +295,7 @@ private fun JournalEmptyState(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(12.dp))
         Text(
             "Save your first verse from today's reading",
-            fontSize = 14.sp,
+            style = MaterialTheme.typography.bodyMedium,
             textAlign = androidx.compose.ui.text.style.TextAlign.Center
         )
     }
@@ -317,13 +329,16 @@ private fun JournalComposerSheet(
                 verticalAlignment = Alignment.CenterVertically
             ) {
                 TextButton(onClick = onCancel, enabled = !isSaving) {
-                    Text("Cancel")
+                    Text("Cancel", style = MaterialTheme.typography.bodyMedium)
                 }
                 TextButton(
                     onClick = onSave,
                     enabled = !isSaving && (note.isNotBlank() || verse != null)
                 ) {
-                    Text(if (isSaving) "Saving…" else "Save")
+                    Text(
+                        if (isSaving) "Saving…" else "Save",
+                        style = MaterialTheme.typography.bodyMedium
+                    )
                 }
             }
 
@@ -343,10 +358,9 @@ private fun JournalComposerSheet(
                     Column(Modifier.weight(1f)) {
                             Text(
                                 "\"${verse.text}\"",
-                                fontSize = 12.sp,
-                                fontStyle = FontStyle.Italic,
-                                lineHeight = 18.sp
-                            )
+                                style = MaterialTheme.typography.bodySmall,
+
+                                )
                             Text(
                                 verse.reference,
                                 fontSize = 10.sp,
@@ -371,7 +385,9 @@ private fun JournalComposerSheet(
                         modifier = Modifier.size(16.dp)
                     )
                     Spacer(Modifier.width(6.dp))
-                    Text("Attach a verse", fontSize = 13.sp)
+                    Text(
+                        "Attach a verse", style = MaterialTheme.typography.bodyMedium,
+                    )
                 }
             }
 
@@ -379,7 +395,11 @@ private fun JournalComposerSheet(
             OutlinedTextField(
                 value = note,
                 onValueChange = onNoteChanged,
-                placeholder = { Text("What's on your heart today?") },
+                placeholder = {
+                    Text(
+                        "What's on your heart today?", style = MaterialTheme.typography.bodyLarge,
+                    )
+                },
                 modifier = Modifier
                     .fillMaxSize()
                     .height(140.dp)
