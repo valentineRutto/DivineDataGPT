@@ -35,13 +35,13 @@ import androidx.compose.material.icons.rounded.Share
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -214,7 +214,6 @@ private fun BibleReaderContent(
                     ) { verse ->
                         VerseRow(
                             verse = verse,
-
                             isSelected = verse.verse == uiState.selectedVerse,
                             highlightColor = uiState.highlightedVerseColors[verse.id].toHighlightColor(),
                             onClick = { onVerseSelected(verse.verse) }
@@ -268,16 +267,15 @@ private fun SearchResultsHeader(resultCount: Int) {
         Text(
             text = "Search Results",
             color = Ink,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold,
-            fontSize = 34.sp
+            style = MaterialTheme.typography.headlineMedium
         )
         Text(
             text = "$resultCount matches",
             color = Purple,
-            fontFamily = FontFamily.Serif,
-            fontSize = 13.sp,
-            letterSpacing = 2.sp,
+            style = MaterialTheme.typography.labelMedium.copy(
+                fontSize = 13.sp,
+                letterSpacing = 2.sp
+            ),
             modifier = Modifier.padding(top = 10.dp)
         )
     }
@@ -501,16 +499,15 @@ private fun ChapterHeader(
         Text(
             text = bookName,
             color = Ink,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold,
-            fontSize = 42.sp
+            style = MaterialTheme.typography.headlineMedium
         )
         Text(
             text = "C H A P T E R  $chapter",
             color = Purple,
-            fontFamily = FontFamily.Serif,
-            fontSize = 14.sp,
-            letterSpacing = 3.sp,
+            style = MaterialTheme.typography.labelMedium.copy(
+                fontSize = 14.sp,
+                letterSpacing = 3.sp
+            ),
             modifier = Modifier.padding(top = 14.dp)
         )
     }
@@ -544,9 +541,7 @@ private fun VerseRow(
             append(" ${verse.text}")
         },
         color = Ink,
-        fontFamily = FontFamily.Serif,
-        fontSize = 26.sp,
-        lineHeight = 44.sp,
+        style = MaterialTheme.typography.bodyLarge,
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp)
@@ -597,17 +592,19 @@ private fun SearchResultRow(
     ) {
         Text(
             text = "${verse.bookName} ${verse.chapter}:${verse.verse}",
-            color = Purple,
-            fontFamily = FontFamily.Serif,
-            fontWeight = FontWeight.Bold,
-            fontSize = 15.sp
+            style = MaterialTheme.typography.bodyMedium.copy(
+                color = Purple,
+                fontWeight = FontWeight.Bold,
+                fontSize = 15.sp
+            )
         )
         Text(
             text = verse.text,
-            color = Ink,
-            fontFamily = FontFamily.Serif,
-            fontSize = 21.sp,
-            lineHeight = 32.sp,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = Ink,
+                fontSize = 21.sp,
+                lineHeight = 32.sp
+            ),
             modifier = Modifier.padding(top = 8.dp)
         )
     }

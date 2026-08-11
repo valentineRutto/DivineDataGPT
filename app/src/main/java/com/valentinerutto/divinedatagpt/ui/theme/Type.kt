@@ -16,6 +16,7 @@ val Manrope = FontFamily(
 )
 
 val Typography = Typography(
+
     headlineLarge = TextStyle(
         fontFamily = Manrope,
         fontWeight = FontWeight.Bold,
@@ -50,6 +51,9 @@ val Typography = Typography(
         fontSize = 11.sp,
         letterSpacing = 0.5.sp,
         color = TextMuted
+
+
     )
+
 )
 
