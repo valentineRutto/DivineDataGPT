@@ -318,9 +318,7 @@ private fun ReaderTopBar(
                     Text(
                         text = title.ifBlank { "Bible" },
                         color = Ink,
-                        fontFamily = FontFamily.Serif,
-                        fontWeight = FontWeight.Bold,
-                        fontSize = 24.sp
+                        style = MaterialTheme.typography.headlineMedium
                     )
                     Icon(
                         imageVector = Icons.Rounded.KeyboardArrowDown,
@@ -454,8 +452,8 @@ private fun SearchBox(
             Text(
                 text = "Search by emotion or keyword...",
                 color = MutedInk,
-                fontFamily = FontFamily.Serif,
-                fontSize = 18.sp
+                style = MaterialTheme.typography.bodyLarge
+
             )
         },
         leadingIcon = {
