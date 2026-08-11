@@ -32,6 +32,7 @@ import androidx.compose.material.icons.filled.Send
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
@@ -51,7 +52,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -61,7 +61,6 @@ import com.valentinerutto.divinedatagpt.ui.theme.AiBubble
 import com.valentinerutto.divinedatagpt.ui.theme.CardBackground
 import com.valentinerutto.divinedatagpt.ui.theme.DarkBackground
 import com.valentinerutto.divinedatagpt.ui.theme.EmotionCard
-import com.valentinerutto.divinedatagpt.ui.theme.PurpleAccent
 import com.valentinerutto.divinedatagpt.ui.theme.PurplePrimary
 import com.valentinerutto.divinedatagpt.ui.theme.ReflectionTheme.TextPrimary
 import com.valentinerutto.divinedatagpt.ui.theme.TextMuted
@@ -97,19 +96,15 @@ fun ReflectionScreen(
         topBar = {
             TopAppBar(
                 title = {
-                    Column(horizontalAlignment = Alignment.CenterHorizontally) {
-                        Text(
-                            "Divine Reflection",
-                            color = TextPrimary,
-                            fontWeight = FontWeight.Bold,
-                            fontSize = 18.sp
-                        )
-                        Text(
-                            "DIVINE AI",
-                            color = PurpleAccent,
-                            fontSize = 11.sp,
-                            letterSpacing = 1.sp
-                        )
+                    Box {
+                        Row(verticalAlignment = Alignment.CenterVertically) {
+                            Text(
+                                "Divine Reflection",
+                                color = TextPrimary,
+                                style = MaterialTheme.typography.headlineMedium,
+                            )
+
+                        }
                     }
                 },
                 navigationIcon = {
@@ -247,13 +242,13 @@ fun ChatBubblereflection(message: ChatMessage) {
                         .background(PurplePrimary),
                     contentAlignment = Alignment.Center
                 ) {
-                    Text("✦", color = TextPrimary, fontSize = 14.sp)
+                    Text("✦", color = TextPrimary, style = MaterialTheme.typography.bodyMedium)
                 }
                 Spacer(Modifier.width(8.dp))
                 Column {
 
                     Text(
-                        "Divine AI", color = TextMuted, fontSize = 11.sp,
+                        "Divine AI", color = TextMuted, style = MaterialTheme.typography.bodyMedium,
                         modifier = Modifier.padding(bottom = 4.dp)
                     )
 
