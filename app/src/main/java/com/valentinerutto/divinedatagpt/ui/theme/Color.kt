@@ -31,3 +31,15 @@ val TextMuted = Color(0xFF6B6B8A)
 val EmotionCard = Color(0xFF252540)
 val UserBubble = Color(0xFF6C3CE1)
 val AiBubble = Color(0xFF252540)
+
+
+//lightdeffault
+val LightBackground = Color(0xFFF0CEA0)
+val LightSurface = Color(0xFFFFF7EC)
+val LightCardBackground = Color(0xFFF5F5F5)
+val LightTextPrimary = Color(0xFF0F0F0F)
+val LightTextSecondary = Color(0xFF5E5E5E)
+
+
+
+
