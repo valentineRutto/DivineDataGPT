@@ -395,6 +395,7 @@ private fun BiblePickerMenu(
                         text = {
                             Text(
                                 text = book.bookName,
+                                style = MaterialTheme.typography.bodyLarge,
                                 color = if (book.book == selectedBook) Purple else Ink
                             )
                         },
@@ -424,6 +425,8 @@ private fun BiblePickerMenu(
                         text = {
                             Text(
                                 text = chapter.toString(),
+                                style = MaterialTheme.typography.bodyLarge,
+
                                 color = if (chapter == selectedChapter) Purple else Ink
                             )
                         },
