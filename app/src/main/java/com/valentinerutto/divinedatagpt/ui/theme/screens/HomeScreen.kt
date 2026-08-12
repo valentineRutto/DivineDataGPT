@@ -82,7 +82,7 @@ fun HomeScreen(
                 )
             }
 
-            Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(28.dp))
 
         // ── Verse of the Day ─────────────────────────────────
         Row(
@@ -106,7 +106,7 @@ fun HomeScreen(
             )
         }
 
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(28.dp))
 
         if (uiState.isLoading) {
             Box(
@@ -129,7 +129,7 @@ fun HomeScreen(
                 )
             }
         }
-        Spacer(Modifier.height(24.dp))
+        Spacer(Modifier.height(28.dp))
 
             Box(
                 modifier = Modifier
@@ -222,7 +222,6 @@ fun HomeScreen(
                     }
                 }
             }
-
 
 
             Spacer(Modifier.height(12.dp))
