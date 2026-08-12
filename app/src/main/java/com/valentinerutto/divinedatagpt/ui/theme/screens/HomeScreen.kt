@@ -84,6 +84,53 @@ fun HomeScreen(
 
             Spacer(Modifier.height(24.dp))
 
+        // ── Verse of the Day ─────────────────────────────────
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(horizontal = 20.dp),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text(
+                "Verse of the Day",
+                color = TextPrimary,
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold
+            )
+            Text(
+                text = "Share",
+                color = PurpleAccent,
+                fontSize = 14.sp,
+                modifier = Modifier.clickable { onDailyReflection() }
+            )
+        }
+
+        Spacer(Modifier.height(24.dp))
+
+        if (uiState.isLoading) {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(220.dp)
+                    .padding(horizontal = 20.dp)
+                    .clip(RoundedCornerShape(20.dp))
+                    .background(CardBackground),
+                contentAlignment = Alignment.Center
+            ) {
+                CircularProgressIndicator(color = PurplePrimary)
+            }
+        } else {
+            uiState.verseOfDay?.let { verse ->
+                VerseCard(
+                    verse = verse.verse,
+                    reference = verse.reference,
+                    onClick = { onDailyReflection() }
+                )
+            }
+        }
+        Spacer(Modifier.height(24.dp))
+
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -129,7 +176,7 @@ fun HomeScreen(
                 }
             }
 
-            Spacer(Modifier.height(14.dp))
+        Spacer(Modifier.height(28.dp))
 
             Box(
                 modifier = Modifier
@@ -176,55 +223,9 @@ fun HomeScreen(
                 }
             }
 
-            Spacer(Modifier.height(28.dp))
 
-            // ── Verse of the Day ─────────────────────────────────
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(horizontal = 20.dp),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    "Verse of the Day",
-                    color = TextPrimary,
-                    fontSize = 18.sp,
-                    fontWeight = FontWeight.Bold
-                )
-                Text(
-                    text = "Share",
-                    color = PurpleAccent,
-                    fontSize = 14.sp,
-                    modifier = Modifier.clickable { onDailyReflection() }
-                )
-            }
 
             Spacer(Modifier.height(12.dp))
-
-            if (uiState.isLoading) {
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(220.dp)
-                        .padding(horizontal = 20.dp)
-                        .clip(RoundedCornerShape(20.dp))
-                        .background(CardBackground),
-                    contentAlignment = Alignment.Center
-                ) {
-                    CircularProgressIndicator(color = PurplePrimary)
-                }
-            } else {
-                uiState.verseOfDay?.let { verse ->
-                    VerseCard(
-                        verse = verse.verse,
-                        reference = verse.reference,
-                        onClick = { onDailyReflection() }
-                    )
-                }
-            }
-
-            Spacer(Modifier.height(24.dp))
         }
     }
 
