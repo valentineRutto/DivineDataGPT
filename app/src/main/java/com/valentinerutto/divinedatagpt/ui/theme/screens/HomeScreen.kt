@@ -74,7 +74,7 @@ fun HomeScreen(
                     fontWeight = FontWeight.Bold,
                     lineHeight = 38.sp
                 )
-                Spacer(Modifier.height(6.dp))
+                Spacer(Modifier.height(26.dp))
                 Text(
                     text = "May your time here bring you peace and clarity.",
                     color = TextSecondary,
