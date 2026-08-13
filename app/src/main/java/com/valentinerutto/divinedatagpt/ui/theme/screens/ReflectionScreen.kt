@@ -25,7 +25,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ChevronLeft
 import androidx.compose.material.icons.filled.MoreHoriz
 import androidx.compose.material.icons.filled.Send
@@ -168,13 +167,8 @@ fun ReflectionScreen(
                     .padding(horizontal = 16.dp, vertical = 12.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                IconButton(onClick = {}) {
-                    Icon(
-                        Icons.Default.Add, contentDescription = "Add",
-                        tint = TextMuted, modifier = Modifier.size(24.dp)
-                    )
-                }
-                TextField(
+
+            TextField(
                     value = inputText,
                     onValueChange = { inputText = it },
                     placeholder = {
