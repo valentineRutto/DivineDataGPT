@@ -38,6 +38,7 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -97,7 +98,7 @@ fun DailyReflectionScreen(
                 title = {
                     Text(
                         "DAILY REFLECTION", color = TextPrimary,
-                        fontSize = 14.sp, fontWeight = FontWeight.SemiBold,
+                        style = MaterialTheme.typography.headlineMedium,
                         letterSpacing = 1.sp
                     )
                 },
@@ -143,7 +144,7 @@ fun DailyReflectionScreen(
                         Spacer(Modifier.height(16.dp))
                         Text(
                             "Preparing your reflection...",
-                            color = TextSecondary,
+                            color = TextSecondary, style = MaterialTheme.typography.bodyMedium,
                             fontSize = 14.sp
                         )
                     }
@@ -184,24 +185,22 @@ fun DailyReflectionScreen(
                                 Text(
                                     text = "SCRIPTURE",
                                     color = Color.White.copy(0.7f),
-                                    fontSize = 11.sp,
-                                    letterSpacing = 2.sp
-                                )
+                                    style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp),
+
+                                    )
                                 Spacer(Modifier.height(12.dp))
                                 Text(
                                     text = "\"${reflection.verse}\"",
                                     color = TextPrimary,
-                                    fontSize = 26.sp,
+                                    style = MaterialTheme.typography.bodyLarge,
                                     fontStyle = FontStyle.Italic,
-                                    fontWeight = FontWeight.Bold,
-                                    lineHeight = 36.sp
-                                )
+
+                                    )
                                 Spacer(Modifier.height(16.dp))
                                 Text(
                                     text = "— ${reflection.reference}",
                                     color = Color.White.copy(0.85f),
-                                    fontSize = 15.sp,
-                                    fontWeight = FontWeight.Medium
+                                    style = MaterialTheme.typography.bodyMedium
                                 )
                             }
 
@@ -222,18 +221,16 @@ fun DailyReflectionScreen(
                                         Text(
                                             text = "Divine INSIGHT",
                                             color = PurpleAccent,
-                                            fontSize = 12.sp,
-                                            fontWeight = FontWeight.SemiBold,
-                                            letterSpacing = 1.sp
+                                            style = MaterialTheme.typography.bodyLarge,
                                         )
                                     }
                                     Spacer(Modifier.height(8.dp))
                                     Text(
                                         text = reflection.insight,
                                         color = TextPrimary,
-                                        fontSize = 14.sp,
-                                        lineHeight = 21.sp
-                                    )
+                                        style = MaterialTheme.typography.bodyMedium,
+
+                                        )
                                 }
                             }
 
@@ -242,11 +239,9 @@ fun DailyReflectionScreen(
                             Text(
                                 text = "✨ Daily Reflection from Divine AI",
                                 color = Color.White.copy(0.82f),
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Medium,
-                                textAlign = TextAlign.Center,
-                                modifier = Modifier.fillMaxWidth()
-                            )
+                                style = MaterialTheme.typography.bodySmall,
+
+                                )
                         }
                     }
 
