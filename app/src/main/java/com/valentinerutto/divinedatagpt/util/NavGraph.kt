@@ -7,6 +7,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleNotesRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.BibleReaderRoute
+import com.valentinerutto.divinedatagpt.ui.theme.screens.DailyReflectionScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.HomeScreen
 import com.valentinerutto.divinedatagpt.ui.theme.screens.JournalRoute
 import com.valentinerutto.divinedatagpt.ui.theme.screens.ReflectionScreen
@@ -57,6 +58,10 @@ fun NavGraph(
 
         composable(Screen.Journal.route) {
             JournalRoute()
+        }
+
+        composable(Screen.Daily.route) {
+            DailyReflectionScreen(onBack = { navController.popBackStack() })
         }
 
     }
