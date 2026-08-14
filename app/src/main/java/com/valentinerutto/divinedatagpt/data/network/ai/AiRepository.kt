@@ -68,11 +68,13 @@ class AiRepository(
             val request = GeminiRequest(
                 contents = listOf(Content(parts = listOf(Part(prompt))))
             )
+
             val response = aiApi.generateContent(apikey, request)
             val rawText = response.candidates?.firstOrNull()?.content?.parts?.firstOrNull()?.text
                 ?: return Resource.Error("Empty response")
 
             val json = JSONObject(rawText.trim())
+
             Resource.Success(
                 Reflection(
                     verse = json.getString("verse"),
@@ -80,6 +82,7 @@ class AiRepository(
                     insight = json.getString("insight")
                 )
             )
+
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }
@@ -130,6 +133,7 @@ class AiRepository(
                     insight = json.getString("insight")
                 )
             )
+
         } catch (e: Exception) {
             Resource.Error(e.message.toString())
         }
@@ -177,20 +181,24 @@ class AiRepository(
 
         return try {
 
-            val historyText = conversationHistory.joinToString("\n") { (role, msg) ->
+            val historyText = conversationHistory.takeLast(6).joinToString("\n") { (role, msg) ->
                 "${if (role == "user") "User" else "AI"}: $msg"
             }
 
             val prompt = """
-                You are a compassionate AI Bible Companion named DivineData AI.
-                Provide comfort, wisdom, and relevant Bible verses for emotional support.
-                
-                ${if (historyText.isNotBlank()) "Conversation history:\n$historyText\n\n" else ""}
-                User: $userMessage
-                
-                Respond with empathy. Include ONE relevant Bible verse in italics if appropriate.
-                Keep your response warm, personal, and under 100 words. End with a reflective question.
-            """.trimIndent()
+You are DivineData AI, a compassionate Christian companion.
+
+Conversation:
+$historyText
+
+User: $userMessage
+
+Reply warmly and briefly.
+Include one relevant Bible verse.
+End with one reflective question.
+Keep the response under 80 words.
+""".trimIndent()
+
             initializeModel()
 
 

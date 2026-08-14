@@ -83,7 +83,6 @@ fun ErrorContent(
                     color = TextSecondary,
                     textAlign = TextAlign.Center
                 )
-
                 // Retry Button
                 Button(
                     onClick = onRetry,
