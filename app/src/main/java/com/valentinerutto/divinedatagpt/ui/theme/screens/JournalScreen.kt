@@ -214,6 +214,11 @@ private fun JournalEntryCard(
 
         Column(Modifier.padding(12.dp)) {
 
+            entry.title?.let { title ->
+                Spacer(Modifier.height(6.dp))
+                Text(title, style = MaterialTheme.typography.bodyLarge, lineHeight = 18.sp)
+            }
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -282,6 +287,7 @@ private fun JournalEntryCard(
                 )
             }
 
+
             entry.note?.let { note ->
                 Spacer(Modifier.height(6.dp))
                 Text(note, style = MaterialTheme.typography.bodyLarge, lineHeight = 18.sp)
@@ -313,7 +319,7 @@ private fun JournalEmptyState(modifier: Modifier = Modifier) {
 @Composable
 private fun JournalComposerSheet(
     note: String,
-    title:String,
+    title: String,
     verse: VerseCitation?,
     isSaving: Boolean,
     error: String?,
