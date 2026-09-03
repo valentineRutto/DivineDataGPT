@@ -86,6 +86,9 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
         _uiState.update { it.copy(composerVerse = null) }
     }
 
+    fun onTitleChanged(title: String) {
+        _uiState.update { it.copy(composerTitle = title) }
+    }
     fun onSaveComposerEntry() {
         val draft = _uiState.value
         val note = draft.composerNote.trim().ifEmpty { null }
@@ -105,7 +108,10 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
                         verse = draft.composerVerse,
                         note = note,
                         sourceType = JournalSourceType.MANUAL,
-                        createdAt = System.currentTimeMillis()
+                        createdAt = System.currentTimeMillis(),
+                        title = draft.composerTitle,
+                        sessionId = null,
+                        messageId = null
                     )
                 )
             }.onSuccess {

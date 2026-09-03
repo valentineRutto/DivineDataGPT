@@ -11,5 +11,7 @@ data class JournalEntryEntity(
     val sourceType: String,     // "bible_reader" | "reflection_chat" | "manual"
     val sessionId: String?,     // soft reference — no FK/CASCADE, see note below
     val messageId: String?,
-    val createdAt: Long
+    val createdAt: Long,
+    val title: String?
+
 )

@@ -210,7 +210,8 @@ private fun JournalEntryEntity.toDomain(verse: VerseCitation?) = JournalEntry(
     sourceType = JournalSourceType.valueOf(sourceType.uppercase()),
     sessionId = sessionId,
     messageId = messageId,
-    createdAt = createdAt
+    createdAt = createdAt,
+    title = title
 )
 
 private fun JournalEntry.toEntity() = JournalEntryEntity(
@@ -220,5 +221,6 @@ private fun JournalEntry.toEntity() = JournalEntryEntity(
     sourceType = sourceType.name.lowercase(),
     sessionId = sessionId,
     messageId = messageId,
-    createdAt = createdAt
+    createdAt = createdAt,
+    title = title
 )

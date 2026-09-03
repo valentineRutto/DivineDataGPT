@@ -106,6 +106,7 @@ fun BibleReaderScreen(
     modifier: Modifier = Modifier,
     viewModel: BibleViewModel = koinViewModel()
 ) {
+
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
     BibleReaderContent(
@@ -119,6 +120,7 @@ fun BibleReaderScreen(
         onSaveBibleNote = viewModel::saveBibleNote,
         modifier = modifier
     )
+
 }
 
 @Composable
@@ -135,8 +137,10 @@ private fun BibleReaderContent(
 ) {
 
     val context = LocalContext.current
+
     var noteEditorVerse by remember { mutableStateOf<VerseEntity?>(null) }
     var noteEditorColor by remember { mutableStateOf(HighlightColors.first().key) }
+
     val selectedVerse = uiState.verses.firstOrNull { verse ->
         verse.verse == uiState.selectedVerse
     }
@@ -146,7 +150,9 @@ private fun BibleReaderContent(
         modifier = modifier.fillMaxSize(),
         containerColor = Page,
         topBar = {
-            ReaderTopBar(
+
+
+        ReaderTopBar(
                 title = "${uiState.request.bookName} ${uiState.request.chapter}".trim(),
                 books = uiState.books,
                 chapters = uiState.availableChapters,
@@ -155,10 +161,13 @@ private fun BibleReaderContent(
                 onBookSelected = onBookSelected,
                 onChapterSelected = onChapterSelected
             )
+
+
         }
 
     ) { innerPadding ->
-        Box(
+
+    Box(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(innerPadding)

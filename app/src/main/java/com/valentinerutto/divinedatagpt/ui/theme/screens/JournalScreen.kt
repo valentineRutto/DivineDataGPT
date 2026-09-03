@@ -40,6 +40,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -150,6 +151,7 @@ fun JournalScreen(
         }
 
         if (state.isComposerOpen) {
+
             JournalComposerSheet(
                 note = state.composerNote,
                 verse = state.composerVerse,
@@ -159,11 +161,15 @@ fun JournalScreen(
                 onAttachVerse = viewModel::onAttachVerseTapped,
                 onRemoveVerse = viewModel::onVerseRemoved,
                 onCancel = viewModel::onComposerCancelled,
-                onSave = viewModel::onSaveComposerEntry
+                onSave = viewModel::onSaveComposerEntry,
+                title = state.composerTitle,
+                onTitleChanged = viewModel::onTitleChanged
             )
+
         }
 
         if (editingEntry != null) {
+
             JournalComposerSheet(
                 note = editingNote,
                 verse = editingEntry?.verse,
@@ -176,6 +182,8 @@ fun JournalScreen(
                     editingEntry = null
                     editingNote = ""
                 },
+                title = editingEntry?.title ?: "",
+                onTitleChanged = { editingEntry = editingEntry?.copy(title = it) },
                 onSave = {
                     editingEntry?.let { entry ->
                         onEditJournal(entry, editingNote)
@@ -296,7 +304,7 @@ private fun JournalEmptyState(modifier: Modifier = Modifier) {
         Text(
             "Save your first verse from today's reading",
             style = MaterialTheme.typography.bodyMedium,
-            textAlign = androidx.compose.ui.text.style.TextAlign.Center
+            textAlign = TextAlign.Center
         )
     }
 }
@@ -305,15 +313,18 @@ private fun JournalEmptyState(modifier: Modifier = Modifier) {
 @Composable
 private fun JournalComposerSheet(
     note: String,
+    title:String,
     verse: VerseCitation?,
     isSaving: Boolean,
     error: String?,
     onNoteChanged: (String) -> Unit,
+    onTitleChanged: (String) -> Unit,
     onAttachVerse: () -> Unit,
     onRemoveVerse: () -> Unit,
     onCancel: () -> Unit,
     onSave: () -> Unit
 ) {
+
     ModalBottomSheet(
         onDismissRequest = {
             if (!isSaving) onCancel()
@@ -391,7 +402,24 @@ private fun JournalComposerSheet(
                 }
             }
 
+
             Spacer(Modifier.height(12.dp))
+
+            OutlinedTextField(
+                value = title,
+
+                onValueChange = onTitleChanged,
+                placeholder = {
+                    Text(
+                        "Title of your reflection", style = MaterialTheme.typography.bodyLarge,
+                    )
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+            )
+
+            Spacer(Modifier.height(12.dp))
+
             OutlinedTextField(
                 value = note,
                 onValueChange = onNoteChanged,
