@@ -158,13 +158,9 @@ private fun BibleReaderContent(
                     selectedBook = uiState.request.book,
                     selectedChapter = uiState.request.chapter,
                     onBookSelected = onBookSelected,
-                    onChapterSelected = onChapterSelected
-                )
-
-                SearchBox(
+                    onChapterSelected = onChapterSelected,
                     query = uiState.searchQuery,
-                    onQueryChange = onSearchQueryChange,
-                    modifier = Modifier.padding(horizontal = 32.dp, vertical = 22.dp)
+                    onQueryChange = onSearchQueryChange
                 )
             }
         }
@@ -197,7 +193,22 @@ private fun BibleReaderContent(
                     ) { verse ->
                         SearchResultRow(
                             verse = verse,
-                            onClick = { onSearchResultSelected(verse) }
+                            onClick = {
+                                // restore the context (book, chapter, verse) when a search result is clicked
+                                try {
+                                    onBookSelected(verse.book)
+                                } catch (_: Exception) {
+                                }
+                                try {
+                                    onChapterSelected(verse.chapter)
+                                } catch (_: Exception) {
+                                }
+                                try {
+                                    onVerseSelected(verse.verse)
+                                } catch (_: Exception) {
+                                }
+                                onSearchResultSelected(verse)
+                            }
                         )
                     }
                 } else if (uiState.isLoading) {
@@ -300,64 +311,71 @@ private fun ReaderTopBar(
     selectedBook: Int,
     selectedChapter: Int,
     onBookSelected: (Int) -> Unit,
-    onChapterSelected: (Int) -> Unit
+    onChapterSelected: (Int) -> Unit,
+    query: String,
+    onQueryChange: (String) -> Unit
 ) {
+
     var pickerExpanded by remember { mutableStateOf(false) }
 
-    Row(
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .background(TopBar)
             .statusBarsPadding()
-            .height(84.dp)
-            .padding(horizontal = 44.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 44.dp)
     ) {
 
-
         Row(
-            verticalAlignment = Alignment.CenterVertically,
             modifier = Modifier
-                .weight(1f)
-                .clickable(enabled = books.isNotEmpty()) {
-                    pickerExpanded = true
-                }
+                .fillMaxWidth()
+                .height(84.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
-            Box {
 
-                Row(verticalAlignment = Alignment.CenterVertically) {
-                    Text(
-                        text = title.ifBlank { "Bible" },
-                        color = Ink,
-                        style = MaterialTheme.typography.headlineMedium
-                    )
-                    Icon(
-                        imageVector = Icons.Rounded.KeyboardArrowDown,
-                        contentDescription = "Change book or chapter",
-                        tint = Purple,
-                        modifier = Modifier
-                            .padding(start = 4.dp)
-                            .size(22.dp)
-                    )
-                }
-
-                BiblePickerMenu(
-                    expanded = pickerExpanded,
-                    books = books,
-                    chapters = chapters,
-                    selectedBook = selectedBook,
-                    selectedChapter = selectedChapter,
-                    onDismiss = { pickerExpanded = false },
-                    onBookSelected = onBookSelected,
-                    onChapterSelected = { chapter ->
-                        onChapterSelected(chapter)
-                        pickerExpanded = false
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .weight(1f)
+                    .clickable(enabled = books.isNotEmpty()) {
+                        pickerExpanded = true
                     }
-                )
+            ) {
+                Box {
+
+                    Row(verticalAlignment = Alignment.CenterVertically) {
+                        Text(
+                            text = title.ifBlank { "Bible" },
+                            color = Ink,
+                            style = MaterialTheme.typography.headlineMedium
+                        )
+                        Icon(
+                            imageVector = Icons.Rounded.KeyboardArrowDown,
+                            contentDescription = "Change book or chapter",
+                            tint = Purple,
+                            modifier = Modifier
+                                .padding(start = 4.dp)
+                                .size(22.dp)
+                        )
+                    }
+
+                    BiblePickerMenu(
+                        expanded = pickerExpanded,
+                        books = books,
+                        chapters = chapters,
+                        selectedBook = selectedBook,
+                        selectedChapter = selectedChapter,
+                        onDismiss = { pickerExpanded = false },
+                        onBookSelected = onBookSelected,
+                        onChapterSelected = { chapter ->
+                            onChapterSelected(chapter)
+                            pickerExpanded = false
+                        }
+                    )
 
 
+                }
             }
-        }
 
 //        Icon(
 //            imageVector = Icons.Rounded.AutoAwesome,
@@ -365,6 +383,14 @@ private fun ReaderTopBar(
 //            tint = Purple,
 //            modifier = Modifier.size(30.dp)
 //        )
+        }
+
+        // place SearchBox inside the top bar so it stays attached to the header
+        SearchBox(
+            query = query,
+            onQueryChange = onQueryChange,
+            modifier = Modifier.padding(horizontal = 32.dp, vertical = 12.dp)
+        )
     }
 }
 
