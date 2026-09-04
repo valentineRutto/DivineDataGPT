@@ -344,7 +344,8 @@ private fun ReaderTopBar(
                 Box {
 
                     Row(verticalAlignment = Alignment.CenterVertically) {
-                        Text(
+
+                    Text(
                             text = title.ifBlank { "Bible" },
                             color = Ink,
                             style = MaterialTheme.typography.headlineMedium
@@ -377,15 +378,8 @@ private fun ReaderTopBar(
                 }
             }
 
-//        Icon(
-//            imageVector = Icons.Rounded.AutoAwesome,
-//            contentDescription = "Open assistant",
-//            tint = Purple,
-//            modifier = Modifier.size(30.dp)
-//        )
         }
 
-        // place SearchBox inside the top bar so it stays attached to the header
         SearchBox(
             query = query,
             onQueryChange = onQueryChange,
