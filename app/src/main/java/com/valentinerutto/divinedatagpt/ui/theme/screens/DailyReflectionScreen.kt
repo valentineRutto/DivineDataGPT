@@ -153,7 +153,6 @@ fun DailyReflectionScreen(
                 uiState.reflection?.let { reflection ->
                     // ── Scripture Card ───────────────────────────
 
-
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()

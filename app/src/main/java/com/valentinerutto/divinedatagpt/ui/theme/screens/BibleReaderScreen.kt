@@ -150,20 +150,25 @@ private fun BibleReaderContent(
         modifier = modifier.fillMaxSize(),
         containerColor = Page,
         topBar = {
+            Column {
+                ReaderTopBar(
+                    title = "${uiState.request.bookName} ${uiState.request.chapter}".trim(),
+                    books = uiState.books,
+                    chapters = uiState.availableChapters,
+                    selectedBook = uiState.request.book,
+                    selectedChapter = uiState.request.chapter,
+                    onBookSelected = onBookSelected,
+                    onChapterSelected = onChapterSelected
+                )
 
-
-        ReaderTopBar(
-                title = "${uiState.request.bookName} ${uiState.request.chapter}".trim(),
-                books = uiState.books,
-                chapters = uiState.availableChapters,
-                selectedBook = uiState.request.book,
-                selectedChapter = uiState.request.chapter,
-                onBookSelected = onBookSelected,
-                onChapterSelected = onChapterSelected
-            )
-
-
+                SearchBox(
+                    query = uiState.searchQuery,
+                    onQueryChange = onSearchQueryChange,
+                    modifier = Modifier.padding(horizontal = 32.dp, vertical = 22.dp)
+                )
+            }
         }
+
 
     ) { innerPadding ->
 
@@ -172,18 +177,14 @@ private fun BibleReaderContent(
                 .fillMaxSize()
                 .padding(innerPadding)
         ) {
-            LazyColumn(
-                modifier = Modifier.fillMaxSize(),
-                contentPadding = PaddingValues(bottom = 128.dp)
-            ) {
-                item {
-                    SearchBox(
-                        query = uiState.searchQuery,
-                        onQueryChange = onSearchQueryChange,
-                        modifier = Modifier.padding(horizontal = 32.dp, vertical = 22.dp)
-                    )
-                }
 
+        LazyColumn(
+            modifier = Modifier.fillMaxSize(),
+            contentPadding = PaddingValues(bottom = 128.dp)
+        ) {
+            item {
+
+            }
                 if (uiState.searchQuery.isNotBlank()) {
                     item {
                         SearchResultsHeader(
