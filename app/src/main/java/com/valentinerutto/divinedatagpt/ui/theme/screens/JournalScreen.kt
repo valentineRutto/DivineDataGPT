@@ -56,8 +56,9 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun JournalRoute(
     modifier: Modifier = Modifier,
-    viewModel: JournalViewModel = koinViewModel()
-) {
+    viewModel: JournalViewModel = koinViewModel(),
+
+    ) {
 
     JournalScreen(
 
@@ -73,7 +74,8 @@ fun JournalRoute(
                 )
             )
 
-        }
+        },
+        onOpenBibleReader = {}
     )
 }
 
@@ -84,6 +86,7 @@ fun JournalScreen(
     onReopenSession: (sessionId: String, messageId: String) -> Unit = { _, _ -> },
     onEditJournal: (JournalEntry, String) -> Unit,
     onDeleteJournal: (JournalEntry) -> Unit,
+    onOpenBibleReader: () -> Unit
 ) {
 
     val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -166,6 +169,16 @@ fun JournalScreen(
                 onTitleChanged = viewModel::onTitleChanged
             )
 
+        }
+
+        if (state.isVersePickerOpen) {
+            VersePicker(
+                viewModel = koinViewModel(),
+                onPick = { verse ->
+                    viewModel.onVersePicked(verse)
+                },
+                onDismiss = { viewModel.onComposerCancelled() }
+            )
         }
 
         if (editingEntry != null) {
