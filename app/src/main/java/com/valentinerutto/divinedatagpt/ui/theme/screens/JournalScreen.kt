@@ -133,14 +133,15 @@ fun JournalScreen(
                             editingNote = entryToEdit.note ?: ""
                         },
 
-                        onClick = {
+                        onClick = { entryToEdit ->
+                            editingEntry = entryToEdit
+                            editingNote = entryToEdit.note ?: ""
 
-
-                            if (entry.sourceType == JournalSourceType.REFLECTION_CHAT && entry.sessionId != null && entry.messageId != null
-                        ) {
-                            onReopenSession(entry.sessionId, entry.messageId)
-                            } else {
-                        }
+//                            if (entry.sourceType == JournalSourceType.REFLECTION_CHAT && entry.sessionId != null && entry.messageId != null
+//                        ) {
+//                            onReopenSession(entry.sessionId, entry.messageId)
+//                            } else {
+//                        }
 
 
                         }
@@ -216,10 +217,10 @@ private fun JournalEntryCard(
     entry: JournalEntry,
     onDelete: () -> Unit,
     onOpenEditor: (JournalEntry) -> Unit,
-    onClick: () -> Unit
+    onClick: (JournalEntry) -> Unit
 ) {
     Surface(
-        onClick = onClick,
+        onClick = { onClick(entry) },
         shape = RoundedCornerShape(14.dp),
         color = MaterialTheme.colorScheme.surfaceVariant,
         modifier = Modifier.fillMaxWidth()
@@ -270,6 +271,7 @@ private fun JournalEntryCard(
 
                 if (entry.sourceType == JournalSourceType.REFLECTION_CHAT) {
                     Surface(
+                        onClick = { onClick(entry) },
                         shape = RoundedCornerShape(20.dp),
                         color = MaterialTheme.colorScheme.primaryContainer
                     ) {
