@@ -25,7 +25,7 @@ fun NavGraph(
         composable(Screen.Home.route) {
             HomeScreen(
                 onStartReflection = {
-                    navController.navigate(Screen.Reflection.route)
+                    navController.navigate(Screen.Home.route)
                 },
                 onDailyReflection = {
                     navController.navigate(Screen.Daily.route)
