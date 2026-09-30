@@ -10,8 +10,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Book
 import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -39,7 +41,8 @@ fun VersePicker(
     modifier: Modifier = Modifier,
     viewModel: BibleViewModel = koinViewModel(),
     onPick: (VerseCitation) -> Unit,
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    onOpenReader: () -> Unit = {}
 ) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     var query by remember { mutableStateOf("") }
@@ -59,6 +62,11 @@ fun VersePicker(
                 },
                 singleLine = true,
                 leadingIcon = { Icon(Icons.Rounded.Search, contentDescription = null) },
+                trailingIcon = {
+                    IconButton(onClick = { onOpenReader() }) {
+                        Icon(Icons.Filled.Book, contentDescription = "Open Bible reader")
+                    }
+                },
                 placeholder = { Text("Search verses") },
                 colors = TextFieldDefaults.colors(),
                 modifier = Modifier
