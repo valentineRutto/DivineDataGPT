@@ -176,9 +176,15 @@ fun JournalScreen(
             VersePicker(
                 viewModel = koinViewModel(),
                 onPick = { verse ->
-                    viewModel.onVersePicked(verse)
+                    if (editingEntry != null) {
+                        editingEntry = editingEntry?.copy(verse = verse)
+                        // just close the picker and keep editing state
+                        viewModel.onDismissVersePicker()
+                    } else {
+                        viewModel.onVersePicked(verse)
+                    }
                 },
-                onDismiss = { viewModel.onComposerCancelled() }
+                onDismiss = { viewModel.onDismissVersePicker() },
             )
         }
 

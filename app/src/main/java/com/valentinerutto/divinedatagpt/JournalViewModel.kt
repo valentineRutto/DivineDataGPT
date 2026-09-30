@@ -86,6 +86,13 @@ class JournalViewModel(private val bibleRepository: BibleRepository) : ViewModel
         _uiState.update { it.copy(composerVerse = null) }
     }
 
+    /**
+     * Close the verse picker without cancelling the composer.
+     */
+    fun onDismissVersePicker() {
+        _uiState.update { it.copy(isVersePickerOpen = false) }
+    }
+
     fun onTitleChanged(title: String) {
         _uiState.update { it.copy(composerTitle = title) }
     }
